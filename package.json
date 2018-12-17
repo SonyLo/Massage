@@ -1,19 +1,23 @@
-{ 
-"name": "massage", 
-"version": "1.0.0", 
-"description": "", 
-"main": "index.js", 
-"scripts": { 
-"test": "echo \"Error: no test specified\" && exit 1" 
-}, 
-"repository": { 
-"type": "git", 
-"url": "git+https://github.com/SonyLo/Massage.git" 
-}, 
-"author": "", 
-"license": "ISC", 
-"bugs": { 
-"url": "https://github.com/SonyLo/Massage/issues" 
-}, 
-"homepage": "https://github.com/SonyLo/Massage#readme" 
-} 
+{
+  "name": "massage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SonyLo/Massage.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SonyLo/Massage/issues"
+  },
+  "homepage": "https://github.com/SonyLo/Massage#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}

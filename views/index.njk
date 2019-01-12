@@ -1,100 +1,4 @@
-<!DOCTYPE html>
-<html lang="rus">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-        crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Jura:400,700&amp;subset=cyrillic,cyrillic-ext" rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/style.css">
-
-
-</head>
-
-<body>
-
-
-
-
-
-    <div class="container-fluid " style="background-color:#00416a;">
-
-
-        <div class="  row">
-
-            <div class="col-md-12">
-
-                <nav class="navbar navbar-expand-lg navbar-dark " style="background-color:#00416a;font-size:20px">
-
-                    <a class="navbar-brand" href="#"><img class="logoImg" src="./img/log_png_test.png" alt=""></a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1"
-                        aria-controls="navbar1" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbar1">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="#">Новости <span class="sr-only">(current)</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Расписание</a>
-                            </li>
-
-
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Обучение</a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                                    <a class="dropdown-item" href="#">Для начинающих</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Для продвинутых</a>
-
-
-                                </div>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Преподаватели</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Контакты </a>
-                            </li>
-
-
-
-
-                        </ul>
-
-
-                        <span class="mr-5" style="color:#fff">СФЕРА </span>
-                        <a class="socLink" href="">
-                            <i class="fa fa-instagram fa-2x" aria-hidden="true"></i>
-                        </a>
-                        <a class="socLink" href="">
-                            <i class="fa fa-vk fa-2x" aria-hidden="true"></i>
-                        </a>
-                        <a class="socLink" href="">
-                            <i class="fa fa-facebook fa-2x" aria-hidden="true"></i>
-                        </a>
-
-                    </div>
-                </nav>
-
-
-            </div>
-        </div>
-
-
-
-
-    </div>
-
+{% include "./layout/nav.njk" %}
 
     <section class="d-none d-xl-none  d-md-block" id="main">
 
@@ -239,29 +143,11 @@
                                         </div>
                                       </div>
                         </div>
-                    <!-- <div class="col-md-4">
-                            <div class="card" style="width: 30rem;">
-                                    <img src="./img/33.jpg" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                      <p style="font-size:18px" class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                      <a href="#" class="card-link">Another link</a>
-                                    </div>
-                                  </div>
-                    </div> -->
-<!--                    
-                    <div class="col-md-4">
-                            <div class="card" style="width: 30rem;">
-                                    <img src="./img/33.jpg" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                      <p style="font-size:18px" class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                      <a href="#" class="card-link">Another link</a>
-                                    </div>
-                                  </div>
-                    </div> -->
+                   
                 </div>
                 <div class="row text-center ">
                         <div class="col-md-12">
-                            <button type="button" style="height:50px; width:150px; font-size: 20px" class="btn btn-primary mb-3 ">Все новости</button>
+                            <button type="button" style="height:50px; width:150px; font-size: 20px" class="btn btn-primary mb-4 ">Все новости</button>
                         </div>
                     </div>
             </div>
@@ -308,7 +194,7 @@
                         <img src="./img/img_avatar.png" alt="Avatar" style="width:100%">
                         <div class="containerrr">
                             <h4><b>John Doe</b></h4>
-                            <p>Architect & Engineer</p>
+                            <p>Architect  Engineer</p>
                         </div>
                     </div>
                 </div>
@@ -317,7 +203,7 @@
                         <img src="./img/Pikachu.png" alt="Avatar" style="width:100%">
                         <div class="containerrr">
                             <h4><b>John Doe</b></h4>
-                            <p>Architect & Engineer</p>
+                            <p>Architect  Engineer</p>
                         </div>
                     </div>
                 </div>
@@ -326,7 +212,7 @@
                         <img src="./img/img_avatar.png" alt="Avatar" style="width:100%">
                         <div class="containerrr">
                             <h4><b>John Doe</b></h4>
-                            <p>Architect & Engineer</p>
+                            <p>Architect  Engineer</p>
                         </div>
                     </div>
                 </div>
@@ -366,80 +252,5 @@
         </div>
     </div>
 </section>
-   
-
-    <!-- <footer>
-        <div class="containerr">
-            <div class="footer-info">
-                <p class="footer-head">Sonya Logvinova</p>
-                <p>Разработка сайтов<br> под ключ</p>
-            </div>
-            <div class="social-links">
-                <p class="footer-head">Подпишись</p>
-
-                <a href="#">
-                    <picture>
-                        <source type="img/svg+xml" srcset="img/vkontakte.svg">
-                        <img src="img/Pikachu.png" alt="Телеграмм">
-                    </picture>
-                </a>
-
-                <a href="#">
-                    <picture>
-                        <source type="img/svg+xml" srcset="img/1200px-Telegram_logo.svg">
-                        <img src="img/Telegram_Messenger.png" alt="Телеграмм">
-                    </picture>
-
-                </a>
-
-
-                <a href="">
-
-                    <picture>
-                        <source type="img/svg+xml" srcset="img/instagram-2016.svg">
-                        <img src="img/Pikachu.png" alt="ПИкачу">
-                    </picture>
-
-                </a>
-            </div>
-            <div class="callback">
-                <p class="footer-head">Напишите мне</p>
-                <a target="_blank" class="footer-btn" href="#"> Заказать</a>
-            </div>
-        </div>
-    </footer> -->
-
-    <footer>
-            <div class="row text-center mb-2">
-               
-                <div class="col-md-12 mt-2" style="font-size:2.5rem">
-                       <a class="socLink" href="">
-                            <i class="fa fa-instagram fa-2x" aria-hidden="true"></i>
-                       </a>
-                       <a  class="socLink" href="">
-                            <i class="fa fa-vk fa-2x" aria-hidden="true"></i>
-                       </a>
-                       <a  class="socLink" href="">
-                            <i class="fa fa-facebook fa-2x" aria-hidden="true"></i>
-                       </a>
-                </div>
-            </div>
-                <div class="row text-center">
-                <div class=" slogan col-md-12">
-                        <p style="font-size:2.5rem" >Школа массажа "СФЕРА" © 2019</p>
-                </div>
-            </div>
-        </footer>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
-    <script src="./js/main.js"></script>
-
-
-</body>
-
-</html>
+  {% include "./layout/footer.njk" %}
+ 

@@ -7,6 +7,9 @@ const nunjucks = require('nunjucks')
 
 
 
+
+
+
 mongoose.connect(keys.mongoURL)
 .then(()=>{
     console.log('MongoDB connect')
@@ -14,6 +17,8 @@ mongoose.connect(keys.mongoURL)
 .catch(err=>{
     console.log(err)// Можно сделать страницу ошибки 
 })
+
+
 
 
 app.use(require('morgan')('dev'))

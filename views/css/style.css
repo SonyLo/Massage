@@ -223,3 +223,24 @@ img {
 
 
 
+.bodyNews{
+    
+    background: url('../img/news_pattern.jpg') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+
+
+
+.blockNews{
+    min-height: 20rem;
+   
+}
+.opacityNews{
+     background: url('../img/opacity.png') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+

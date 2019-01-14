@@ -34,6 +34,11 @@ app.get('/get', async(req,res)=>{
     res.status(200).json({ st:"Your order is accepted"})
 })
 
+app.get("/courses", (req, res)=>{
+    res.render('news.njk');
+})
+
+
 app.listen(port, ()=> console.log(`Server started ${port}`))
 
 

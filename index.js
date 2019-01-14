@@ -5,8 +5,12 @@ const News = require('./models/news')
 
 
 
-app.get("/", (req, res)=>{
-    res.render('index.njk');
+app.get("/", async(req, res)=>{
+    const count_news= await News.find({}).count()
+    const news = await News.find({}).skip(count_news-3)
+    news.reverse()
+    console.log(count_news)
+    res.render('index.njk',{news});
 })
 
 app.get("/news", (req, res)=>{
@@ -15,9 +19,9 @@ app.get("/news", (req, res)=>{
 // добавление новости
 app.get('/get', async(req,res)=>{
     const news = await new News({
-        linkPicture: 'uploads/file1.png',
-        title: 'Новость №2',
-        text: 'Текст новости №2'
+        linkPicture: 'img/uploads/file1.png',
+        title: 'Новость №4',
+        text: 'Текст новости №4'
     })
     try {
         news.save()

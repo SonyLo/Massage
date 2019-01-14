@@ -119,37 +119,25 @@
                 <div class="row pt-5 pb-5">
                         <div class="col-md-12">
                                 <div class="card-deck">
+                                {% for n in news %}
                                         <div class="card">
-                                          <img src="./img/33.jpg" class="card-img-top" alt="...">
+                                          <img src="{{n.linkPicture}}" class="card-img-top" alt="{{n.title}}">
                                           <div class="card-body">
-                                            <h4 class="card-title">Card title</h5>
-                                            <p style="font-size:15px" class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                            <p style="font-size:12px" class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                            <h4 class="card-title">{{n.title}}</h5>
+                                            <p style="font-size:15px" class="card-text">{{n.text}}</p>
+                                            <p style="font-size:12px" class="card-text"><small class="text-muted">{{n.date}}</small></p>
                                           </div>
                                         </div>
-                                        <div class="card">
-                                          <img src="./img/33.jpg" class="card-img-top" alt="...">
-                                          <div class="card-body">
-                                            <h4 class="card-title">Card title</h5>
-                                            <p style="font-size:15px" class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                                            <p style="font-size:12px" class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                          </div>
-                                        </div>
-                                        <div class="card">
-                                          <img src="./img/33.jpg" class="card-img-top" alt="...">
-                                          <div class="card-body">
-                                            <h4 class="card-title">Card title</h5>
-                                            <p style="font-size:15px" class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                                            <p style="font-size:12px" class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                          </div>
-                                        </div>
+                                        {% endfor %}
                                       </div>
                         </div>
                    
                 </div>
                 <div class="row text-center ">
                         <div class="col-md-12">
+                        <a href="/news">
                             <button type="button" style="height:50px; width:150px; font-size: 20px" class="btn btn-primary mb-4 ">Все новости</button>
+                        </a>
                         </div>
                     </div>
             </div>

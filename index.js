@@ -9,12 +9,13 @@ app.get("/", async(req, res)=>{
     const count_news= await News.find({}).count()
     const news = await News.find({}).skip(count_news-3)
     news.reverse()
-    console.log(count_news)
     res.render('index.njk',{news});
 })
 
-app.get("/news", (req, res)=>{
-    res.render('news.njk');
+app.get("/news", async(req, res)=>{
+    const news = await News.find({})
+    news.reverse()
+    res.render('news.njk',{news});
 })
 // добавление новости
 app.get('/get', async(req,res)=>{

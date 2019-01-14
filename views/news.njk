@@ -14,20 +14,19 @@
         <div class="container mt-3 opacityNews" >
           <h1 class="text-center font-weight-bold pt-5 mb-5">Новости</h1>
         <div class="row justify-content-center  " >
-           
+           {% for n in news %}
             <div class="col-md-11 mb-5 " style="font-size: 1.8rem">   
                 <div class="card card-body blockNews">
                     <div class="row">
                         <div class="col-md-3">
-                            <img class=" img-fluid" src="https://images.aif.ru/004/711/6fff8bfbde211128602c747242a12e0b.jpg" alt="фото мероприятия">
+                            <img class=" img-fluid" src="{{n.linkPicture}}" alt="фото мероприятия">
                         </div>
                         <div class="col-md-9">
-                            <h3 class="font-weight-bold" style="font-size: 2rem">Название мероприятия или события</h3>
-                            <small style="color:gray"><i class="fa fa-calendar" aria-hidden="true"></i> Дата</small>
+                            <h3 class="font-weight-bold" style="font-size: 2rem">{{n.title}}</h3>
+                            <small style="color:gray"><i class="fa fa-calendar" aria-hidden="true"></i>{{n.date}}</small>
                             <hr  class="font-weight-bold">
                             <hr class="font-weight-bold">
-                            <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur, fugit.
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa unde nihil est nemo quae ab sunt, magni alias facilis consectetur.
+                            <p class="text-justify textrowcount">{{n.text}}
                             </p>
                             <p class="text-right mr-3">
                                 <a  href="#">Подробней</a>    
@@ -37,50 +36,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-11 mb-5 " style="font-size: 1.8rem">   
-                <div class="card card-body blockNews">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <img class=" img-fluid" src="https://images.aif.ru/004/711/6fff8bfbde211128602c747242a12e0b.jpg" alt="фото мероприятия">
-                        </div>
-                        <div class="col-md-9">
-                            <h3 class="font-weight-bold" style="font-size: 2rem">Название мероприятия или события</h3>
-                            <small style="color:gray"><i class="fa fa-calendar" aria-hidden="true"></i> Дата</small>
-                            <hr  class="font-weight-bold">
-                            <hr class="font-weight-bold">
-                            <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur, fugit.
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa unde nihil est nemo quae ab sunt, magni alias facilis consectetur.
-                            </p>
-                            <p class="text-right mr-3">
-                                <a  href="#">Подробней</a>    
-                            </p>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-11 mb-5 " style="font-size: 1.8rem">   
-                <div class="card card-body blockNews">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <img class=" img-fluid" src="https://images.aif.ru/004/711/6fff8bfbde211128602c747242a12e0b.jpg" alt="фото мероприятия">
-                        </div>
-                        <div class="col-md-9">
-                            <h3 class="font-weight-bold" style="font-size: 2rem">Название мероприятия или события</h3>
-                            <small style="color:gray"><i class="fa fa-calendar" aria-hidden="true"></i> Дата</small>
-                            <hr  class="font-weight-bold">
-                            <hr class="font-weight-bold">
-                            <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur, fugit.
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa unde nihil est nemo quae ab sunt, magni alias facilis consectetur.
-                            </p>
-                            <p class="text-right mr-3">
-                                <a  href="#">Подробней</a>    
-                            </p>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
+            
      
             
 

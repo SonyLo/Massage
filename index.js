@@ -12,6 +12,11 @@ app.get("/news", (req, res)=>{
     res.render('news.njk');
 })
 
+app.get("/courses", (req, res)=>{
+    res.render('news.njk');
+})
+
+
 app.listen(port, ()=> console.log(`Server started ${port}`))
 
 

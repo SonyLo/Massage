@@ -18,6 +18,14 @@ section#main{
     text-align: center;
     
 }
+section#aboutTecher{
+   
+    min-height: 70vh;
+   
+   
+    
+}
+
 
 
 section#news, section#teacher {
@@ -266,3 +274,4 @@ img {
     color:#fff; 
     font-size: 1.7rem;
 }
+

@@ -38,7 +38,7 @@ app.get('/addNews', async(req,res)=>{
     })
     try {
         news.save()
-        console.log('Новость добавлен')
+        console.log('Новость добавлена')
     }
     catch (e) {
         console.log(e)
@@ -71,7 +71,10 @@ app.get("/coursesOld", (req, res)=>{
     // Тут сделать выборку курсов для продолжающих
     res.render('courses.njk');
 })
-
+app.get("/teachers", (req, res)=>{
+    // Преподы
+    res.render('teacher.njk');
+})
 app.listen(port, ()=> console.log(`Server started ${port}`))
 
 

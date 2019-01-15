@@ -238,7 +238,11 @@ img {
     background-attachment: fixed;
 }
 
-
+.bodyCourses{
+    background: url('../img/uploads/file1.png') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+}
 
 
 .blockNews{

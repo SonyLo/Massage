@@ -12,3 +12,12 @@ $('.carousel').carousel({
       x.className = "topnav";
     }
   }
+
+  $(document).ready(function (){
+    elemRef = document.getElementsByClassName("nav-link dropdown-toggle")[0]
+$("#"+elemRef).hover(
+  document.getElementsByClassName("nav-link dropdown-toggle")[0].addClass()
+)
+  })
+
+ 

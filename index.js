@@ -34,6 +34,7 @@ app.get('/get', async(req,res)=>{
     res.status(200).json({ st:"Your order is accepted"})
 })
 
+
 app.get("/coursesNew", (req, res)=>{
     // Тут сделать выборку курсов для начинающих
     res.render('courses.njk');

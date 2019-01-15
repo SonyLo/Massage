@@ -179,33 +179,17 @@
             <h2 class="pt-5 portfolio-header"> Наши преподаватели</h2>
 
             <div class="row mt-5">
+                {% for t in teachers %}
                 <div class="col-md-4">
                     <div class="card card-body">
-                        <img src="./img/img_avatar.png" alt="Avatar" style="width:100%">
+                        <img src="{{t.linkPicture}}" alt="Avatar" style="width:100%">
                         <div class="containerrr">
-                            <h4><b>John Doe</b></h4>
-                            <p>Architect  Engineer</p>
+                            <h4><b>{{t.name}}</b></h4>
+                            <p>{{t.description}}</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 d-none d-md-block">
-                    <div class="card card-body">
-                        <img src="./img/Pikachu.png" alt="Avatar" style="width:100%">
-                        <div class="containerrr">
-                            <h4><b>John Doe</b></h4>
-                            <p>Architect  Engineer</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 d-none d-md-block">
-                    <div class="card card-body">
-                        <img src="./img/img_avatar.png" alt="Avatar" style="width:100%">
-                        <div class="containerrr">
-                            <h4><b>John Doe</b></h4>
-                            <p>Architect  Engineer</p>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
 
            

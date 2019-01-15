@@ -24,7 +24,11 @@ const  coursesSchema = new Schema({
     },
     duration:{
         type: String
+    },
+    forNewbies:{
+        type:Boolean
     }
+
     
    
 })

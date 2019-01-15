@@ -2,6 +2,7 @@ const app = require('./app')
 const port = process.env.port || 3000
 const News = require('./models/news')
 const Teachers=require('./models/teachers')
+const Courses=require('./models/courses')
 
 
 
@@ -61,7 +62,30 @@ app.get('/addTeachers', async(req,res)=>{
     }
     res.status(200).json({ st:"Your order is accepted"})
 })
-
+// добавление курсов для новичков
+app.get('/addCoursesNew', async(req,res)=>{
+    const courses = await new Courses({
+        linkPicture: 'img/uploads/courseNew1.png',
+        title: 'Курс новичков №5',
+        text: 'На данном курсе вы научитесь основам массажа, а также...',
+        idTeacher: await Teachers.findOne({'name':'Скрипник Маргарита Викторовна'}),
+        date:new Date(Date.UTC(2019,1,27,0,0,0)),
+        price: '6000р',
+        duration: '8 месяц',
+        forNewbies: 'true'
+    })
+    // нумерация месяца начинается с 0
+    // года и числа адекватно
+    // 27-01-2019 = 27-02-2019 (в бд)
+    try {
+        courses.save()
+        console.log('Курс для новичков добавлен')
+    }
+    catch (e) {
+        console.log(e)
+    }
+    res.status(200).json({ st:"Your order is accepted"})
+})
 
 app.get("/coursesNew", (req, res)=>{
     // Тут сделать выборку курсов для начинающих

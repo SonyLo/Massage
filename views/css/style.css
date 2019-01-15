@@ -253,3 +253,12 @@ img {
 }
 
 
+.dropdown-item:hover{
+    background-color: #333; 
+    color:#fff; 
+}
+
+.dropdown-item{
+    color:#fff; 
+    font-size: 1.7rem;
+}

@@ -1,6 +1,7 @@
 const app = require('./app')
 const port = process.env.port || 3000
 const moment = require('moment')
+const bodyParser = require("body-parser");
 const News = require('./models/news')
 const Teachers=require('./models/teachers')
 const Courses=require('./models/courses')
@@ -40,7 +41,7 @@ app.get("/", async(req, res)=>{
     }
     // вывод преподавателей
     const teachers = await Teachers.find({})
-    res.render('index.njk',{news,teachers,date});
+    res.render('index.njk',{news,teachers,date})
 })
 
 app.get("/news", async(req, res)=>{
@@ -51,7 +52,13 @@ app.get("/news", async(req, res)=>{
     {
         date.push(moment(news[i].date).format('DD-MM-YYYY'))
     }
-    res.render('news.njk',{news,date});
+    res.render('news.njk',{news,date})
+})
+// подробно новости
+app.get("/news/detail",async(req,res)=>{
+    const id=req.query.id
+    const news = await News.findOne({_id:id})
+    res.status(200).json({ st:"Your order is accepted"})
 })
 // добавление новости
 app.get('/addNews', async(req,res)=>{

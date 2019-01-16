@@ -119,13 +119,13 @@
                 <div class="row pt-5 pb-5">
                         <div class="col-md-12">
                                 <div class="card-deck">
-                                {% for n in news %}
+                                {% for i in range(0,news.length)  %}
                                         <div class="card">
-                                          <img src="{{n.linkPicture}}" class="card-img-top" alt="{{n.title}}">
+                                          <img src="{{news[i].linkPicture}}" class="card-img-top" alt="{{n.title}}">
                                           <div class="card-body">
-                                            <h4 class="card-title">{{n.title}}</h5>
-                                            <p style="font-size:15px" class="card-text textrowcount">{{n.text}}</p>
-                                            <p style="font-size:12px" class="card-text"><small class="text-muted">{{n.date}}</small></p>
+                                            <h4 class="card-title">{{news[i].title}}</h5>
+                                            <p style="font-size:15px" class="card-text textrowcount">{{news[i].text}}</p>
+                                            <p style="font-size:12px" class="card-text"><small class="text-muted">{{date[i]}}</small></p>
                                           </div>
                                         </div>
                                         {% endfor %}

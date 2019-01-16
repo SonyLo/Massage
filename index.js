@@ -1,16 +1,30 @@
 const app = require('./app')
 const port = process.env.port || 3000
+const moment = require('moment')
 const News = require('./models/news')
 const Teachers=require('./models/teachers')
 const Courses=require('./models/courses')
 
 
 
+function formatDate(date) {
 
+    var dd = date.getDate();
+    if (dd < 10) dd = '0' + dd;
+  
+    var mm = date.getMonth() + 1;
+    if (mm < 10) mm = '0' + mm;
+  
+    var yy = date.getFullYear();
+    if (yy < 10) yy = '0' + yy;
+  
+    return dd + '.' + mm + '.' + yy;
+  }
 app.get("/", async(req, res)=>{
     // вывод новостей
     const count_news= await News.find({}).count()
     let news={}
+    var date=[]
     if(count_news<=3)
     {
         news = await News.find({})
@@ -20,15 +34,24 @@ app.get("/", async(req, res)=>{
         news = await News.find({}).skip(count_news-3)
     }
     news.reverse()
+    for (var i=0;i<news.length;i++)
+    {
+        date.push(moment(news[i].date).format('DD-MM-YYYY'))
+    }
     // вывод преподавателей
     const teachers = await Teachers.find({})
-    res.render('index.njk',{news,teachers});
+    res.render('index.njk',{news,teachers,date});
 })
 
 app.get("/news", async(req, res)=>{
     const news = await News.find({})
     news.reverse()
-    res.render('news.njk',{news});
+    var date=[]
+    for (var i=0;i<news.length;i++)
+    {
+        date.push(moment(news[i].date).format('DD-MM-YYYY'))
+    }
+    res.render('news.njk',{news,date});
 })
 // добавление новости
 app.get('/addNews', async(req,res)=>{

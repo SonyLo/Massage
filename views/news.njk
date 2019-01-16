@@ -14,19 +14,19 @@
         <div class="container mb-3 mt-5 opacityNews " style="border-radius: 10px;" >
           <h1 class="text-center font-weight-bold pt-5 mb-5">Новости</h1>
         <div class="row justify-content-center  " >
-           {% for n in news %}
+           {% for i in range(0,news.length)  %}
             <div class="col-md-11 mb-5 " style="font-size: 1.8rem">   
                 <div class="card card-body blockNews">
                     <div class="row">
                         <div class="col-md-3">
-                            <img class=" img-fluid" src="{{n.linkPicture}}" alt="фото мероприятия">
+                            <img class=" img-fluid" src="{{news[i].linkPicture}}" alt="фото мероприятия">
                         </div>
                         <div class="col-md-9">
-                            <h3 class="font-weight-bold" style="font-size: 2rem">{{n.title}}</h3>
-                            <small style="color:gray"><i class="fa fa-calendar" aria-hidden="true"></i>{{n.date}}</small>
+                            <h3 class="font-weight-bold" style="font-size: 2rem">{{news[i].title}}</h3>
+                            <small style="color:gray"><i class="fa fa-calendar" aria-hidden="true"></i>{{date[i]}}</small>
                             <hr  class="font-weight-bold">
                             <hr class="font-weight-bold">
-                            <p class="text-justify textrowcount">{{n.text}}
+                            <p class="text-justify textrowcount">{{news[i].text}}
                             </p>
                             <p class="text-right mr-3">
                                 <a  href="#">Подробней</a>    

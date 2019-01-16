@@ -129,6 +129,11 @@ app.get("/teachers", (req, res)=>{
     // Преподы
     res.render('teacher.njk');
 })
+// контакты
+app.get("/contact", async(req, res)=>{
+    res.render('contact.njk');    
+})
+
 app.listen(port, ()=> console.log(`Server started ${port}`))
 
 

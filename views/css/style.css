@@ -23,6 +23,11 @@ section#aboutTeacher{
     min-height: 70vh;
   
 }
+section#contact{
+   
+    min-height: 70vh;
+  
+}
 
 .borderTeacher{
     border: 1px solid
@@ -275,3 +280,13 @@ img {
     font-size: 1.7rem;
 }
 
+.icContact{
+    font-size:5rem;
+}
+.pBContact{
+    font-size:2rem;
+}
+
+.pContact{
+    font-size:1.7rem;
+}

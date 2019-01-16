@@ -18,15 +18,15 @@ section#main{
     text-align: center;
     
 }
-section#aboutTecher{
+section#aboutTeacher{
    
     min-height: 70vh;
-   
-   
-    
+  
 }
 
-
+.borderTeacher{
+    border: 1px solid
+}
 
 section#news, section#teacher {
   

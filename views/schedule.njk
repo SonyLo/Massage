@@ -1,0 +1,23 @@
+
+{% include "./layout/header.njk" %}
+<body >
+{% include "./layout/nav.njk" %}
+
+{% include "./layout/script.njk" %}
+
+<section id="raspis">
+    <div class="container">
+        <div class="col-md-12">
+            <h1>
+                В разработке
+            </h1>
+        </div>
+    </div>
+</section>
+
+<script>
+            $(".active").removeClass('active')
+             document.getElementById('liRapis').setAttribute("class", "active")
+    </script>
+</body>
+  {% include "./layout/footer.njk" %}

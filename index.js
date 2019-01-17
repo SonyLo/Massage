@@ -41,6 +41,7 @@ app.get("/", async(req, res)=>{
     }
     // вывод преподавателей
     const teachers = await Teachers.find({})
+
     res.render('index.njk',{news,teachers,date})
 })
 
@@ -130,8 +131,13 @@ app.get("/teachers", (req, res)=>{
     res.render('teacher.njk');
 })
 // контакты
+
 app.get("/contact", async(req, res)=>{
     res.render('contact.njk');    
+})
+app.get("/schedule", async(req, res)=>{
+    // расписание
+    res.render('schedule.njk');    
 })
 
 app.listen(port, ()=> console.log(`Server started ${port}`))

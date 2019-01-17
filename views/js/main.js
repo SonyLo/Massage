@@ -22,7 +22,12 @@ $(document).ready(function(){
       document.getElementById("navbarDropdown1").setAttribute("aria-expanded", "false")
 
     }else{
-      document.getElementById("liDropdown").setAttribute("class","nav-item dropdown show")
+      if($("#liDropdown").hasClass("active")){
+        document.getElementById("liDropdown").setAttribute("class","nav-item dropdown show active")
+      }
+      else{
+        document.getElementById("liDropdown").setAttribute("class","nav-item dropdown show")
+      }
       document.getElementById("navbarDropdown1").setAttribute("aria-expanded", "true")
       document.getElementById("divDropdown-menu").setAttribute("class","dropdown-menu show")
     } 
@@ -31,3 +36,8 @@ $(document).ready(function(){
 )
 })
   
+//function activElem(elemRef){
+  //$(".active").removeClass('active')
+  //document.getElementById(elemRef).setAttribute("class", "active")
+
+//}

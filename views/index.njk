@@ -116,7 +116,7 @@
     <section id="news">
             <div class="container">
                 <h2 class="portfolio-header pt-5"> Новости </h2>
-                <div class="row pt-5 pb-5">
+                <div class="row pt-5 pb-5 justify-content-center" >
                         <div class="col-md-12">
                                 <div class="card-deck">
                                 {% for i in range(0,news.length)  %}
@@ -157,7 +157,10 @@
 
         
                             <div class="col-md-12">
-                                <button type="button" style="height:50px; width:150px; font-size: 20px" class="btn btn-outline-primary mb-3 mt-3">Подробнее</button>
+                                 <a href="/coursesNew">
+                                    <button type="button" style="height:50px; width:150px; font-size: 20px" class="btn btn-outline-primary mb-3 mt-3">Подробнее</button>
+
+                                 </a> 
                             </div>
                         </div>
                         <div class="col-md-6 text-center" style="font-size:30px">
@@ -166,7 +169,10 @@
                             <p>Курсы для повышения квалификации</p>
                             <p class="text-justify" style="font-size:20px">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deleniti doloremque ipsum facere, suscipit debitis ipsa harum. Fugiat quod qui omnis cum repellendus similique adipisci, quibusdam laudantium maiores et, veniam pariatur?   </p>
                             <div class="col-md-12">
-                                <button type="button" style="height:50px; width:150px; font-size: 20px" class="btn btn-outline-primary mb-3 mt-3">Подробнее</button>
+                                <a href="/coursesOld">
+                                    <button type="button" style="height:50px; width:150px; font-size: 20px" class="btn btn-outline-primary mb-3 mt-3">Подробнее</button>
+
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -178,9 +184,9 @@
         <div class="container ">
             <h2 class="pt-5 portfolio-header"> Наши преподаватели</h2>
 
-            <div class="row mt-5">
+            <div class="row mt-4 justify-content-center">
                 {% for t in teachers %}
-                <div class="col-md-4">
+                <div class="col-md-4 mt-4">
                     <div class="card card-body">
                         <img src="{{t.linkPicture}}" alt="Avatar" style="width:100%">
                         <div class="containerrr">
@@ -195,7 +201,10 @@
            
             <div class="row text-center mt-5">
                 <div class="col-md-12">
-                    <button type="button" style="height:50px; width:150px; font-size: 20px" class="btn btn-primary mb-5 mt-3">Подробнее</button>
+                    <a href="/teachers">
+                        <button type="button" style="height:50px; width:150px; font-size: 20px" class="btn btn-primary mb-5 mt-3">Подробнее</button>
+                    </a>
+                   
                 </div>
             </div>
         </div>
@@ -210,10 +219,10 @@
                     <div class="card mb-4">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-3 ">
+                                    <div class=" col-md-4  ">
                                         <img src="./img/img_avatar.png" alt="" class="commentImg">
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class=" col-md-8">
                                         <p style="font-size:2.5rem" class="font-weight-bold"> Lorem, ipsum.</p>
                                        
                                         <p style="font-size:2rem">Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui harum aspernatur neque non enim perferendis minima eum praesentium accusantium accusamus!</p>
@@ -226,7 +235,9 @@
         </div>
     </div>
 </section>
+
 {% include "./layout/script.njk" %}
+
 </body>
   {% include "./layout/footer.njk" %}
  

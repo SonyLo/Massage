@@ -109,6 +109,9 @@
 
 
 {% include "./layout/script.njk" %}
-
+<script>
+ $(".active").removeClass('active')
+  document.getElementById('liDropdown').setAttribute("class", "active")
+</script>
 </body>
 {% include "./layout/footer.njk" %}

@@ -18,6 +18,13 @@ section#main{
     text-align: center;
     
 }
+
+
+section#raspis{
+   
+    min-height: 70vh;
+  
+}
 section#aboutTeacher{
    
     min-height: 70vh;

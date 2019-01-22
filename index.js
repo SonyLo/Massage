@@ -140,6 +140,11 @@ app.get("/schedule", async(req, res)=>{
     res.render('schedule.njk');    
 })
 
+app.get("/a", async(req, res)=>{
+    // расписание
+    res.render('admin.njk');    
+})
+
 app.listen(port, ()=> console.log(`Server started ${port}`))
 
 

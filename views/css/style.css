@@ -18,7 +18,12 @@ section#main{
     text-align: center;
     
 }
-
+section#adm{
+   
+    min-height: 70vh;
+    font-size: 1.7rem;
+  
+}
 
 section#raspis{
    

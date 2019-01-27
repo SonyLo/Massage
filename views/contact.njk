@@ -1,0 +1,91 @@
+{% include "./layout/header.njk" %}
+
+<body>
+    {% include "./layout/nav.njk" %}
+
+    <section id="contact">
+        <div class="container mt-5">
+
+            <div class="row text-center">
+                <div class="col-md-3">
+                    <p class="icContact">
+                        <i class="fa fa-phone" aria-hidden="true"></i>
+                    </p>
+
+                    <p class="font-weight-bold pBContact">Завоните нам</p>
+                    <p class="pContact">89347873289743897</p>
+
+                </div>
+                <div class="col-md-3">
+                    <p class="icContact">
+                        <i class="fa fa-clock-o" aria-hidden="true"></i>
+                    </p>
+
+                    <p class="font-weight-bold pBContact">Часы работы</p>
+                    <p class="pContact">с 8:00 до 17:00</p>
+
+                </div>
+                <div class="col-md-3">
+                    <p class="icContact">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    </p>
+
+                    <p class="font-weight-bold pBContact">Мы находимся</p>
+                    <p class="pContact">АДРЕС</p>
+
+                </div>
+                <div class="col-md-3">
+                    <p class="icContact">
+                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                    </p>
+
+                    <p class="font-weight-bold pBContact">Напишите нам</p>
+                    <p class="pContact">e-mail</p>
+
+                </div>
+            </div>
+
+
+            <div class="row mt-5">
+
+                <div class="col-md-5  shadow-sm p-3 mb-5 bg-white rounded">
+                    <h1 class="text-center">НАПИШИТЕ НАМ</h1>
+                    <hr>
+                    <hr>
+                    <form style="font-size:1.7rem">
+                        <div class="form-group">
+                            <label for="">Ваше имя</label>
+                            <input type="text" class="form-control" id="" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Ваш e-mail</label>
+                            <input type="email" class="form-control" id="" aria-describedby="" placeholder="">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Сообщение</label>
+                            <textarea class="form-control" id="" rows="3"></textarea>
+                        </div>
+                        <div class="form-group text-center">
+                            <button style="font-size:1.7rem" type="submit" class="btn btn-outline-primary">ОТПРАВИТЬ</button>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="col-md-7 shadow-sm p-3 mb-5 bg-white rounded">
+                    <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A0b67190d9abcbfa6374ca27f400a720622fb933961d74c9793ac96f6d5f00b0a&amp;width=100%&amp;height=400&amp;lang=ru_UA&amp;scroll=true"></script>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+
+    {% include "./layout/script.njk" %}
+    <script>
+            $(".active").removeClass('active')
+             document.getElementById('liContact').setAttribute("class", "active")
+    </script>
+</body>
+{% include "./layout/footer.njk" %}

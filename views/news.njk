@@ -1,0 +1,77 @@
+
+{% include "./layout/header.njk" %}
+<body class="bodyNews">
+{% include "./layout/nav.njk" %}
+
+
+
+
+
+        <!--КОНТЕНТ-->
+    
+         
+    
+        <div class="container mb-3 mt-5 opacityNews " style="border-radius: 10px;" >
+          <h1 class="text-center font-weight-bold pt-5 mb-5">Новости</h1>
+        <div class="row justify-content-center  " >
+           {% for i in range(0,news.length)  %}
+            <div class="col-md-11 mb-5 " style="font-size: 1.8rem">   
+                <div class="card card-body blockNews">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <img class=" img-fluid" src="{{news[i].linkPicture}}" alt="фото мероприятия">
+                        </div>
+                        <div class="col-md-9">
+                        <form action="/news/detail/" method="get">
+                            <input type="hidden" value="{{news[i]._id}}" name="id"/>
+                            <h3 class="font-weight-bold" style="font-size: 2rem">{{news[i].title}}</h3>
+                            <small style="color:gray"><i class="fa fa-calendar" aria-hidden="true"></i>{{date[i]}}</small>
+                            <hr  class="font-weight-bold">
+                            <hr class="font-weight-bold">
+                            <p class="text-justify textrowcount">{{news[i].text}}
+                            </p>
+                            <p class="text-right mr-3">
+                                <input style="font-size:1.7rem" class="btn btn-outline-info" type="submit" value="Подробно" />
+                            </p>
+                            
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+     
+            
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  </ul>
+</nav>
+
+        
+
+        
+
+    </div>
+     </div>
+
+  
+  
+   <!--контент-->
+   
+
+
+
+{% include "./layout/script.njk" %}
+<script>
+ $(".active").removeClass('active')
+  document.getElementById('LiNews').setAttribute("class", "active")
+</script>
+</body>
+{% include "./layout/footer.njk" %}

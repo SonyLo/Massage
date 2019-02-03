@@ -1,0 +1,40 @@
+{% include "./layout/header.njk" %}
+
+<body>
+    {% include "./layout/nav.njk" %}
+
+    {% include "./layout/script.njk" %}
+
+    <section id="detail" class="pt-3 pb-3">
+        <div class="container ">
+                
+            <div class="row card card-body ">
+                   
+                <div class="col-md-12">
+                    <img class=" img-fluid" src="/{{news.linkPicture}}" alt="фото новости">
+
+                </div>
+                <div class="col-md-12">
+                    <h1  class="text-center slogan">{{news.title}}</h1>
+                    <p style="color:gray"><i class="fa fa-calendar" aria-hidden="true"></i> {{date}} </p>
+                    <hr>
+                    
+                    <p style="font-size: 17px">
+                        {{news.text}}
+                    </p>
+                </div>
+                <a class="btn btn-outline-info" style="font-size:17px" href="/news/story/1">Назад</a>
+            </div>
+
+
+
+            
+        </div>
+    </section>
+
+    <script>
+        $(".active").removeClass('active')
+        document.getElementById('LiNews').setAttribute("class", "active")
+    </script>
+</body>
+{% include "./layout/footer.njk" %}

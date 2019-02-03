@@ -54,7 +54,12 @@ section#news, section#teacher {
     text-align: center;
 }
 
-
+section#detail{
+    background: url('../img/news_detail.jpg') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
 
 
 .main-header{
@@ -261,6 +266,7 @@ img {
     background: url('../img/news_pattern.jpg') no-repeat center center;
     background-size: cover;
     background-attachment: fixed;
+    
 }
 
 .bodyCourses{
@@ -302,3 +308,4 @@ img {
 .pContact{
     font-size:1.7rem;
 }
+

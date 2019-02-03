@@ -56,7 +56,7 @@ app.get("/", async(req, res)=>{
 //    res.render('news.njk',{news,date})
 // })
 
-app.get('/news/:page', async (req, res) => {
+app.get('/news/story/:page', async (req, res) => {
     const perPage = 6
     let page = req.params.page || 1
     let news = await News.find({}).skip((perPage * page) - perPage).limit(perPage)
@@ -67,22 +67,19 @@ app.get('/news/:page', async (req, res) => {
        {
            date.push(moment(news[i].date).format('DD-MM-YYYY'))
        }
-       console.log(page)
-       console.log(Math.ceil(count   / perPage))
-       console.log(count)
+       
        res.render('news.njk',{news,date, current:page, pages: Math.ceil(count / perPage) })
 
-
-   
 })
-
+ 
 
 
 // подробно новости
 app.get("/news/detail",async(req,res)=>{
     const id=req.query.id
     const news = await News.findOne({_id:id})
-    res.status(200).json({ st:"Your order is accepted"})
+    const date = moment(news.date).format('DD-MM-YYYY')
+    res.render('news_detail.njk',{news,date })
 })
 // добавление новости
 app.get('/addNews', async(req,res)=>{

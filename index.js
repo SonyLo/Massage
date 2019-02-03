@@ -45,16 +45,39 @@ app.get("/", async(req, res)=>{
     res.render('index.njk',{news,teachers,date})
 })
 
-app.get("/news", async(req, res)=>{
-    const news = await News.find({})
-    news.reverse()
+// app.get("/news", async(req, res)=>{
+//    const news = await News.find({})
+//    news.reverse()
+//    var date=[]
+//     for (var i=0;i<news.length;i++)
+//    {
+//        date.push(moment(news[i].date).format('DD-MM-YYYY'))
+//    }
+//    res.render('news.njk',{news,date})
+// })
+
+app.get('/news/:page', async (req, res) => {
+    const perPage = 6
+    let page = req.params.page || 1
+    let news = await News.find({}).skip((perPage * page) - perPage).limit(perPage)
+    // news.reverse()
+    let count = await News.count()
     var date=[]
     for (var i=0;i<news.length;i++)
-    {
-        date.push(moment(news[i].date).format('DD-MM-YYYY'))
-    }
-    res.render('news.njk',{news,date})
+       {
+           date.push(moment(news[i].date).format('DD-MM-YYYY'))
+       }
+       console.log(page)
+       console.log(Math.ceil(count   / perPage))
+       console.log(count)
+       res.render('news.njk',{news,date, current:page, pages: Math.ceil(count / perPage) })
+
+
+   
 })
+
+
+
 // подробно новости
 app.get("/news/detail",async(req,res)=>{
     const id=req.query.id

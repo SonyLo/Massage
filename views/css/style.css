@@ -44,7 +44,12 @@ section#contact{
 .borderTeacher{
     border: 1px solid
 }
-
+section#aboutTeacher{
+    /* background: url('../img/news_detail.jpg') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed; */
+    min-height: 70vh;
+}
 section#news, section#teacher {
   
     background: url('../img/5.jpg') no-repeat center center;

@@ -59,7 +59,7 @@ app.get("/", async(req, res)=>{
 app.get('/news/story/:page', async (req, res) => {
     const perPage = 6
     let page = req.params.page || 1
-    let news = await News.find({}).skip((perPage * page) - perPage).limit(perPage)
+    let news = await News.find({}).sort('-date').skip((perPage * page) - perPage).limit(perPage)
     // news.reverse()
     let count = await News.count()
     var date=[]

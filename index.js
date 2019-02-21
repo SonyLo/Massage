@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const News = require('./models/news')
 const Teachers=require('./models/teachers')
 const Courses=require('./models/courses')
+const Contacts=require('./models/contacts')
 
 
 
@@ -113,6 +114,21 @@ app.get('/addTeachers', async(req,res)=>{
     }
     res.status(200).json({ st:"Your order is accepted"})
 })
+// добавление контактов
+app.get('/addContacts', async(req,res)=>{
+    const contacts = await new Contacts({
+        title: 'Напишите нам',
+        description: 'Sfera_Email@gmail.com'
+    })
+    try {
+        contacts.save()
+        console.log('Контакт добавлен')
+    }
+    catch (e) {
+        console.log(e)
+    }
+    res.status(200).json({ st:"Your order is accepted"})
+})
 // добавление курсов для новичков
 app.get('/addCoursesNew', async(req,res)=>{
     const courses = await new Courses({
@@ -146,14 +162,39 @@ app.get("/coursesOld", (req, res)=>{
     // Тут сделать выборку курсов для продолжающих
     res.render('courses.njk');
 })
-app.get("/teachers", (req, res)=>{
-    // Преподы
-    res.render('teacher.njk');
+app.get("/teachers", async(req, res)=>{
+    teachers = await Teachers.find({})
+    console.log(teachers)
+    res.render('teacher.njk',{teachers});
 })
 // контакты
 
 app.get("/contact", async(req, res)=>{
-    res.render('contact.njk');    
+    contacts=await Contacts.find({})
+    let call=[]
+    let workTime=[]
+    let address=[]
+    let send=[]
+    for(var i=0;i<contacts.length;i++)
+    {
+        if(contacts[i].title=='Звоните нам')
+        {
+            call.push(contacts[i].description)
+        }
+        if(contacts[i].title=="Часы работы")
+        {
+            workTime.push(contacts[i].description)
+        }
+        if(contacts[i].title=="Мы находимся")
+        {
+            address.push(contacts[i].description)
+        }
+        if(contacts[i].title=="Напишите нам")
+        {
+            send.push(contacts[i].description)
+        }
+    }
+    res.render('contact.njk',{call,workTime,address,send});    
 })
 app.get("/schedule", async(req, res)=>{
     // расписание

@@ -12,8 +12,10 @@
                         <i class="fa fa-phone" aria-hidden="true"></i>
                     </p>
 
-                    <p class="font-weight-bold pBContact">Завоните нам</p>
-                    <p class="pContact">89347873289743897</p>
+                    <p class="font-weight-bold pBContact">Звоните нам</p>
+                    {% for call_i in call %}
+                    <p class="pContact">{{call_i}}</p>
+                    {% endfor %}
 
                 </div>
                 <div class="col-md-3">
@@ -22,7 +24,9 @@
                     </p>
 
                     <p class="font-weight-bold pBContact">Часы работы</p>
-                    <p class="pContact">с 8:00 до 17:00</p>
+                    {% for time_i in workTime %}
+                    <p class="pContact">{{time_i}}</p>
+                    {% endfor %}
 
                 </div>
                 <div class="col-md-3">
@@ -31,7 +35,9 @@
                     </p>
 
                     <p class="font-weight-bold pBContact">Мы находимся</p>
-                    <p class="pContact">АДРЕС</p>
+                    {% for address_i in address %}
+                    <p class="pContact">{{address_i}}</p>
+                    {% endfor %}
 
                 </div>
                 <div class="col-md-3">
@@ -40,7 +46,9 @@
                     </p>
 
                     <p class="font-weight-bold pBContact">Напишите нам</p>
-                    <p class="pContact">e-mail</p>
+                    {% for send_i in send %}
+                    <p class="pContact">{{send_i}}</p>
+                    {% endfor %}
 
                 </div>
             </div>

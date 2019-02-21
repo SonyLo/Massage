@@ -7,34 +7,23 @@
 
         <h2 class="portfolio-header mt-4"> НАШИ ПРЕПОДАВАТЕЛИ</h2>
         <div class="container mt-5">
-             
+            {% for i in teachers  %} 
             <div class="row shadow-lg p-3 mb-5 bg-white rounded">
                
                 <div class="col-md-4 mt-3">
-                    <img src="./img/uploads/teacher1.png" alt="">
+                    <img src="{{i.linkPicture}}" alt="">
                 </div>
                 <div class="col-md-8 mt-3">
                         <p style="font-size:2rem"> 
-                                ФИО
+                                {{i.name}}
                             </p> 
                     <p style="font-size:1.7rem">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint deleniti aut non tenetur illum
-                        quasi alias earum expedita minus nulla? Praesentium explicabo totam molestias quisquam
-                        doloremque obcaecati illum et veritatis.
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut quam recusandae hic ipsa, culpa
-                        similique veritatis iste illo quasi quos explicabo expedita molestias praesentium alias ea
-                        laborum, mollitia minima quod!
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium consectetur quam
-                        perferendis praesentium tempore magnam commodi. Rem accusamus ducimus aliquam eum, deleniti
-                        ratione itaque ea cum deserunt. Quisquam, atque commodi.
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere, doloremque eum eius sunt,
-                        dolorem provident nihil neque rem soluta fuga possimus ratione illo minima mollitia commodi
-                        quia temporibus nesciunt voluptate.
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Est dolores a aliquid beatae inventore ipsum, doloremque ab deleniti quo! Provident ipsam alias tenetur iste doloribus aspernatur fuga, dolores laborum deserunt!
+                        {{i.description}}
                     </p>
                 </div>
 
             </div>
+            {% endfor %}
 
 
         </div>

@@ -74,18 +74,16 @@
             <hr class="d-xl-block d-block d-md-none ">
             <h2 class="portfolio-header "> О нас</h2>
             <div class="row mt-5">
-
+                {% for a in about %}
                 <div class="col-md-6 text-center" style="font-size:30px">
 
-                    <i style="color:#0375B3" class="fa fa-thumbs-o-up fa-5x " aria-hidden="true"></i>
-                    <p style="font-size:20px">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laudantium inventore veritatis facilis enim omnis tenetur quis porro odio dolor nesciunt.</p>
+                    <i style="color:#0375B3" class="{{a.linkIcon}}" aria-hidden="true"></i>
+                    <p style="font-size:20px">{{a.description}}</p>
 
 
                 </div>
-                <div class="col-md-6 text-center" style="font-size:30px">
-                    <i style="color:#0375B3" class="fa fa-graduation-cap fa-5x " aria-hidden="true"></i>
-                    <p style="font-size:20px">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic culpa tempora laborum assumenda praesentium autem atque, quidem accusamus inventore provident!</p>
-                </div>
+                {% endfor %}
+                
             </div>
             {# <div class="row text-center">
                 <div class="col-md-12">

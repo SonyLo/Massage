@@ -6,6 +6,7 @@ const News = require('./models/news')
 const Teachers=require('./models/teachers')
 const Courses=require('./models/courses')
 const Contacts=require('./models/contacts')
+const About=require('./models/abouts')
 
 
 
@@ -28,6 +29,7 @@ app.get("/", async(req, res)=>{
     let news={}
     let slider={}
     let slider_active={}
+    const about= await About.find({})
     var date=[]
     if(count_news<=3)
     {
@@ -62,7 +64,7 @@ app.get("/", async(req, res)=>{
     // вывод преподавателей
     const teachers = await Teachers.find({})
 
-    res.render('index.njk',{news,teachers,date, slider_active,slider})
+    res.render('index.njk',{news,teachers,date, slider_active,slider,about})
 })
 
 // app.get("/news", async(req, res)=>{
@@ -111,6 +113,21 @@ app.get('/addNews', async(req,res)=>{
     try {
         news.save()
         console.log('Новость добавлена')
+    }
+    catch (e) {
+        console.log(e)
+    }
+    res.status(200).json({ st:"Your order is accepted"})
+})
+// добавление информации О нас
+app.get('/addAbout', async(req,res)=>{
+    const about = await new About({
+        linkIcon: '<i style="color:#0375B3" class="fa fa-graduation-cap fa-5x " aria-hidden="true"></i>',
+        description: 'Наша школа работает со многими салонами, фитнес центрами и тед. учреждениями'
+    })
+    try {
+        about.save()
+        console.log('Информация добавлена')
     }
     catch (e) {
         console.log(e)

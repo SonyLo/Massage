@@ -7,6 +7,7 @@ const Teachers=require('./models/teachers')
 const Courses=require('./models/courses')
 const Contacts=require('./models/contacts')
 const About=require('./models/abouts')
+const AboutCourses=require('./models/about_courses')
 
 
 
@@ -30,6 +31,8 @@ app.get("/", async(req, res)=>{
     let slider={}
     let slider_active={}
     const about= await About.find({})
+    const course_new=await AboutCourses.findOne({})
+    const course_old=await AboutCourses.findOne({}).skip(1)
     var date=[]
     if(count_news<=3)
     {
@@ -64,7 +67,7 @@ app.get("/", async(req, res)=>{
     // вывод преподавателей
     const teachers = await Teachers.find({})
 
-    res.render('index.njk',{news,teachers,date, slider_active,slider,about})
+    res.render('index.njk',{news,teachers,date, slider_active,slider,about,course_new,course_old})
 })
 
 // app.get("/news", async(req, res)=>{
@@ -128,6 +131,22 @@ app.get('/addAbout', async(req,res)=>{
     try {
         about.save()
         console.log('Информация добавлена')
+    }
+    catch (e) {
+        console.log(e)
+    }
+    res.status(200).json({ st:"Your order is accepted"})
+})
+// добавление информации О курсах
+app.get('/addAboutCourses', async(req,res)=>{
+    const about_courses = await new AboutCourses({
+        linkIcon: 'fa fa-arrow-circle-o-up fa-5x',
+        title: 'Курсы для повышения квалификации',
+        description: 'На данном курсе мастера смогут узнать о новых техниках и приёмах'
+    })
+    try {
+        about_courses.save()
+        console.log('Информация о курсе добавлена')
     }
     catch (e) {
         console.log(e)

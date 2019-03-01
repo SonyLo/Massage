@@ -122,6 +122,36 @@ app.get('/addNews', async(req,res)=>{
     }
     res.status(200).json({ st:"Your order is accepted"})
 })
+app.get('/coursesNew/:page', async (req, res) => {
+    const perPage = 6
+    let page = req.params.page || 1
+    let courses_new = await Courses.find({}).sort('-date').where({forNewbies: true}).skip((perPage * page) - perPage).limit(perPage)
+    // news.reverse()
+    let count = await Courses.where({forNewbies: true}).count()
+    var date=[]
+    for (var i=0;i<courses_new.length;i++)
+       {
+           date.push(moment(courses_new[i].date).format('DD-MM-YYYY'))
+       }
+       
+       res.render('courses_new.njk',{courses_new,date, current:page, pages: Math.ceil(count / perPage) })
+
+})
+app.get('/coursesOld/:page', async (req, res) => {
+    const perPage = 6
+    let page = req.params.page || 1
+    let courses_old = await Courses.find({}).sort('-date').where({forNewbies: false}).skip((perPage * page) - perPage).limit(perPage)
+    // news.reverse()
+    let count = await Courses.where({forNewbies: false}).count()
+    var date=[]
+    for (var i=0;i<courses_old.length;i++)
+       {
+           date.push(moment(courses_old[i].date).format('DD-MM-YYYY'))
+       }
+       
+       res.render('courses_old.njk',{courses_old,date, current:page, pages: Math.ceil(count / perPage) })
+
+})
 // добавление информации О нас
 app.get('/addAbout', async(req,res)=>{
     const about = await new About({
@@ -185,23 +215,23 @@ app.get('/addContacts', async(req,res)=>{
     res.status(200).json({ st:"Your order is accepted"})
 })
 // добавление курсов для новичков
-app.get('/addCoursesNew', async(req,res)=>{
+app.get('/addCourses', async(req,res)=>{
     const courses = await new Courses({
         linkPicture: 'img/uploads/courseNew1.png',
-        title: 'Курс новичков №5',
-        text: 'На данном курсе вы научитесь основам массажа, а также...',
+        title: 'Курс повышения квалификации №7',
+        text: 'На данном курсе вы научитесь новым техникам, а также...',
         idTeacher: await Teachers.findOne({'name':'Скрипник Маргарита Викторовна'}),
-        date:new Date(Date.UTC(2019,1,27,0,0,0)),
-        price: '6000р',
+        date:new Date(Date.UTC(2019,2,18,0,0,0)),
+        price: '12000р',
         duration: '8 месяц',
-        forNewbies: 'true'
+        forNewbies: 'false'
     })
     // нумерация месяца начинается с 0
     // года и числа адекватно
     // 27-01-2019 = 27-02-2019 (в бд)
     try {
         courses.save()
-        console.log('Курс для новичков добавлен')
+        console.log('Курс добавлен')
     }
     catch (e) {
         console.log(e)
@@ -209,14 +239,14 @@ app.get('/addCoursesNew', async(req,res)=>{
     res.status(200).json({ st:"Your order is accepted"})
 })
 
-app.get("/coursesNew", (req, res)=>{
-    // Тут сделать выборку курсов для начинающих
-    res.render('courses.njk');
-})
-app.get("/coursesOld", (req, res)=>{
-    // Тут сделать выборку курсов для продолжающих
-    res.render('courses.njk');
-})
+// app.get("/coursesNew", (req, res)=>{
+//     // Тут сделать выборку курсов для начинающих
+//     res.render('courses.njk');
+// })
+// app.get("/coursesOld", (req, res)=>{
+//     // Тут сделать выборку курсов для продолжающих
+//     res.render('courses.njk');
+// })
 app.get("/teachers", async(req, res)=>{
     teachers = await Teachers.find({})
     console.log(teachers)

@@ -1,6 +1,6 @@
 
 {% include "./layout/header.njk" %}
-<body class="bodyNews">
+<body class="bodyCourses">
 {% include "./layout/nav.njk" %}
 
 
@@ -8,47 +8,50 @@
 
 
         <!--КОНТЕНТ-->
-    
+     <div class=""> 
          
     
-        <div class="container mb-3 mt-5 opacityNews " style="border-radius: 10px; min-height: 70vh;" >
-          <h1 class="text-center font-weight-bold pt-5 mb-5">Новости</h1>
+        <div class="container mt-3 opacityNews" >
+          <h1 class="text-center text-uppercase font-weight-bold pt-5 mb-5">курсы для начинающих</h1>
         <div class="row justify-content-center  " >
-           {% for i in range(0,news.length)  %}
+           {% for i in range(0,courses_new.length)  %}
             <div class="col-md-11 mb-5 " style="font-size: 1.8rem">   
                 <div class="card card-body blockNews">
                     <div class="row">
                         <div class="col-md-3">
-                            <img class=" img-fluid" src="/{{news[i].linkPicture}}" alt="фото мероприятия">
+                            <img class=" img-fluid" src="/{{courses_new[i].linkPicture}}" alt="фото мероприятия">
                         </div>
                         <div class="col-md-9">
-                        <form action="/news/detail/" method="get">
-                            <input type="hidden" value="{{news[i]._id}}" name="id"/>
-                            <h3 class="font-weight-bold" style="font-size: 2rem">{{news[i].title}}</h3>
+                        <form action="/coursesNew/detail/" method="get">
+                            <input type="hidden" value="{{courses_new[i]._id}}" name="id"/>
+                            <h3 class="font-weight-bold" style="font-size: 2rem">{{courses_new[i].title}}</h3>
                             <small style="color:gray"><i class="fa fa-calendar" aria-hidden="true"></i>{{date[i]}}</small>
                             <hr  class="font-weight-bold">
                             <hr class="font-weight-bold">
-                            <p class="text-justify textrowcount">{{news[i].text}}
+                            <p class="text-justify">
+                                {{courses_new[i].text}}
                             </p>
                             <p class="text-right mr-3">
                                 <input style="font-size:1.7rem" class="btn btn-outline-info" type="submit" value="Подробно" />
                             </p>
-                            
+                            </form>
                         </div>
-                        </form>
                     </div>
                 </div>
             </div>
-            {% endfor %}     
+            {% endfor %}
         </div>
-        <div class="row justify-content-center ">
+            
+     
+            
+<div class="row justify-content-center ">
             <nav class="mb-2" style="font-size:17px;" aria-label="Page navigation example">
                 {% if (pages > 0)  %}
                 <ul class="pagination ">
                     {%if (current == 1) %}
                      <li class="page-item disabled"><a class="page-link" >Начало</a></li>
                     {% else %}
-                    <li class="page-item" ><a class="page-link" href="/news/story/1">Начало</a></li>
+                    <li class="page-item" ><a class="page-link" href="/coursesNew/1">Начало</a></li>
                     {% endif %}
                 
                     
@@ -69,18 +72,18 @@
                         {% if (ii == current) %}
                             <li class="page-item active"><a class="page-link" >{{ii}}</a></li>
                         {% else %}
-                            <li  class="page-item" ><a class="page-link" href="/news/story/{{ii}}">{{ii}}</a></li>
+                            <li  class="page-item" ><a class="page-link" href="/coursesNew/{{ii}}">{{ii}}</a></li>
                         {% endif %}
                 
                         {% if ((ii == current + 4) and (ii < pages)) %}
                             <li class=" page-item disabled"><a class="page-link" >...</a></li>
                         {% endif %}
-                    {%- endfor %}
+                    {% endfor %}
                     
                     {% if (current == pages) %}
                         <li class=" page-item disabled"><a class="page-link" >Конец</a></li>
                     {% else %}
-                        <li class="page-item"  ><a class="page-link" href="/news/story/{{pages}}">Конец</a></li>
+                        <li class="page-item"  ><a class="page-link" href="/coursesNew/{{pages}}">Конец</a></li>
                     {% endif %}
                 
                  </ul>
@@ -88,8 +91,11 @@
                 </nav>
         </div>
 
-    
-     </div>
+        </div>
+
+        
+
+    </div>
 
   
   
@@ -101,7 +107,7 @@
 {% include "./layout/script.njk" %}
 <script>
  $(".active").removeClass('active')
-  document.getElementById('LiNews').setAttribute("class", "active")
+  document.getElementById('liDropdown').setAttribute("class", "active")
 </script>
 </body>
 {% include "./layout/footer.njk" %}

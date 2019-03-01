@@ -26,6 +26,8 @@ app.get("/", async(req, res)=>{
     // вывод новостей
     const count_news= await News.find({}).count()
     let news={}
+    let slider={}
+    let slider_active={}
     var date=[]
     if(count_news<=3)
     {
@@ -33,9 +35,26 @@ app.get("/", async(req, res)=>{
     }
     else
     {
-        news = await News.find({}).skip(count_news-3)
+        news = await News.find({}).sort('-date').limit(3)
     }
-    news.reverse()
+    if(count_news<=1)
+    {
+        slider_active= await News.find({}).sort('-date')
+    }
+    else
+    {
+        if(count_news<=5)
+        {
+            slider_active= await News.find({}).sort('-date').limit(1)
+            slider= await News.find({}).sort('-date').skip(1)
+        }
+        else
+        {
+            slider_active= await News.find({}).sort('-date').limit(1)
+            slider= await News.find({}).sort('-date').skip(1).limit(4)
+        }
+    }
+    //news.reverse()
     for (var i=0;i<news.length;i++)
     {
         date.push(moment(news[i].date).format('DD-MM-YYYY'))
@@ -43,7 +62,7 @@ app.get("/", async(req, res)=>{
     // вывод преподавателей
     const teachers = await Teachers.find({})
 
-    res.render('index.njk',{news,teachers,date})
+    res.render('index.njk',{news,teachers,date, slider_active,slider})
 })
 
 // app.get("/news", async(req, res)=>{

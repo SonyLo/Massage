@@ -1,0 +1,54 @@
+{% include "../layout/header.njk" %}
+<body>
+    
+    <div class="container-fluid pl-3">
+        <div class="row">
+                {% include "./adminLayout/adminHeader.njk" %}
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-2 pr-0">
+                {% include "./adminLayout/sidebar.njk" %}
+            </div>
+            <div class="col-md-10 pl-4">
+                    
+                <div class="card card-body">
+                       <div class="row mb-2">
+                            
+                            <button class="btn btn-outline-info mx-2"> <i class="fa fa-plus fa-lg fa-fw" aria-hidden="true" data-toggle="modal" data-target="#CalcUserTechnicians"></i> </button>
+                       </div>
+                       <div class="row">
+                            <table class="table table-bordered mx-2">
+                                    <thead class="thead-dark  text-center align-content-center">
+                                      <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Заголовок новости</th>
+                                        <th scope="col">Текст новости</th>
+                                        <th scope="col">Дата</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <th scope="row">1</th>
+                                        <td>Lorem, ipsum dolor.</td>
+                                        <td>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus enim placeat explicabo, soluta rerum earum officia. Rerum laborum, facilis eligendi perferendis doloremque illum magni eveniet ipsam sint quasi exercitationem vel cupiditate nobis quia vitae recusandae laudantium quam earum. Esse eaque omnis optio numquam ipsum natus odit, laboriosam aliquam placeat aspernatur.</td>
+                                        <td>какая нить дата</td>
+                                      </tr>
+                                      <tr>
+                                            <th scope="row">1</th>
+                                            <td>Lorem, ipsum dolor.</td>
+                                            <td>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus enim placeat explicabo, soluta rerum earum officia. Rerum laborum, facilis eligendi perferendis doloremque illum magni eveniet ipsam sint quasi exercitationem vel cupiditate nobis quia vitae recusandae laudantium quam earum. Esse eaque omnis optio numquam ipsum natus odit, laboriosam aliquam placeat aspernatur.</td>
+                                            <td>какая нить дата</td>
+                                          </tr>
+                                    
+                                    </tbody>
+                                  </table>
+                        </div>
+                       
+                              
+                              
+                </div>
+            </div>
+        </div>    
+    </div>
+
+</body>

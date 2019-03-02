@@ -346,7 +346,12 @@ app.get("/schedule", async(req, res)=>{
 
 app.get("/a", async(req, res)=>{
     // расписание
-    res.render('admin.njk');    
+    res.render('auth.njk');    
+})
+
+app.get("/adminNews", async(req, res)=>{
+    // расписание
+    res.render('adminTables/adminNews.njk');    
 })
 
 app.listen(port, ()=> console.log(`Server started ${port}`))

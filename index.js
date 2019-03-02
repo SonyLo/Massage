@@ -70,16 +70,6 @@ app.get("/", async(req, res)=>{
     res.render('index.njk',{news,teachers,date, slider_active,slider,about,course_new,course_old})
 })
 
-// app.get("/news", async(req, res)=>{
-//    const news = await News.find({})
-//    news.reverse()
-//    var date=[]
-//     for (var i=0;i<news.length;i++)
-//    {
-//        date.push(moment(news[i].date).format('DD-MM-YYYY'))
-//    }
-//    res.render('news.njk',{news,date})
-// })
 
 app.get('/news/story/:page', async (req, res) => {
     const perPage = 6
@@ -96,7 +86,21 @@ app.get('/news/story/:page', async (req, res) => {
        res.render('news.njk',{news,date, current:page, pages: Math.ceil(count / perPage) })
 
 })
- 
+app.get('/news/story', async (req, res) => {
+    const perPage = 6
+    let page = req.params.page || 1
+    let news = await News.find({}).sort('-date').skip((perPage * page) - perPage).limit(perPage)
+    // news.reverse()
+    let count = await News.count()
+    var date=[]
+    for (var i=0;i<news.length;i++)
+       {
+           date.push(moment(news[i].date).format('DD-MM-YYYY'))
+       }
+       
+       res.render('news.njk',{news,date, current:page, pages: Math.ceil(count / perPage) })
+
+})
 
 
 // подробно новости
@@ -122,7 +126,7 @@ app.get('/addNews', async(req,res)=>{
     }
     res.status(200).json({ st:"Your order is accepted"})
 })
-app.get('/coursesNew/:page', async (req, res) => {
+app.get('/courses/new/:page', async (req, res) => {
     const perPage = 6
     let page = req.params.page || 1
     let courses_new = await Courses.find({}).sort('-date').where({forNewbies: true}).skip((perPage * page) - perPage).limit(perPage)
@@ -137,7 +141,29 @@ app.get('/coursesNew/:page', async (req, res) => {
        res.render('courses_new.njk',{courses_new,date, current:page, pages: Math.ceil(count / perPage) })
 
 })
-app.get('/coursesOld/:page', async (req, res) => {
+app.get('/courses/new', async (req, res) => {
+    const perPage = 6
+    let page = req.params.page || 1
+    let courses_new = await Courses.find({}).sort('-date').where({forNewbies: true}).skip((perPage * page) - perPage).limit(perPage)
+    // news.reverse()
+    let count = await Courses.where({forNewbies: true}).count()
+    var date=[]
+    for (var i=0;i<courses_new.length;i++)
+       {
+           date.push(moment(courses_new[i].date).format('DD-MM-YYYY'))
+       }
+       
+       res.render('courses_new.njk',{courses_new,date, current:page, pages: Math.ceil(count / perPage) })
+
+})
+// подробно курсы для новичков
+app.get("/coursesNew/detail",async(req,res)=>{
+    const id=req.query.id
+    const courses = await Courses.findOne({_id:id})
+    const date = moment(courses.date).format('DD-MM-YYYY')
+    res.render('courses_detail.njk',{courses,date })
+})
+app.get('/courses/old/:page', async (req, res) => {
     const perPage = 6
     let page = req.params.page || 1
     let courses_old = await Courses.find({}).sort('-date').where({forNewbies: false}).skip((perPage * page) - perPage).limit(perPage)
@@ -152,10 +178,32 @@ app.get('/coursesOld/:page', async (req, res) => {
        res.render('courses_old.njk',{courses_old,date, current:page, pages: Math.ceil(count / perPage) })
 
 })
+app.get('/courses/old', async (req, res) => {
+    const perPage = 6
+    let page = req.params.page || 1
+    let courses_old = await Courses.find({}).sort('-date').where({forNewbies: false}).skip((perPage * page) - perPage).limit(perPage)
+    // news.reverse()
+    let count = await Courses.where({forNewbies: false}).count()
+    var date=[]
+    for (var i=0;i<courses_old.length;i++)
+       {
+           date.push(moment(courses_old[i].date).format('DD-MM-YYYY'))
+       }
+       
+       res.render('courses_old.njk',{courses_old,date, current:page, pages: Math.ceil(count / perPage) })
+
+})
+// подробно курсы для продвинутых
+app.get("/coursesOld/detail",async(req,res)=>{
+    const id=req.query.id
+    const courses = await Courses.findOne({_id:id})
+    const date = moment(courses.date).format('DD-MM-YYYY')
+    res.render('courses_detail.njk',{courses,date })
+})
 // добавление информации О нас
 app.get('/addAbout', async(req,res)=>{
     const about = await new About({
-        linkIcon: '<i style="color:#0375B3" class="fa fa-graduation-cap fa-5x " aria-hidden="true"></i>',
+        linkIcon: 'fa fa-graduation-cap fa-5x',
         description: 'Наша школа работает со многими салонами, фитнес центрами и тед. учреждениями'
     })
     try {

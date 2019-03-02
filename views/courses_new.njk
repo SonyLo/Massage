@@ -51,7 +51,7 @@
                     {%if (current == 1) %}
                      <li class="page-item disabled"><a class="page-link" >Начало</a></li>
                     {% else %}
-                    <li class="page-item" ><a class="page-link" href="/coursesNew/1">Начало</a></li>
+                    <li class="page-item" ><a class="page-link" href="/courses/new">Начало</a></li>
                     {% endif %}
                 
                     
@@ -72,7 +72,7 @@
                         {% if (ii == current) %}
                             <li class="page-item active"><a class="page-link" >{{ii}}</a></li>
                         {% else %}
-                            <li  class="page-item" ><a class="page-link" href="/coursesNew/{{ii}}">{{ii}}</a></li>
+                            <li  class="page-item" ><a class="page-link" href="/courses/new/{{ii}}">{{ii}}</a></li>
                         {% endif %}
                 
                         {% if ((ii == current + 4) and (ii < pages)) %}
@@ -83,7 +83,7 @@
                     {% if (current == pages) %}
                         <li class=" page-item disabled"><a class="page-link" >Конец</a></li>
                     {% else %}
-                        <li class="page-item"  ><a class="page-link" href="/coursesNew/{{pages}}">Конец</a></li>
+                        <li class="page-item"  ><a class="page-link" href="/courses/new/{{pages}}">Конец</a></li>
                     {% endif %}
                 
                  </ul>

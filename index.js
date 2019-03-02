@@ -8,6 +8,7 @@ const Courses=require('./models/courses')
 const Contacts=require('./models/contacts')
 const About=require('./models/abouts')
 const AboutCourses=require('./models/about_courses')
+const Comments=require('./models/comments')
 
 
 
@@ -33,6 +34,7 @@ app.get("/", async(req, res)=>{
     const about= await About.find({})
     const course_new=await AboutCourses.findOne({})
     const course_old=await AboutCourses.findOne({}).skip(1)
+    const comments=await Comments.find({})
     var date=[]
     if(count_news<=3)
     {
@@ -67,7 +69,7 @@ app.get("/", async(req, res)=>{
     // вывод преподавателей
     const teachers = await Teachers.find({})
 
-    res.render('index.njk',{news,teachers,date, slider_active,slider,about,course_new,course_old})
+    res.render('index.njk',{news,teachers,date, slider_active,slider,about,course_new,course_old,comments})
 })
 
 
@@ -262,6 +264,22 @@ app.get('/addContacts', async(req,res)=>{
     }
     res.status(200).json({ st:"Your order is accepted"})
 })
+// добавление отзывов
+app.get('/addComments', async(req,res)=>{
+    const comments = await new Comments({
+        linkPicture:'img/uploads/Comment.png',
+        title: '',
+        text: 'Хотела порадовать вас, в Болгарии работаю в отеле массажистом. Официально трудоустроилась. Нашла свое место — это курорты. Диплом школы и навыки пригодились. Думаю по осени ещё что нибудь пройти у вас. Всем рекомендую школу.'
+    })
+    try {
+        comments.save()
+        console.log('Отзыв добавлен')
+    }
+    catch (e) {
+        console.log(e)
+    }
+    res.status(200).json({ st:"Your order is accepted"})
+})
 // добавление курсов для новичков
 app.get('/addCourses', async(req,res)=>{
     const courses = await new Courses({
@@ -287,14 +305,6 @@ app.get('/addCourses', async(req,res)=>{
     res.status(200).json({ st:"Your order is accepted"})
 })
 
-// app.get("/coursesNew", (req, res)=>{
-//     // Тут сделать выборку курсов для начинающих
-//     res.render('courses.njk');
-// })
-// app.get("/coursesOld", (req, res)=>{
-//     // Тут сделать выборку курсов для продолжающих
-//     res.render('courses.njk');
-// })
 app.get("/teachers", async(req, res)=>{
     teachers = await Teachers.find({})
     console.log(teachers)

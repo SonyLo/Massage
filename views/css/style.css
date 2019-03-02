@@ -1,5 +1,5 @@
 html{
-    font-size: 13px;
+    font-size: 10px;
     font-family: 'Open Sans', sans-serif;
     color: #333;
 }
@@ -14,7 +14,6 @@ html{
 section#main{
     height: 70vh;
     min-height: 500px;
-   
     text-align: center;
     
 }

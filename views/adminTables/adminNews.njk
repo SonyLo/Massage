@@ -29,27 +29,13 @@
                                       </tr>
                                     </thead>
                                     <tbody>
+                                    {% for i in range(0,news.length) %}
                                       <tr>
-                                      
-                                        <td>Lorem, ipsum dolor. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, eaque.    </td>
-                                        <td>Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
-                                            Minus enim placeat explicabo, soluta rerum earum officia. Rerum laborum, 
-                                            facilis eligendi perferendis doloremque illum magni eveniet ipsam sint quasi exercitationem vel 
-                                            cupiditate nobis quia vitae recusandae laudantium quam earum. Esse eaque omnis optio numquam ipsum natus 
-                                            odit, laboriosam aliquam placeat aspernatur.</td>
-                                        <td>какая нить дата</td>
+                                        <td>{{news[i].title}} </td>
+                                        <td>{{news[i].text}}</td>
+                                        <td>{{date[i]}}</td>
                                       </tr>
-                                      <tr>
-                                          
-                                            <td>Lorem, ipsum dolor.</td>
-                                            <td>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                                                 Minus enim placeat explicabo, soluta rerum earum officia. 
-                                                 Rerum laborum, facilis eligendi perferendis doloremque illum magni eveniet ipsam sint quasi 
-                                                 exercitationem vel cupiditate nobis quia vitae recusandae laudantium quam earum. Esse eaque omnis
-                                                  optio numquam ipsum natus odit, laboriosam aliquam placeat aspernatur.</td>
-                                            <td>какая нить дата</td>
-                                          </tr>
-                                    
+                                      {% endfor %}
                                     </tbody>
                                   </table>
                         </div>

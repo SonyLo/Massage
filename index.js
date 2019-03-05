@@ -353,6 +353,10 @@ app.get("/adminNews", async(req, res)=>{
     // расписание
     res.render('adminTables/adminNews.njk');    
 })
+app.get("/adminCourses", async(req, res)=>{
+    // расписание
+    res.render('adminTables/adminCourses.njk');    
+})
 
 app.listen(port, ()=> console.log(`Server started ${port}`))
 

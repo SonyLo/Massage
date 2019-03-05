@@ -345,7 +345,7 @@ app.get("/schedule", async(req, res)=>{
 })
 
 app.get("/a", async(req, res)=>{
-    // расписание
+    
     res.render('auth.njk');    
 })
 //новости на админ-панели
@@ -359,9 +359,19 @@ app.get("/adminNews", async(req, res)=>{
     res.render('adminTables/adminNews.njk',{news,date});    
 })
 app.get("/adminCourses", async(req, res)=>{
-    // расписание
+    
     res.render('adminTables/adminCourses.njk');    
 })
+app.get("/adminTeacher", async(req, res)=>{
+    
+    res.render('adminTables/adminTeacher.njk');    
+})
+app.get("/adminContact", async(req, res)=>{
+    
+    res.render('adminTables/adminContact.njk');    
+})
+
+
 
 app.listen(port, ()=> console.log(`Server started ${port}`))
 

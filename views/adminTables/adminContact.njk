@@ -1,0 +1,31 @@
+{% include "../layout/header.njk" %}
+
+<body>
+    <section style=" min-height: 80vh;">
+
+        <div class="container-fluid " style="font-size:1.5rem;">
+            <div class="row">
+                {% include "./adminLayout/adminHeader.njk" %}
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-2">
+                    {% include "./adminLayout/sidebar.njk" %}
+                </div>
+                <div class="col-md-10">
+
+                    <div class="card card-body">
+                        <div class="row ">
+                            Тут че то с контактами
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    {% include "../layout/script.njk" %}
+    <script>
+        $(".active").removeClass('active')
+        document.getElementById('aContact').setAttribute("class", "active list-group-item list-group-item-action")
+    </script>
+</body>

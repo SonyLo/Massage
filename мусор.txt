@@ -70,7 +70,12 @@
 
 
 
-
+@media (min-width:300px)
+{
+    #tableAdminNews{
+        font-size: 1rem;
+    } 
+}
 
 
 

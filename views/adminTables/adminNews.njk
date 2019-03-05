@@ -19,16 +19,17 @@
                             <button class="btn btn-outline-info ml-4 mb-3"> <i class="fa fa-plus fa-lg fa-fw" aria-hidden="true" data-toggle="modal" data-target="#addNews"></i> </button>
                        </div>
                        <div class="row mx-1">
-                            <table class="table table-bordered ">
-                                    <thead class="thead-dark  text-center align-content-center">
+                       
+                            <table id="tableAdminNews" class="table table-bordered ">
+                                    <thead class="thead  text-center align-content-center ">
                                       <tr>
                                        
-                                        <th scope="col">Заголовок новости</th>
-                                        <th scope="col">Текст новости</th>
-                                        <th scope="col">Дата</th>
+                                        <th style="width: 21%" >Заголовок новости</th>
+                                        <th style="width: 60%" >Текст новости</th>
+                                        <th style="width: 9%" >Дата</th>
                                       </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody >
                                     {% for i in range(0,news.length) %}
                                       <tr>
                                         <td>{{news[i].title}} </td>
@@ -48,7 +49,10 @@
     </div>
 </section>
     {% include "../layout/script.njk" %}
-
+    <script>
+      $(".active").removeClass('active')
+       document.getElementById('aNews').setAttribute("class", "active list-group-item list-group-item-action")
+</script>
 </body>
 
 

@@ -14,13 +14,13 @@
             <div class="col-md-10">
                     
                 <div class="card card-body">
-                       <div class="row ">
+                       <div class="row">
                             
                             <button class="btn btn-outline-info ml-4 mb-3"> <i class="fa fa-plus fa-lg fa-fw" aria-hidden="true" data-toggle="modal" data-target="#addCourses"></i> </button>
                        </div>
                        <div class="row mx-1 ">
-                            <table class="table table-bordered ">
-                                    <thead class="thead-dark  text-center align-content-center">
+                            <table id="tableAdminCourses" class="table table-bordered ">
+                                    <thead class="thead text-center align-content-center">
                                       <tr>
                                        
                                         <th scope="col">Название курса</th>
@@ -35,28 +35,11 @@
                                       
                                         <td>Lorem, ipsum dolor. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, eaque.    </td>
                                          <td>Lorem, ipsum dolor. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, eaque.    </td>
-                                          <td>Lorem, ipsum dolor. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, eaque.    </td>
-                                        <td>Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
-                                            Minus enim placeat explicabo, soluta rerum earum officia. Rerum laborum, 
-                                            facilis eligendi perferendis doloremque illum magni eveniet ipsam sint quasi exercitationem vel 
-                                            cupiditate nobis quia vitae recusandae laudantium quam earum. Esse eaque omnis optio numquam ipsum natus 
-                                            odit, laboriosam aliquam placeat aspernatur.</td>
-                                        <td>какая нить дата</td>
+                                          <td>какая нить дата </td>
+                                        <td></td>
+                                        <td></td>
                                       </tr>
-                                      <tr>
-                                          
-                                            <td>Lorem, ipsum dolor.</td>
-
-                                            <td>Lorem, ipsum dolor.</td>
-
-                                            <td>Lorem, ipsum dolor.</td>
-                                            <td>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                                                 Minus enim placeat explicabo, soluta rerum earum officia. 
-                                                 Rerum laborum, facilis eligendi perferendis doloremque illum magni eveniet ipsam sint quasi 
-                                                 exercitationem vel cupiditate nobis quia vitae recusandae laudantium quam earum. Esse eaque omnis
-                                                  optio numquam ipsum natus odit, laboriosam aliquam placeat aspernatur.</td>
-                                            <td>какая нить дата</td>
-                                          </tr>
+                                     
                                     
                                     </tbody>
                                   </table>
@@ -70,7 +53,10 @@
     </div>
 </section>
     {% include "../layout/script.njk" %}
-
+    <script>
+      $(".active").removeClass('active')
+       document.getElementById('aCourses').setAttribute("class", "active list-group-item list-group-item-action")
+</script>
 </body>
 
 
@@ -78,7 +64,7 @@
         <div style="font-size:1.5rem"  class="modal-dialog" role="document">
           <div style="font-size:1.5rem" class="modal-content">
             <div class="modal-header">
-              <h4  class="modal-title" id="exampleModalLabel">Добавить новость</h4>
+              <h4  class="modal-title" id="exampleModalLabel">Добавить курс</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -86,17 +72,35 @@
             <div class="modal-body">
               <form>
                 <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">Название новости</label>
-                  <input type="text" class="form-control" id="recipient-name">
+                  <label for="recipient-name" class="col-form-label">Название курса</label>
+                  <input type="text" class="form-control" id="">
                 </div>
                 <div class="form-group">
-                  <label for="message-text" class="col-form-label">Текст новости</label>
-                  <textarea class="form-control" id="message-text"></textarea>
+                  <label for="message-text" class="col-form-label">Описание курса</label>
+                  <textarea class="form-control" id=""></textarea>
                 </div>
                 <div class="form-group">
-                      
-                        <input type="file">
-                      </div>
+                  <label for="message-text" class="col-form-label">Дата начала</label>
+                  <input type="text" class="form-control" id="">
+                </div>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label">Дата конца</label>
+                  <input type="text" class="form-control" id="">
+                </div>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label">Преподаватель</label>
+                  <select name="" id="">
+                    <option value=""> sdfdsfdsfdsfd</option>
+                  </select> 
+                </div>
+                 <div class="form-group">
+                  <label for="message-text" class="col-form-label">Уровень</label>
+                  <select name="" id="">
+                    <option value="">fsdfsdfsdfdsf</option>
+                  </select>  
+                  
+                </div>
+                
               </form>
             </div>
             <div  class="modal-footer">

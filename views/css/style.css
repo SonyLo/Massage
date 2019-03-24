@@ -463,3 +463,119 @@ img {
     min-height: 5vh;
     background-color: #474389;
   }
+
+
+
+
+  *{box-sizing: border-box;}
+.item {
+  width: 300px;
+  border: 1px solid rgba(0,0,0,.08);
+  padding: 15px 0;
+  margin: 0 auto;
+  background: white;
+}
+.item a {
+  text-decoration: none;
+  outline: 0;
+}
+.product {
+  padding: 0 15px;
+  position: relative;
+}
+.thumb-img {
+  position: relative;
+  overflow: hidden;
+}
+.thumb-img img {
+  width: 100%;
+  display: block;
+}
+.thumb-img:after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, .5);
+  opacity: 0;
+  transition: .3s ease-in-out; 
+}
+.product:hover .thumb-img:after {opacity: 1;}
+.actions {
+  position: absolute;
+  z-index: 2;
+  top: 100%;
+  left: 0;
+  right: 0;
+  padding: 0 15px;
+  text-align: center;
+  opacity: 0;
+  transition: .3s ease-in-out; 
+}
+.product:hover .actions {
+  top: 50%;
+  opacity: 1;
+}
+.actions a {
+  margin: 7px 6px;
+  color: white;
+  height: 30px;
+  line-height: 26px;
+  display: inline-block;
+  border-radius: 30px;
+  font-size: 12px;
+  text-transform: uppercase;
+  text-align: center;
+  border: 2px solid white;
+  background: transparent;
+  transition: .3s ease-in-out; 
+}
+.share-button {width: 30px;}
+.add-to-cart:hover {background: #A2927F;}
+.actions a:hover {
+  border-color: #A2927F;
+  background: #A2927F;
+}
+.share-wrap {
+  display: inline-block;
+  height: 30px;
+  position: relative;
+  margin: 7px 6px;
+}
+.share-item {
+  width: 200px;
+  margin-left: -100px;
+  position: absolute;
+  z-index: 3;
+  bottom: 38px;
+  left: 50%;
+  opacity: 0;
+  visibility: hidden;
+  text-align: center;
+  transition: .3s ease-in-out; 
+}
+.share-wrap:hover .share-item {
+  opacity: 1;
+  visibility: visible;
+}
+.add-to-cart {padding: 0 20px;}
+.product-about {
+  padding: 20px 0 0;
+  text-align: center;
+}
+.product-title {
+  font-family: 'Open Sans', sans-serif;
+  line-height: 1.1;
+  font-size: 16px;
+  margin: 5px 0 15px;
+  font-weight: normal;
+}
+.product-title a {color: #373737;}
+.price {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.25em;
+  font-weight: bold;
+  color: #F2453E; 
+}

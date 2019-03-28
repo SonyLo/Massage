@@ -1,7 +1,7 @@
 const app = require('./app')
 const port = process.env.PORT || 3000
 const moment = require('moment')
-const bodyParser = require("body-parser");
+const passport = require('passport')
 const News = require('./models/news')
 const Teachers=require('./models/teachers')
 const Courses=require('./models/courses')
@@ -9,7 +9,13 @@ const Contacts=require('./models/contacts')
 const About=require('./models/abouts')
 const AboutCourses=require('./models/about_courses')
 const Comments=require('./models/comments')
+const User = require('./models/users')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
+
+app.use(passport.initialize())
+require('./mid/passport')(passport)
 
 
 function formatDate(date) {
@@ -354,8 +360,67 @@ app.get("/a", async(req, res)=>{
     
     res.render('auth.njk');    
 })
+
+app.post("/a", async(req, res)=>{
+    
+   console.log("dfs")
+    const candidate = await User.findOne({login: req.body.login})
+   
+  if (candidate) {
+    // Проверка пароля, пользователь существует
+    const passwordResult = bcrypt.compareSync(req.body.pass, candidate.password)
+    
+    if (passwordResult) {
+      // Генерация токена, пароли совпали
+      console.log(candidate._id)
+      const token = jwt.sign({
+        login: candidate.login,
+        userId: candidate._id
+      }, "dev-jwt", {expiresIn: 60 * 60})
+      
+      res.status(200).json({
+        token: `bearer ${token}`
+      })
+    } else {
+      // Пароли не совпали
+      res.status(401).json({
+        message: 'Пароли не совпадают. Попробуйте снова.'
+      })
+    }
+  } else {
+    // Пользователя нет, ошибка
+    res.status(404).json({
+      message: 'Пользователь с таким логином не найден.'
+    })
+  }
+
+
+
+    // res.render('auth.njk');    
+})
+
+app.get("/reg", async(req, res)=>{
+    const salt = bcrypt.genSaltSync(10)
+    // const password = req.body.password
+    const password = "111"
+    const user = new User({
+      login: "sss",
+      password: bcrypt.hashSync(password, salt)
+    })
+    try {
+        await user.save()
+        res.status(201).json(user)
+      } catch(e) {
+        // Обработать ошибку
+       console.log("не добавился")
+      }
+  
+
+})
+
+
 //новости на админ-панели
-app.get("/adminNews", async(req, res)=>{
+app.get("/adminNews",  passport.authenticate('jwt', {session: false}), async(req, res)=>{
     let news = await News.find({}).sort('-date')
     var date=[]
     for (var i=0;i<news.length;i++)

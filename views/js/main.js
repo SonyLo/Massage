@@ -270,7 +270,30 @@ $('#tableAdminNews').SetEditable({
  
 });
 
+function subForm(){
+    $.ajax({
+        type: "POST",
+        url: '/a',
+        data: JSON.stringify(
+            {
+                login: document.getElementById("inputEmail").value,
+                pass: document.getElementById("inputPassword").value
+            }
+        ),//
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+             localStorage.setItem('Authorization', response.token)
+             document.location.href = "/adminNews"
+        },
+        error: function (response) {
 
+        }
+    });
+    
+    
+    
+}
 
   
 //function activElem(elemRef){

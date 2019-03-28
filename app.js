@@ -4,8 +4,8 @@ const bodyParser = require('body-parser')
 const mongoose =require('mongoose')
 const keys = require("./key")
 const nunjucks = require('nunjucks')
-
-
+const passport = require('passport')
+require('./models/users');
 
 
 
@@ -26,7 +26,7 @@ app.use(require('morgan')('dev'))
 app.use(express.static(__dirname + "/views/"));
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
-
+app.use(require('cors')())
 nunjucks.configure('views', {
     autoescape: true,
     express: app

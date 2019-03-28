@@ -265,10 +265,6 @@ $(document).ready(function(){
 )
 })
 
-$('#tableAdminNews').SetEditable({
-  columnsEd: "0,1,2" //editable columns
- 
-});
 
 function subForm(){
     $.ajax({
@@ -326,7 +322,6 @@ function sendSubNews(){
 
 $('#formId').on('submit', function(e){
     e.preventDefault()
-    console.log("dasd")
     var formData = new FormData(this)
     
     $.ajax({
@@ -353,3 +348,10 @@ $('#formId').on('submit', function(e){
   //document.getElementById(elemRef).setAttribute("class", "active")
 
 //}
+
+
+$('#tableAdminNews').SetEditable({
+    columnsEd: "0,1,2" //editable columns
+   
+  })
+  

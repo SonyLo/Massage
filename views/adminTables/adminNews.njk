@@ -66,24 +66,62 @@
               </button>
             </div>
             <div class="modal-body">
-              <form>
+              <form id="formId"  method="post" enctype="multipart/form-data">
                 <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Название новости</label>
-                  <input type="text" class="form-control" id="recipient-name">
+                  <input name="titleNews" type="text" class="form-control" id="recipient-name">
                 </div>
                 <div class="form-group">
                   <label for="message-text" class="col-form-label">Текст новости</label>
-                  <textarea class="form-control" id="message-text"></textarea>
+                  <textarea name ="description" class="form-control" id="message-text"></textarea>
                 </div>
-                <div class="form-group">
+                <div  class="form-group">
                       
-                        <input type="file">
-                      </div>
+                        <input name="image" type="file">
+                </div>
+                <button id="subHidden" type="submit" class="d-none" ></button>
               </form>
+
+
+
+
+              <!-- <form id="formId"  method="post" enctype="multipart/form-data">
+                <div class="row align-items-center">
+                    
+                            
+                            <div class="col-md-12">
+                                <input name="image" id="inputFile" type="file">
+                                <div class="form-group">
+                                    <label for="">Название</label>
+                                    <input name="titleNews" type="input" class="form-control" id="inputName" aria-describedby="" placeholder="Введите название">
+    
+                                </div>
+                               
+                                <div class="form-group">
+                                    <label for="">Описание</label>
+    
+                                    <textarea name="description" placeholder="Введите описание" class="texareastyle" rows="3" id="textareaDescription"></textarea>
+    
+                                </div>
+    
+                            </div>
+                </div>
+                    
+                    
+                
+                <div class="row justify-content-end">
+                    <div class="col-md-2">
+                        <button id="btnSubmit" type="submit"  class="btn btn-primary">Добавить товар</button>
+                    </div>
+                </div>
+            </form> -->
+
+
+
             </div>
             <div  class="modal-footer">
               <button style="font-size:1.5rem" type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-              <button  style="font-size:1.5rem" type="button" class="btn btn-primary">Добавить</button>
+              <button  style="font-size:1.5rem" type="button"  onclick="sendSubNews()" class="btn btn-primary">Добавить</button>
             </div>
           </div>
         </div>

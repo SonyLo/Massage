@@ -6,12 +6,12 @@ const keys = require("./key")
 const nunjucks = require('nunjucks')
 const passport = require('passport')
 require('./models/users');
-
 var cookieParser = require('cookie-parser')
-app.use(cookieParser())
+const upload = require('./mid/upload')
 
 
-mongoose.connect(keys.mongoURL)
+
+mongoose.connect(keys.mongoURL,  { useNewUrlParser: true })
 .then(()=>{
     console.log('MongoDB connect')
 })
@@ -19,12 +19,10 @@ mongoose.connect(keys.mongoURL)
     console.log(err)// Можно сделать страницу ошибки 
 })
 
-
-
-
-
 app.use(require('morgan')('dev'))
 app.use(express.static(__dirname + "/views/"));
+app.use('/uploads', express.static('uploads'))
+app.use(cookieParser())
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
 app.use(require('cors')())

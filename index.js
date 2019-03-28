@@ -12,6 +12,7 @@ const Comments=require('./models/comments')
 const User = require('./models/users')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const upload = require('./mid/upload')
 
 
 app.use(passport.initialize())
@@ -459,11 +460,43 @@ app.get("/adminNews",  async(req, res)=>{
     res.render('adminTables/adminNews.njk',{news,date}); 
     }
     else{
+        //res.send("Nooooo")
+        res.redirect("/a")
+    }
+    
+       
+})
+
+app.post("/adminNews", upload.single('image'), async(req, res)=>{
+    
+    authh(req, res)
+    if(req.user_data){
+        console.log(req.file)
+            const news = new News({
+                linkPicture: req.file ? req.file.path : '',
+                title: req.body.titleNews,
+                text: req.body.description,
+                date: Date.now()
+            })
+    try {
+        await news.save()
+        res.redirect("/adminNews")
+      } catch (e) {
+       res.status(501).json({
+        status: "bad"
+       })
+      }
+    }
+    else{
         res.send("Nooooo")
     }
     
        
 })
+
+
+
+
 app.get("/adminCourses", async(req, res)=>{
     authh(req, res)
     if(req.user_data){
@@ -497,7 +530,6 @@ app.get("/adminContact", async(req, res)=>{
 
 app.post("/exit", (req, res)=>{
     
-
     res.cookie('auth',"");
     res.status(200).json({
         token: ""

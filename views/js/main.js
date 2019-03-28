@@ -318,6 +318,34 @@ function exitAdm(){
    
 }
 
+function sendSubNews(){
+   
+    document.getElementById("subHidden").click();
+}
+
+
+$('#formId').on('submit', function(e){
+    e.preventDefault()
+    console.log("dasd")
+    var formData = new FormData(this)
+    
+    $.ajax({
+        type: 'POST',
+        url: '/adminNews',
+        data:formData,
+        processData:false,
+        contentType:false,
+        success: function(r){
+            alert('Успешно добавлено!')
+            document.location.href ='/adminNews'
+        },
+        error: function(er){
+            console.log(er);
+            alert('Упс, что то пошло не так')
+        }
+    })
+})
+
 
   
 //function activElem(elemRef){

@@ -363,7 +363,7 @@ app.get("/a", async(req, res)=>{
 
 app.post("/a", async(req, res)=>{
     
-   console.log("dfs")
+   //console.log("dfs")
     const candidate = await User.findOne({login: req.body.login})
    
   if (candidate) {
@@ -378,11 +378,14 @@ app.post("/a", async(req, res)=>{
         userId: candidate._id
       }, "dev-jwt", {expiresIn: 60 * 60})
       
-      res.status(200).json({
+    //   req.headers['Authorization'] = `bearer ${token}`
+    res.cookie('auth',token);  
+    res.status(200).json({
         token: `bearer ${token}`
       })
     } else {
       // Пароли не совпали
+      
       res.status(401).json({
         message: 'Пароли не совпадают. Попробуйте снова.'
       })
@@ -396,8 +399,31 @@ app.post("/a", async(req, res)=>{
 
 
 
-    // res.render('auth.njk');    
+      
 })
+
+function authh (req, res) {
+    
+    var token = req.cookies.auth;
+    
+    // decode token
+    if (token) {
+  
+      jwt.verify(token, "dev-jwt", function(err, token_data) {
+        if (err) {
+           return 0
+        } else {
+          req.user_data = token_data;
+          return 1
+        }
+      });
+  
+    } else {
+      return 0;
+    }
+  }
+
+
 
 app.get("/reg", async(req, res)=>{
     const salt = bcrypt.genSaltSync(10)
@@ -420,28 +446,63 @@ app.get("/reg", async(req, res)=>{
 
 
 //новости на админ-панели
-app.get("/adminNews",  passport.authenticate('jwt', {session: false}), async(req, res)=>{
-    let news = await News.find({}).sort('-date')
+app.get("/adminNews",  async(req, res)=>{
+
+    authh(req, res)
+    if(req.user_data){
+        let news = await News.find({}).sort('-date')
     var date=[]
     for (var i=0;i<news.length;i++)
        {
            date.push(moment(news[i].date).format('DD-MM-YYYY'))
        }
-    res.render('adminTables/adminNews.njk',{news,date});    
+    res.render('adminTables/adminNews.njk',{news,date}); 
+    }
+    else{
+        res.send("Nooooo")
+    }
+    
+       
 })
 app.get("/adminCourses", async(req, res)=>{
-    
-    res.render('adminTables/adminCourses.njk');    
+    authh(req, res)
+    if(req.user_data){
+        res.render('adminTables/adminCourses.njk');  
+    }
+    else{
+        res.send("Nooooo")
+    }
+      
 })
 app.get("/adminTeacher", async(req, res)=>{
-    
-    res.render('adminTables/adminTeacher.njk');    
+    authh(req, res)
+    if(req.user_data){
+        res.render('adminTables/adminTeacher.njk');
+    }
+    else{
+        res.send("Nooooo")
+    }
+       
 })
 app.get("/adminContact", async(req, res)=>{
-    
-    res.render('adminTables/adminContact.njk');    
+    authh(req, res)
+    if(req.user_data){
+        res.render('adminTables/adminContact.njk');   
+    }
+    else{
+        res.send("Nooooo")
+    }
+     
 })
 
+app.post("/exit", (req, res)=>{
+    
+
+    res.cookie('auth',"");
+    res.status(200).json({
+        token: ""
+      })
+})
 
 
 app.listen(port, ()=> console.log(`Server started ${port}`))

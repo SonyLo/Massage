@@ -274,6 +274,7 @@ function subForm(){
     $.ajax({
         type: "POST",
         url: '/a',
+       
         data: JSON.stringify(
             {
                 login: document.getElementById("inputEmail").value,
@@ -283,7 +284,9 @@ function subForm(){
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (response) {
-             localStorage.setItem('Authorization', response.token)
+            // localStorage.setItem('Authorization', response.token)
+            
+            //  Headers.append('Authorization', response.token)
              document.location.href = "/adminNews"
         },
         error: function (response) {
@@ -294,6 +297,27 @@ function subForm(){
     
     
 }
+
+function exitAdm(){
+
+    $.ajax({
+        type: "POST",
+        url: '/exit',
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            // localStorage.setItem('Authorization', response.token)
+            
+            //  Headers.append('Authorization', response.token)
+            document.location.href ='/'
+        },
+        error: function (response) {
+
+        }
+    })
+   
+}
+
 
   
 //function activElem(elemRef){

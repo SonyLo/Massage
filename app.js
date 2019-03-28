@@ -7,7 +7,8 @@ const nunjucks = require('nunjucks')
 const passport = require('passport')
 require('./models/users');
 
-
+var cookieParser = require('cookie-parser')
+app.use(cookieParser())
 
 
 mongoose.connect(keys.mongoURL)

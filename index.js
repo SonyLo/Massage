@@ -452,8 +452,8 @@ app.get("/adminNews",  async(req, res)=>{
     authh(req, res)
     if(req.user_data){
         let news = await News.find({}).sort('-date')
-    var date=[]
-    for (var i=0;i<news.length;i++)
+        var date=[]
+        for (var i=0;i<news.length;i++)
        {
            date.push(moment(news[i].date).format('DD-MM-YYYY'))
        }
@@ -493,40 +493,246 @@ app.post("/adminNews", upload.single('image'), async(req, res)=>{
     
        
 })
-
+app.get("/adminNewsDelete", async(req, res)=>{
+    
+    authh(req, res)
+    if(req.user_data){
+        const id=req.query.idDelete
+        let news = await News.findByIdAndDelete({_id:id})
+    try {
+        await news.save()
+        res.redirect("/adminNews")
+      } catch (e) {
+       res.status(501).json({
+        status: "bad"
+       })
+      }
+    }
+    else{
+        res.send("Nooooo")
+    }
+    
+       
+})
 
 
 
 app.get("/adminCourses", async(req, res)=>{
     authh(req, res)
     if(req.user_data){
-        res.render('adminTables/adminCourses.njk');  
+        let courses = await Courses.find({}).sort('-date')
+        var date=[]
+        var teacher=[]
+        let teachers=await Teachers.find({})
+        for (var i=0;i<courses.length;i++)
+       {
+           date.push(moment(courses[i].date).format('DD-MM-YYYY'))
+           teacher.push(await Teachers.findOne({_id: courses[i].idTeacher}))
+       }
+        res.render('adminTables/adminCourses.njk',{courses,date,teacher,teachers});  
     }
     else{
-        res.send("Nooooo")
+        // res.send("Nooooo")
+        res.redirect("/a")
     }
       
 })
-app.get("/adminTeacher", async(req, res)=>{
+
+
+app.post("/adminCourses", upload.single('image'), async(req, res)=>{
+    
     authh(req, res)
     if(req.user_data){
-        res.render('adminTables/adminTeacher.njk');
+        
+        var d=req.body.dateStart
+        
+        var dd=d.split('-')
+        
+        var ddd=new Date(Date.UTC(parseInt(dd[0]),parseInt(dd[1])-1,parseInt(dd[2])))
+        
+        var te=await Teachers.findOne({_id:req.body.teacher})
+        let courses
+        if(req.body.level==1)
+        {
+            courses = new Courses({
+                linkPicture: req.file ? req.file.path : '',
+                title: req.body.courseName,
+                text: req.body.courseDescription,
+                date:ddd,
+                idTeacher:await Teachers.findOne({'_id':req.body.teacher}),
+                price:req.body.price,
+                duration:req.body.duration,
+                forNewbies:'true'
+            })
+            console.log(courses)
+        }
+        else
+        {
+            courses = new Courses({
+                linkPicture: req.file ? req.file.path : '',
+                title: req.body.courseName,
+                text: req.body.courseDescription,
+                date:ddd,
+                idTeacher:await Teachers.findOne({'_id':req.body.teacher}),
+                price:req.body.price,
+                duration:req.body.duration,
+                forNewbies:'false'
+            })
+            console.log(courses)
+        }
+    try {
+        await courses.save()
+        res.redirect("/adminCourses")
+      } catch (e) {
+       res.status(501).json({
+        status: "bad"
+       })
+      }
     }
     else{
         res.send("Nooooo")
     }
+    
        
 })
+app.get("/adminCoursesDelete", async(req, res)=>{
+    
+    authh(req, res)
+    if(req.user_data){
+        const id=req.query.idDelete
+        let courses = await Courses.findByIdAndDelete({_id:id})
+    try {
+        await courses.save()
+        res.redirect("/adminCourses")
+      } catch (e) {
+       res.status(501).json({
+        status: "bad"
+       })
+      }
+    }
+    else{
+        res.send("Nooooo")
+    }
+    
+       
+})
+
+
+app.get("/adminTeacher", async(req, res)=>{
+    authh(req, res)
+    const teachers=await Teachers.find({})
+    if(req.user_data){
+        res.render('adminTables/adminTeacher.njk',{teachers});
+    }
+    else{
+        res.send("Nooooo")
+    }
+})
+app.post("/adminTeacher", upload.single('image'), async(req, res)=>{
+    
+    authh(req, res)
+    if(req.user_data){
+        console.log(req.file)
+            const teacher = new Teachers({
+                linkPicture: req.file ? req.file.path : '',
+                name: req.body.nameTeacher,
+                description: req.body.description
+            })
+    try {
+        await teacher.save()
+        res.redirect("/adminTeacher")
+      } catch (e) {
+       res.status(501).json({
+        status: "bad"
+       })
+      }
+    }
+    else{
+        res.send("Nooooo")
+    }
+    
+       
+})
+
+app.get("/adminTeacherDelete", async(req, res)=>{
+    
+    authh(req, res)
+    if(req.user_data){
+        const id=req.query.idDelete
+        let teacher = await Teachers.findByIdAndDelete({_id:id})
+    try {
+        await teacher.save()
+        res.redirect("/adminTeacher")
+      } catch (e) {
+       res.status(501).json({
+        status: "bad"
+       })
+      }
+    }
+    else{
+        res.send("Nooooo")
+    }
+    
+       
+})
+
+
+
+
 app.get("/adminContact", async(req, res)=>{
     authh(req, res)
     if(req.user_data){
-        res.render('adminTables/adminContact.njk');   
+        const contacts=await Contacts.find({})
+        res.render('adminTables/adminContact.njk', {contacts}); 
     }
     else{
         res.send("Nooooo")
     }
      
 })
+app.post("/adminContact", upload.single('image'), async(req, res)=>{
+    authh(req, res)  
+    if(req.user_data){
+            const contacts = new Contacts({
+                title: req.body.typeContact,
+                description: req.body.description
+            })
+    try {
+        await contacts.save()
+        res.redirect("/adminContact")
+      } catch (e) {
+       res.status(501).json({
+        status: "bad"
+       })
+      }
+    }
+    else{
+        res.send("Nooooo")
+    }
+    
+       
+})
+app.get("/adminContactDelete", async(req, res)=>{
+    authh(req, res) 
+    if(req.user_data){
+        const id=req.query.idDelete
+        let contacts = await Contacts.findByIdAndDelete({_id:id})
+    try {
+        await contacts.save()
+        res.redirect("/adminContact")
+      } catch (e) {
+       res.status(501).json({
+        status: "bad"
+       })
+      }
+    }
+    else{
+        res.send("Nooooo")
+    }
+    
+       
+})
+
 
 app.post("/exit", (req, res)=>{
     

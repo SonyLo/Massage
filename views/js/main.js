@@ -341,7 +341,85 @@ $('#formId').on('submit', function(e){
     })
 })
 
+function sendSubCourses(){
+   
+    document.getElementById("subHidden").click();
+}
 
+$('#coursesFormId').on('submit', function(e){
+    e.preventDefault()
+    var formData = new FormData(this)
+    
+    $.ajax({
+        type: 'POST',
+        url: '/adminCourses',
+        data:formData,
+        processData:false,
+        contentType:false,
+        success: function(r){
+            alert('Успешно добавлено!')
+            document.location.href ='/adminCourses'
+        },
+        error: function(er){
+            console.log(er);
+            alert('Упс, что то пошло не так')
+        }
+    })
+})
+
+
+function sendSubTeacher(){
+   
+    document.getElementById("subHidden").click();
+}
+
+$('#teacherFormId').on('submit', function(e){
+    e.preventDefault()
+    var formData = new FormData(this)
+    
+    $.ajax({
+        type: 'POST',
+        url: '/adminTeacher',
+        data:formData,
+        processData:false,
+        contentType:false,
+        success: function(r){
+            alert('Успешно добавлено!')
+            document.location.href ='/adminTeacher'
+        },
+        error: function(er){
+            console.log(er);
+            alert('Упс, что то пошло не так')
+        }
+    })
+})
+
+
+function sendSubContact(){
+   
+    document.getElementById("subHidden").click();
+}
+
+$('#contactFormId').on('submit', function(e){
+    e.preventDefault()
+    var formData = new FormData(this)
+    
+    $.ajax({
+        type: 'POST',
+        url: '/adminContact',
+        data:formData,
+        processData:false,
+        contentType:false,
+        success: function(r){
+            alert('Успешно добавлено!')
+            document.location.href ='/adminContact'
+        },
+        error: function(er){
+            console.log(er);
+            alert('Упс, что то пошло не так')
+        }
+    })
+})
   
 //function activElem(elemRef){
   //$(".active").removeClass('active')

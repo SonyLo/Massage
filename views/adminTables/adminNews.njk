@@ -35,8 +35,14 @@
                                         <td>{{news[i].title}} </td>
                                         <td>{{news[i].text}}</td>
                                         <td>{{date[i]}}</td>
+                                        <td>
+                                        <form  action="/adminNewsDelete/" method="get">
+                                          <input type="hidden" value="{{news[i]._id}}" name="idDelete"/>
+                                          <input style="font-size:1.7rem" class="btn btn-outline-info" type="submit" value="Удалить" />
+                                        </form>
+                                        </td>
                                       </tr>
-                                      {% endfor %}
+                                    {% endfor %}
                                     </tbody>
                                   </table>
                         </div>

@@ -15,6 +15,7 @@
 
                     <div class="card card-body">
                         <div class="row ">
+                        <button class="btn btn-outline-info ml-4 mb-3"> <i class="fa fa-plus fa-lg fa-fw" aria-hidden="true" data-toggle="modal" data-target="#addContact"></i> </button>
                        <div class="col-md-12">
                         <table id="tableAdminContact" class="table table-bordered ">
                             <thead class="thead  text-center align-content-center ">
@@ -26,7 +27,19 @@
                               </tr>
                             </thead>
                             <tbody >
-                           
+                            {% for c in contacts %}
+                                <tr>
+                               
+                                <td style="width: 21%" >{{c.title}}</td>
+                                <td style="width: 60%" >{{c.description}}</td>
+                                <td>
+                                        <form  action="/adminContactDelete/" method="get">
+                                          <input type="hidden" value="{{c._id}}" name="idDelete"/>
+                                          <input style="font-size:1.7rem" class="btn btn-outline-info" type="submit" value="Удалить" />
+                                        </form>
+                                        </td>
+                              </tr>
+                              {% endfor %}
                             </tbody>
                           </table>
                        </div>
@@ -43,3 +56,39 @@
         document.getElementById('aContact').setAttribute("class", "active list-group-item list-group-item-action")
     </script>
 </body>
+
+
+<div style="font-size:1.5rem"  class="modal fade" id="addContact" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div style="font-size:1.5rem"  class="modal-dialog" role="document">
+          <div style="font-size:1.5rem" class="modal-content">
+            <div class="modal-header">
+              <h4  class="modal-title" id="exampleModalLabel">Добавить контакт</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="contactFormId"  method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Тип контакта</label>
+                  <select name="typeContact" id="">
+                    <option value="Звоните нам">Звоните нам</option>
+                    <option value="Часы работы">Часы работы</option>
+                    <option value="Мы находимся">Мы находимся</option>
+                    <option value="Напишите нам">Напишите нам</option>
+                  </select> 
+                </div>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label">Описание</label>
+                  <textarea name ="description" class="form-control" id="message-text"></textarea>
+                </div>
+                <button id="subHidden" type="submit" class="d-none" ></button>
+              </form>
+            </div>
+            <div  class="modal-footer">
+              <button style="font-size:1.5rem" type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+              <button  style="font-size:1.5rem" type="button"  onclick="sendSubContact()" class="btn btn-primary">Добавить</button>
+            </div>
+          </div>
+        </div>
+      </div>

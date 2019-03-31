@@ -9,6 +9,7 @@ const Contacts=require('./models/contacts')
 const About=require('./models/abouts')
 const AboutCourses=require('./models/about_courses')
 const Comments=require('./models/comments')
+const Products=require('./models/products')
 const User = require('./models/users')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
@@ -284,6 +285,23 @@ app.get('/addContacts', async(req,res)=>{
     }
     res.status(200).json({ st:"Your order is accepted"})
 })
+// добавление товаров
+app.get('/addProducts', async(req,res)=>{
+    const products = await new Products({
+        linkPicture:'img/uploads/courseNew1.png',
+        title: 'Массажное масло',
+        text: '',
+        price:'2000'
+    })
+    try {
+        products.save()
+        console.log('Товар добавлен')
+    }
+    catch (e) {
+        console.log(e)
+    }
+    res.status(200).json({ st:"Your order is accepted"})
+})
 // добавление отзывов
 app.get('/addComments', async(req,res)=>{
     const comments = await new Comments({
@@ -365,8 +383,8 @@ app.get("/schedule", async(req, res)=>{
 })
 
 app.get("/product", async(req, res)=>{
-    
-    res.render('product.njk');    
+    const products=await Products.find({})
+    res.render('product.njk',{products});    
 })
 
 
@@ -773,7 +791,94 @@ app.get("/adminTeacherDelete", async(req, res)=>{
        
 })
 
+app.get("/adminProduct", async(req, res)=>{
+    authh(req, res)
+    const products=await Products.find({})
+    if(req.user_data){
+        res.render('adminTables/adminProduct.njk',{products});
+    }
+    else{
+        res.send("Nooooo")
+    }
+})
+app.post("/adminProduct", upload.single('image'), async(req, res)=>{
+    authh(req, res)
+    if(req.user_data){
+        if(req.body.IDforSearch)
+        {
+            const candidate = await Products.find({_id:req.body.IDforSearch})
+            console.log('111')
+            if(candidate){
+                console.log('222')
+                const updated = {
+                    title: req.body.title,
+                    text: '',
+                    price: req.body.price,
+                }
+                if(req.file){
+                    updated.linkPicture = req.file.path
+                }
 
+                try{
+                    const products = await Products.findOneAndUpdate({_id:req.body.IDforSearch}, {$set: updated},{new:true})
+                    res.redirect("/adminProduct")
+                }
+                catch(e){
+                    console.log(e)
+                }
+
+            }
+            else{
+                res.send("Nooooo")
+            }
+        }
+        else
+        {
+            console.log('333')
+            const product = new Products({
+                linkPicture: req.file ? req.file.path : '',
+                title: req.body.title,
+                text: '',
+                price: req.body.price,
+            })
+            console.log(product)
+            try {
+                await product.save()
+                res.redirect("/adminProduct")
+              } catch (e) {
+               res.status(501).json({
+                status: "bad"
+               })
+              }
+    }
+
+    }
+    else{
+        res.send("Nooooo")
+    }
+})
+
+app.get("/adminProductDelete", async(req, res)=>{
+    
+    authh(req, res)
+    if(req.user_data){
+        const id=req.query.idDelete
+        let products = await Products.findByIdAndDelete({_id:id})
+    try {
+        await products.save()
+        res.redirect("/adminProduct")
+      } catch (e) {
+       res.status(501).json({
+        status: "bad"
+       })
+      }
+    }
+    else{
+        res.send("Nooooo")
+    }
+    
+       
+})
 
 
 app.get("/adminContact", async(req, res)=>{
@@ -857,6 +962,9 @@ app.post("/NewsUpdate", async(req, res)=>{
     console.log("dskjksdlk")
 })
 app.post("/ContactUpdate", async(req, res)=>{
+    console.log("dskjksdlk")
+})
+app.post("/ProductUpdate", async(req, res)=>{
     console.log("dskjksdlk")
 })
 app.post("/CourseUpdate", async(req, res)=>{

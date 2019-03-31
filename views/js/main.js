@@ -393,7 +393,31 @@ $('#teacherFormId').on('submit', function(e){
         }
     })
 })
+function sendSubProduct(){
+   
+    document.getElementById("subHidden").click();
+}
 
+$('#productFormId').on('submit', function(e){
+    console.log('344556')
+    e.preventDefault()
+    var formData = new FormData(this)
+    $.ajax({
+        type: 'POST',
+        url: '/adminProduct',
+        data:formData,
+        processData:false,
+        contentType:false,
+        success: function(r){
+            alert('Успешно добавлено!')
+            document.location.href ='/adminProduct'
+        },
+        error: function(er){
+            console.log(er);
+            alert('Упс, что то пошло не так')
+        }
+    })
+})
 
 function sendSubContact(){
    
@@ -456,19 +480,15 @@ $('#tableAdminNews').SetEditable({
     document.getElementById("idTeacherId").value = idTeacher
 
   }
-  function formatDate(date) {
 
-    var dd = date.getDate();
-    if (dd < 10) dd = '0' + dd;
-  
-    var mm = date.getMonth() + 1;
-    if (mm < 10) mm = '0' + mm;
-  
-    var yy = date.getFullYear();
-    if (yy < 10) yy = '0' + yy;
-  
-    return yy + '-' + mm + '-' + dd;
+  function ProductUpdate(idProduct){
+     
+    document.getElementById("recipient-name").value =  document.getElementById("tdTitle"+idProduct).value
+    document.getElementById("message-text").value =  document.getElementById("tdPrice"+idProduct).value
+    document.getElementById("idProductId").value = idProduct
+
   }
+
   function CourseUpdate(idCourse){
      
     document.getElementById("courseName").value =  document.getElementById("tdTitle"+idCourse).value

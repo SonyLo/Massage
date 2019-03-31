@@ -1,0 +1,102 @@
+{% include "../layout/header.njk" %}
+
+<body>
+    <section style=" min-height: 80vh;">
+            <div class="container-fluid " style="font-size:1.5rem;">
+                    <div class="row">
+                        {% include "./adminLayout/adminHeader.njk" %}
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-md-2">
+                            {% include "./adminLayout/sidebar.njk" %}
+                        </div>
+                        <div class="col-md-10">
+        
+                            <div class="card card-body">
+                                <div class="row">
+                                    <button class="btn btn-outline-info ml-4 mb-3"> <i class="fa fa-plus fa-lg fa-fw" aria-hidden="true" data-toggle="modal" data-target="#addProduct"></i> </button>
+                                    <div class="col-md-12">
+                                        <table id="tableAdminContact" class="table table-bordered ">
+                                            <thead class="thead  text-center align-content-center ">
+                                              <tr>
+                                               <th style="width: 21%"> Фото </th>
+                                                <th style="width: 21%" >Название</th>
+                                                <th style="width: 60%" >Цена</th>
+                                                <th style="width: 9%" ></th>
+                                                
+                                              </tr>
+                                            </thead>
+                                            <tbody >
+                                            {% for p in products %}
+                                           <tr>
+                                           <td><img class="img-thumbnail" src="{{p.linkPicture}}" alt=""></td>
+                                               <td>
+                                                  <input id="tdTitle{{p._id}}" type="text" class="d-none" value="{{p.title}}">
+                                                   {{p.title}}
+                                               </td>
+                                               <td>
+                                                  <input id="tdPrice{{p._id}}" type="text" class="d-none" value="{{p.price}}">
+                                                {{p.price}}
+                                            </td>
+                                            <td>
+                                        <form  action="/adminProductDelete/" method="get">
+                                          <input type="hidden" value="{{p._id}}" name="idDelete"/>
+                                          <button style="font-size:1.5rem" class="btn btn-outline-info" type="submit"  > <i class="fa fa-trash"></i> </button>
+                                        </form>
+                                        <form class="mt-4"  action="/ProductUpdate" method="post">
+                                          <button  onclick="ProductUpdate('{{p._id}}')"  style="font-size:1.5rem" class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#addProduct" > <i class="fa fa-pencil"> </i> </button>
+                                        </form>
+                                        </td>
+                                           </tr>
+                                           {% endfor %}
+                                            </tbody>
+                                          </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+    </section>
+    {% include "../layout/script.njk" %}
+    <script>
+        $(".active").removeClass('active')
+        document.getElementById('aProduct').setAttribute("class", "active list-group-item list-group-item-action")
+    </script>
+</body>
+
+<div style="font-size:1.5rem"  class="modal fade" id="addProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div style="font-size:1.5rem"  class="modal-dialog" role="document">
+          <div style="font-size:1.5rem" class="modal-content">
+            <div class="modal-header">
+              <h4  class="modal-title" id="exampleModalLabel">Добавить товар</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="productFormId"  method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Название</label>
+                  <input name="title" type="text" class="form-control" id="recipient-name">
+                </div>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label">Цена</label>
+                  <textarea name ="price" class="form-control" id="message-text"></textarea>
+                </div>
+                <div  class="form-group">
+                      
+                        <input name="image" type="file">
+                </div>
+                <input name ="IDforSearch"  id="idProductId" type="text" class ="d-none">
+                <button id="subHidden" type="submit" class="d-none" ></button>
+              </form>
+            </div>
+            <div  class="modal-footer">
+              <button style="font-size:1.5rem" type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+              <button  style="font-size:1.5rem" type="button"  onclick="sendSubProduct()" class="btn btn-primary">Сохранить</button>
+            </div>
+          </div>
+        </div>
+      </div>

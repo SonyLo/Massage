@@ -441,3 +441,45 @@ $('#tableAdminNews').SetEditable({
     document.getElementById("idNewsId").value = idNews
 
   }
+
+  function ContactUpdate(idContact){
+     
+    document.getElementById("typeContact").value =  document.getElementById("tdTitle"+idContact).value
+    document.getElementById("message-text").value =  document.getElementById("tdText"+idContact).value
+    document.getElementById("idContactId").value = idContact
+
+  }
+  function TeacherUpdate(idTeacher){
+     
+    document.getElementById("recipient-name").value =  document.getElementById("tdTitle"+idTeacher).value
+    document.getElementById("message-text").value =  document.getElementById("tdText"+idTeacher).value
+    document.getElementById("idTeacherId").value = idTeacher
+
+  }
+  function formatDate(date) {
+
+    var dd = date.getDate();
+    if (dd < 10) dd = '0' + dd;
+  
+    var mm = date.getMonth() + 1;
+    if (mm < 10) mm = '0' + mm;
+  
+    var yy = date.getFullYear();
+    if (yy < 10) yy = '0' + yy;
+  
+    return yy + '-' + mm + '-' + dd;
+  }
+  function CourseUpdate(idCourse){
+     
+    document.getElementById("courseName").value =  document.getElementById("tdTitle"+idCourse).value
+    document.getElementById("courseDescription").value =  document.getElementById("tdText"+idCourse).value
+    var t=document.getElementById("tdDate"+idCourse).value
+    // t=formatDate(t)
+    document.getElementById("dateStart").value =  document.getElementById("tdDate"+idCourse).value
+    document.getElementById("price").value =  document.getElementById("tdPrice"+idCourse).value
+    document.getElementById("duration").value =  document.getElementById("tdDuration"+idCourse).value
+    document.getElementById("teacher").value =  document.getElementById("tdIdTeacher"+idCourse).value
+    document.getElementById("level").value =  document.getElementById("tdForNewbies"+idCourse).value
+    document.getElementById("idCourseId").value = idCourse
+
+  }

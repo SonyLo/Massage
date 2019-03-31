@@ -32,6 +32,19 @@ function formatDate(date) {
   
     return dd + '.' + mm + '.' + yy;
   }
+  function formatDateAdmin(date) {
+
+    var dd = date.getDate();
+    if (dd < 10) dd = '0' + dd;
+  
+    var mm = date.getMonth() + 1;
+    if (mm < 10) mm = '0' + mm;
+  
+    var yy = date.getFullYear();
+    if (yy < 10) yy = '0' + yy;
+  
+    return yy + '-' + mm + '.' + dd;
+  }
 app.get("/", async(req, res)=>{
     // вывод новостей
     const count_news= await News.find({}).count()
@@ -544,14 +557,16 @@ app.get("/adminCourses", async(req, res)=>{
     if(req.user_data){
         let courses = await Courses.find({}).sort('-date')
         var date=[]
+        var dateIn=[]
         var teacher=[]
         let teachers=await Teachers.find({})
         for (var i=0;i<courses.length;i++)
        {
            date.push(moment(courses[i].date).format('DD-MM-YYYY'))
+           dateIn.push(moment(courses[i].date).format('YYYY-MM-DD'))
            teacher.push(await Teachers.findOne({_id: courses[i].idTeacher}))
        }
-        res.render('adminTables/adminCourses.njk',{courses,date,teacher,teachers});  
+        res.render('adminTables/adminCourses.njk',{courses,date,teacher,teachers,dateIn});  
     }
     else{
         // res.send("Nooooo")
@@ -562,60 +577,101 @@ app.get("/adminCourses", async(req, res)=>{
 
 
 app.post("/adminCourses", upload.single('image'), async(req, res)=>{
-    
     authh(req, res)
     if(req.user_data){
         
-        var d=req.body.dateStart
-        
-        var dd=d.split('-')
-        
-        var ddd=new Date(Date.UTC(parseInt(dd[0]),parseInt(dd[1])-1,parseInt(dd[2])))
-        
-        var te=await Teachers.findOne({_id:req.body.teacher})
-        let courses
-        if(req.body.level==1)
-        {
-            courses = new Courses({
-                linkPicture: req.file ? req.file.path : '',
-                title: req.body.courseName,
-                text: req.body.courseDescription,
-                date:ddd,
-                idTeacher:await Teachers.findOne({'_id':req.body.teacher}),
-                price:req.body.price,
-                duration:req.body.duration,
-                forNewbies:'true'
-            })
-            console.log(courses)
+        const candidate = await Courses.findById(req.body.IDforSearch)
+        if(candidate){
+            var d=req.body.dateStart
+            var dd=d.split('-')
+            var ddd=new Date(Date.UTC(parseInt(dd[0]),parseInt(dd[1])-1,parseInt(dd[2])))
+            let updated;
+            if(req.body.level==1)
+            {
+                updated = {
+                    title: req.body.courseName,
+                    text: req.body.courseDescription,
+                    date:ddd,
+                    idTeacher:await Teachers.findOne({'_id':req.body.teacher}),
+                    price:req.body.price,
+                    duration:req.body.duration,
+                    forNewbies:'true'
+                }
+            }
+            else
+            {
+                updated ={
+                    linkPicture: req.file ? req.file.path : '',
+                    title: req.body.courseName,
+                    text: req.body.courseDescription,
+                    date:ddd,
+                    idTeacher:await Teachers.findOne({'_id':req.body.teacher}),
+                    price:req.body.price,
+                    duration:req.body.duration,
+                    forNewbies:'false'
+                }
+            }
+            if(req.file){
+                updated.linkPicture = req.file.path
+            }
+
+            try{
+                const courses = await Courses.findOneAndUpdate({_id:req.body.IDforSearch}, {$set: updated},{new:true})
+                res.redirect("/adminCourses")
+            }
+            catch(e){
+                console.log(e)
+            }
+
         }
-        else
-        {
-            courses = new Courses({
-                linkPicture: req.file ? req.file.path : '',
-                title: req.body.courseName,
-                text: req.body.courseDescription,
-                date:ddd,
-                idTeacher:await Teachers.findOne({'_id':req.body.teacher}),
-                price:req.body.price,
-                duration:req.body.duration,
-                forNewbies:'false'
+        else{
+            var d=req.body.dateStart
+            var dd=d.split('-')
+            var ddd=new Date(Date.UTC(parseInt(dd[0]),parseInt(dd[1])-1,parseInt(dd[2])))
+            var te=await Teachers.findOne({_id:req.body.teacher})
+            let courses
+            if(req.body.level==1)
+            {
+                courses = new Courses({
+                    linkPicture: req.file ? req.file.path : '',
+                    title: req.body.courseName,
+                    text: req.body.courseDescription,
+                    date:ddd,
+                    idTeacher:await Teachers.findOne({'_id':req.body.teacher}),
+                    price:req.body.price,
+                    duration:req.body.duration,
+                    forNewbies:'true'
+                })
+                console.log(courses)
+            }
+            else
+            {
+                courses = new Courses({
+                    linkPicture: req.file ? req.file.path : '',
+                    title: req.body.courseName,
+                    text: req.body.courseDescription,
+                    date:ddd,
+                    idTeacher:await Teachers.findOne({'_id':req.body.teacher}),
+                    price:req.body.price,
+                    duration:req.body.duration,
+                    forNewbies:'false'
+                })
+                console.log(courses)
+            }
+        try {
+            await courses.save()
+            res.redirect("/adminCourses")
+        } catch (e) {
+            res.status(501).json({
+            status: "bad"
             })
-            console.log(courses)
+            }
         }
-    try {
-        await courses.save()
-        res.redirect("/adminCourses")
-      } catch (e) {
-       res.status(501).json({
-        status: "bad"
-       })
-      }
+
     }
     else{
         res.send("Nooooo")
     }
-    
-       
 })
 app.get("/adminCoursesDelete", async(req, res)=>{
     
@@ -651,29 +707,48 @@ app.get("/adminTeacher", async(req, res)=>{
     }
 })
 app.post("/adminTeacher", upload.single('image'), async(req, res)=>{
-    
     authh(req, res)
     if(req.user_data){
-        console.log(req.file)
+        
+        const candidate = await Teachers.findById(req.body.IDforSearch)
+        if(candidate){
+            const updated = {
+                name: req.body.nameTeacher,
+                description: req.body.description
+            }
+            if(req.file){
+                updated.linkPicture = req.file.path
+            }
+
+            try{
+                const teachers = await Teachers.findOneAndUpdate({_id:req.body.IDforSearch}, {$set: updated},{new:true})
+                res.redirect("/adminTeacher")
+            }
+            catch(e){
+                console.log(e)
+            }
+
+        }
+        else{
             const teacher = new Teachers({
                 linkPicture: req.file ? req.file.path : '',
                 name: req.body.nameTeacher,
                 description: req.body.description
             })
-    try {
-        await teacher.save()
-        res.redirect("/adminTeacher")
-      } catch (e) {
-       res.status(501).json({
-        status: "bad"
-       })
-      }
+            try {
+                await teacher.save()
+                res.redirect("/adminTeacher")
+              } catch (e) {
+               res.status(501).json({
+                status: "bad"
+               })
+              }
+        }
+
     }
     else{
         res.send("Nooooo")
     }
-    
-       
 })
 
 app.get("/adminTeacherDelete", async(req, res)=>{
@@ -713,25 +788,48 @@ app.get("/adminContact", async(req, res)=>{
      
 })
 app.post("/adminContact", upload.single('image'), async(req, res)=>{
-    authh(req, res)  
+
+    authh(req, res)
     if(req.user_data){
+        
+        const candidate = await Contacts.findById(req.body.IDforSearch)
+        if(candidate){
+            const updated = {
+                title: req.body.typeContact,
+                description: req.body.description,
+            }
+            if(req.file){
+                updated.linkPicture = req.file.path
+            }
+
+            try{
+                const contacts = await Contacts.findOneAndUpdate({_id:req.body.IDforSearch}, {$set: updated},{new:true})
+                res.redirect("/adminContact")
+            }
+            catch(e){
+                console.log(e)
+            }
+
+        }
+        else{
             const contacts = new Contacts({
                 title: req.body.typeContact,
                 description: req.body.description
             })
-    try {
-        await contacts.save()
-        res.redirect("/adminContact")
-      } catch (e) {
-       res.status(501).json({
-        status: "bad"
-       })
-      }
+            try {
+                await contacts.save()
+                res.redirect("/adminContact")
+              } catch (e) {
+               res.status(501).json({
+                status: "bad"
+               })
+              }
+        }
+
     }
     else{
         res.send("Nooooo")
     }
-    
        
 })
 app.get("/adminContactDelete", async(req, res)=>{
@@ -756,6 +854,12 @@ app.get("/adminContactDelete", async(req, res)=>{
 })
 
 app.post("/NewsUpdate", async(req, res)=>{
+    console.log("dskjksdlk")
+})
+app.post("/ContactUpdate", async(req, res)=>{
+    console.log("dskjksdlk")
+})
+app.post("/CourseUpdate", async(req, res)=>{
     console.log("dskjksdlk")
 })
 

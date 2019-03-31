@@ -23,31 +23,45 @@
                                     <thead class="thead text-center align-content-center">
                                       <tr>
                                        
+                                        <th style="width: 21%"> Фото </th>
                                         <th scope="col">Название курса</th>
                                         <th scope="col">Описание</th>
                                         <th scope="col">Дата</th>
                                         <th scope="col">Преподаватель</th>
                                         <th scope="col">Уровень</th>
-                                        <th scope="col">Уровень</th>
+                                        <th scope="col"></th>
                                       </tr>
                                     </thead>
                                     <tbody>
                                     {% for i in range(0,courses.length)  %}
                                       <tr>
-                                      
-                                        <td>{{courses[i].title}}</td>
+                                      <td><img class="img-thumbnail" src="{{courses[i].linkPicture}}" alt=""></td>
+                                        <td>
+                                        <input id="tdTitle{{courses[i]._id}}" type="text" class="d-none" value="{{courses[i].title}}"> 
+                                        <input id="tdText{{courses[i]._id}}" type="text" class="d-none" value="{{courses[i].text}}"> 
+                                        <input id="tdDate{{courses[i]._id}}" type="text" class="d-none" value="{{dateIn[i]}}"> 
+                                        <input id="tdIdTeacher{{courses[i]._id}}" type="text" class="d-none" value="{{courses[i].idTeacher}}"> 
+                                        <input id="tdPrice{{courses[i]._id}}" type="text" class="d-none" value="{{courses[i].price}}"> 
+                                        <input id="tdDuration{{courses[i]._id}}" type="text" class="d-none" value="{{courses[i].duration}}"> 
+                                        {{courses[i].title}}
+                                        </td>
                                          <td>{{courses[i].text}}</td>
                                           <td>{{date[i]}}</td>
                                         <td>{{teacher[i].name}}</td>
                                         {% if courses[i].forNewbies==true %}
+                                          <input id="tdForNewbies{{courses[i]._id}}" type="text" class="d-none" value="1">
                                           <td>Новички</td>
                                         {% else %}
+                                          <input id="tdForNewbies{{courses[i]._id}}" type="text" class="d-none" value="0">
                                           <td>Продвинутые</td>
                                         {% endif %}
                                         <td>
                                         <form  action="/adminCoursesDelete/" method="get">
                                           <input type="hidden" value="{{courses[i]._id}}" name="idDelete"/>
-                                          <input style="font-size:1.7rem" class="btn btn-outline-info" type="submit" value="Удалить" />
+                                          <button style="font-size:1.5rem" class="btn btn-outline-info" type="submit"  > <i class="fa fa-trash"></i> </button>
+                                        </form>
+                                        <form class="mt-4"  action="/CourseUpdate" method="post">
+                                          <button  onclick="CourseUpdate('{{courses[i]._id}}')"  style="font-size:1.5rem" class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#addCourses" > <i class="fa fa-pencil"> </i> </button>
                                         </form>
                                         </td>
                                       </tr>
@@ -86,27 +100,27 @@
               <form id="coursesFormId"  method="post" enctype="multipart/form-data">
                 <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Название курса</label>
-                  <input type="text" class="form-control" id="" name="courseName">
+                  <input type="text" class="form-control" id="courseName" name="courseName">
                 </div>
                 <div class="form-group">
                   <label for="message-text" class="col-form-label">Описание курса</label>
-                  <textarea class="form-control" id="" name="courseDescription"></textarea>
+                  <textarea class="form-control" id="courseDescription" name="courseDescription"></textarea>
                 </div>
                 <div class="form-group">
                   <label for="message-text" class="col-form-label">Дата начала</label>
-                  <input type="date" class="form-control" id="" name="dateStart">
+                  <input type="date" class="form-control" id="dateStart" name="dateStart">
                 </div>
                 <div class="form-group">
                   <label for="message-text" class="col-form-label">Цена</label>
-                  <input type="text" class="form-control" id="" name="price">
+                  <input type="text" class="form-control" id="price" name="price">
                 </div>
                 <div class="form-group">
                   <label for="message-text" class="col-form-label">Длительность</label>
-                  <input type="text" class="form-control" id="" name="duration">
+                  <input type="text" class="form-control" id="duration" name="duration">
                 </div>
                 <div class="form-group">
                   <label for="message-text" class="col-form-label">Преподаватель</label>
-                  <select name="teacher" id="">
+                  <select name="teacher" id="teacher">
                   {% for t in teachers %}
                     <option value="{{t._id}}">{{t.name}}</option>
                     {% endfor %}
@@ -114,7 +128,7 @@
                 </div>
                  <div class="form-group">
                   <label for="message-text" class="col-form-label">Уровень</label>
-                  <select name="level" id="">
+                  <select name="level" id="level">
                     <option value="1">Новички</option>
                     <option value="0">Продвинутые</option>
                   </select>  
@@ -124,12 +138,13 @@
                       
                         <input name="image" type="file">
                 </div>
+                <input name ="IDforSearch"  id="idCourseId" type="text" class ="d-none">
                 <button id="subHidden" type="submit" class="d-none" ></button>
               </form>
             </div>
             <div  class="modal-footer">
               <button style="font-size:1.5rem" type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-              <button  style="font-size:1.5rem" type="button"  onclick="sendSubCourses()" class="btn btn-primary">Добавить</button>
+              <button  style="font-size:1.5rem" type="button"  onclick="sendSubCourses()" class="btn btn-primary">Сохранить</button>
             </div>
           </div>
         </div>

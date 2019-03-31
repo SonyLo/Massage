@@ -433,3 +433,11 @@ $('#tableAdminNews').SetEditable({
    
   })
   
+
+  function NewsUpdate(idNews){
+     
+    document.getElementById("recipient-name").value =  document.getElementById("tdTitle"+idNews).value
+    document.getElementById("message-text").value =  document.getElementById("tdText"+idNews).value
+    document.getElementById("idNewsId").value = idNews
+
+  }

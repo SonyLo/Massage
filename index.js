@@ -471,21 +471,43 @@ app.post("/adminNews", upload.single('image'), async(req, res)=>{
     
     authh(req, res)
     if(req.user_data){
-        console.log(req.file)
-            const news = new News({
+        
+        const candidate = await News.findById(req.body.IDforSearch)
+        if(candidate){
+            const updated = {
+                title: req.body.titleNews,
+                text: req.body.description,
+            }
+            if(req.file){
+                updated.linkPicture = req.file.path
+            }
+
+            try{
+                const news = await News.findOneAndUpdate({_id:req.body.IDforSearch}, {$set: updated},{new:true})
+                res.redirect("/adminNews")
+            }
+            catch(e){
+                console.log(e)
+            }
+
+        }
+        else{
+            const  news = new News({
                 linkPicture: req.file ? req.file.path : '',
                 title: req.body.titleNews,
                 text: req.body.description,
                 date: Date.now()
             })
-    try {
-        await news.save()
-        res.redirect("/adminNews")
-      } catch (e) {
-       res.status(501).json({
-        status: "bad"
-       })
-      }
+            try {
+                await news.save()
+                res.redirect("/adminNews")
+              } catch (e) {
+               res.status(501).json({
+                status: "bad"
+               })
+              }
+        }
+
     }
     else{
         res.send("Nooooo")
@@ -731,6 +753,10 @@ app.get("/adminContactDelete", async(req, res)=>{
     }
     
        
+})
+
+app.post("/NewsUpdate", async(req, res)=>{
+    console.log("dskjksdlk")
 })
 
 

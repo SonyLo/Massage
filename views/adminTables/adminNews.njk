@@ -16,29 +16,35 @@
                 <div class="card card-body">
                        <div class="row ">
                             
-                            <button class="btn btn-outline-info ml-4 mb-3"> <i class="fa fa-plus fa-lg fa-fw" aria-hidden="true" data-toggle="modal" data-target="#addNews"></i> </button>
+                            <button class="btn btn-outline-info ml-4 mb-3" data-toggle="modal" data-target="#addNews"> <i class="fa fa-plus fa-lg fa-fw" aria-hidden="true" ></i> </button>
                        </div>
                        <div class="row mx-1">
                        
                             <table id="tableAdminNews" class="table table-bordered ">
                                     <thead class="thead  text-center align-content-center ">
                                       <tr>
-                                       
-                                        <th style="width: 21%" >Заголовок новости</th>
-                                        <th style="width: 60%" >Текст новости</th>
+                                        <th style="width: 21%"> Фото </th>
+                                        <th style="width: 20%" >Заголовок новости</th>
+                                        <th style="width: 50%" >Текст новости</th>
                                         <th style="width: 9%" >Дата</th>
+                                        <th style="width: 9%" ></th>
                                       </tr>
                                     </thead>
                                     <tbody >
                                     {% for i in range(0,news.length) %}
                                       <tr>
-                                        <td>{{news[i].title}} </td>
-                                        <td>{{news[i].text}}</td>
-                                        <td>{{date[i]}}</td>
+                                        <td><img class="img-thumbnail" src="{{news[i].linkPicture}}" alt=""></td>
+                                        <td > <input id="tdTitle{{news[i]._id}}" type="text" class="d-none" value="{{news[i].title}}"> {{news[i].title}} </td>
+                                        <td > <input id="tdText{{news[i]._id}}" type="text" class="d-none" value="{{news[i].text}}">  {{news[i].text}}</td>
+                                        <td >{{date[i]}}</td>
                                         <td>
                                         <form  action="/adminNewsDelete/" method="get">
                                           <input type="hidden" value="{{news[i]._id}}" name="idDelete"/>
-                                          <input style="font-size:1.7rem" class="btn btn-outline-info" type="submit" value="Удалить" />
+                                          <button style="font-size:1.5rem" class="btn btn-outline-info" type="submit"  > <i class="fa fa-trash"></i> </button>
+                                        </form>
+                                        <form class="mt-4"  action="/NewsUpdate" method="post">
+                                          <!-- <input id="{{news[i]._id}}" type="hidden" value="{{news[i]._id}}" name="btnUpdate"/> -->
+                                          <button  onclick="NewsUpdate('{{news[i]._id}}')"  style="font-size:1.5rem" class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#addNews" > <i class="fa fa-pencil"> </i> </button>
                                         </form>
                                         </td>
                                       </tr>
@@ -75,22 +81,24 @@
               <form id="formId"  method="post" enctype="multipart/form-data">
                 <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Название новости</label>
-                  <input name="titleNews" type="text" class="form-control" id="recipient-name">
+                  <input style="font-size:1.5rem"  name="titleNews" type="text" class="form-control" id="recipient-name">
                 </div>
                 <div class="form-group">
                   <label for="message-text" class="col-form-label">Текст новости</label>
-                  <textarea name ="description" class="form-control" id="message-text"></textarea>
+                  <textarea style="font-size:1.5rem"  name ="description" class="form-control" id="message-text"></textarea>
                 </div>
                 <div  class="form-group">
                       
                         <input name="image" type="file">
+                        
                 </div>
+                <input name ="IDforSearch"  id="idNewsId" type="text" class ="d-none">
                 <button id="subHidden" type="submit" class="d-none" ></button>
               </form>
             </div>
             <div  class="modal-footer">
               <button style="font-size:1.5rem" type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-              <button  style="font-size:1.5rem" type="button"  onclick="sendSubNews()" class="btn btn-primary">Добавить</button>
+              <button  style="font-size:1.5rem" type="button"  onclick="sendSubNews()" class="btn btn-primary">Сохранить</button>
             </div>
           </div>
         </div>

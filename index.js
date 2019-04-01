@@ -10,6 +10,7 @@ const About=require('./models/abouts')
 const AboutCourses=require('./models/about_courses')
 const Comments=require('./models/comments')
 const Products=require('./models/products')
+const Services=require('./models/services')
 const User = require('./models/users')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
@@ -302,6 +303,23 @@ app.get('/addProducts', async(req,res)=>{
     }
     res.status(200).json({ st:"Your order is accepted"})
 })
+// добавление услуг
+app.get('/addServices', async(req,res)=>{
+    const services = await new Services({
+        linkPicture:'img/uploads/courseNew1.png',
+        title: 'Массажное масло',
+        text: '',
+        price:'2000'
+    })
+    try {
+        services.save()
+        console.log('Услуга добавлена')
+    }
+    catch (e) {
+        console.log(e)
+    }
+    res.status(200).json({ st:"Your order is accepted"})
+})
 // добавление отзывов
 app.get('/addComments', async(req,res)=>{
     const comments = await new Comments({
@@ -383,8 +401,16 @@ app.get("/schedule", async(req, res)=>{
 })
 
 app.get("/product", async(req, res)=>{
-    const products=await Products.find({})
-    res.render('product.njk',{products});    
+    const prod=await Products.find({})
+    const head='Товары'
+    const id='liProd'
+    res.render('product.njk',{prod,head,id});    
+})
+app.get("/service", async(req, res)=>{
+    const prod=await Services.find({})
+    const head='Услуги'
+    const id='liService'
+    res.render('product.njk',{prod,head,id});    
 })
 
 
@@ -812,7 +838,7 @@ app.post("/adminProduct", upload.single('image'), async(req, res)=>{
                 console.log('222')
                 const updated = {
                     title: req.body.title,
-                    text: '',
+                    text: req.body.text,
                     price: req.body.price,
                 }
                 if(req.file){
@@ -838,7 +864,7 @@ app.post("/adminProduct", upload.single('image'), async(req, res)=>{
             const product = new Products({
                 linkPicture: req.file ? req.file.path : '',
                 title: req.body.title,
-                text: '',
+                text: req.body.text,
                 price: req.body.price,
             })
             console.log(product)
@@ -958,6 +984,95 @@ app.get("/adminContactDelete", async(req, res)=>{
        
 })
 
+
+app.get("/adminService", async(req, res)=>{
+    authh(req, res)
+    if(req.user_data){
+        const services=await Services.find({})
+        res.render('adminTables/adminService.njk', {services}); 
+    }
+    else{
+        res.send("Nooooo")
+    }
+     
+})
+
+app.post("/adminService", upload.single('image'), async(req, res)=>{
+
+    authh(req, res)
+    if(req.user_data){
+        if(req.body.IDforSearch)
+        {
+        const candidate = await Services.findById(req.body.IDforSearch)
+        if(candidate){
+            const updated = {
+                title:req.body.title,
+                text: req.body.text,
+                price: req.body.price,
+            }
+            if(req.file){
+                updated.linkPicture = req.file.path
+            }
+
+            try{
+                const services = await Services.findOneAndUpdate({_id:req.body.IDforSearch}, {$set: updated},{new:true})
+                res.redirect("/adminService")
+            }
+            catch(e){
+                console.log(e)
+            }
+
+        }
+        else
+        {
+            res.send("Nooooo")
+        }
+        }
+        else{
+            const services = new Services({
+                linkPicture: req.file ? req.file.path : '',
+                title: req.body.title,
+                text: req.body.text,
+                price: req.body.price,
+            })
+            try {
+                await services.save()
+                res.redirect("/adminService")
+              } catch (e) {
+               res.status(501).json({
+                status: "bad"
+               })
+              }
+        }
+
+    }
+    else{
+        res.send("Nooooo")
+    }
+       
+})
+app.get("/adminServiceDelete", async(req, res)=>{
+    authh(req, res) 
+    if(req.user_data){
+        const id=req.query.idDelete
+        let services = await Services.findByIdAndDelete({_id:id})
+    try {
+        await services.save()
+        res.redirect("/adminService")
+      } catch (e) {
+       res.status(501).json({
+        status: "bad"
+       })
+      }
+    }
+    else{
+        res.send("Nooooo")
+    }
+    
+       
+})
+
+
 app.post("/NewsUpdate", async(req, res)=>{
     console.log("dskjksdlk")
 })
@@ -968,6 +1083,9 @@ app.post("/ProductUpdate", async(req, res)=>{
     console.log("dskjksdlk")
 })
 app.post("/CourseUpdate", async(req, res)=>{
+    console.log("dskjksdlk")
+})
+app.post("/ServiceUpdate", async(req, res)=>{
     console.log("dskjksdlk")
 })
 

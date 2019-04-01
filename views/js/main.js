@@ -444,6 +444,32 @@ $('#contactFormId').on('submit', function(e){
         }
     })
 })
+
+function sendSubService(){
+   
+    document.getElementById("subHidden").click();
+}
+
+$('#serviceFormId').on('submit', function(e){
+    e.preventDefault()
+    var formData = new FormData(this)
+    
+    $.ajax({
+        type: 'POST',
+        url: '/adminService',
+        data:formData,
+        processData:false,
+        contentType:false,
+        success: function(r){
+            alert('Успешно добавлено!')
+            document.location.href ='/adminService'
+        },
+        error: function(er){
+            console.log(er);
+            alert('Упс, что то пошло не так')
+        }
+    })
+})
   
 //function activElem(elemRef){
   //$(".active").removeClass('active')
@@ -484,8 +510,17 @@ $('#tableAdminNews').SetEditable({
   function ProductUpdate(idProduct){
      
     document.getElementById("recipient-name").value =  document.getElementById("tdTitle"+idProduct).value
+    document.getElementById("recipient-text").value =  document.getElementById("tdText"+idProduct).value
     document.getElementById("message-text").value =  document.getElementById("tdPrice"+idProduct).value
     document.getElementById("idProductId").value = idProduct
+
+  }
+  function ServiceUpdate(idService){
+     
+    document.getElementById("recipient-name").value =  document.getElementById("tdTitle"+idService).value
+    document.getElementById("recipient-text").value =  document.getElementById("tdText"+idService).value
+    document.getElementById("message-text").value =  document.getElementById("tdPrice"+idService).value
+    document.getElementById("idServiceId").value = idService
 
   }
 

@@ -7,7 +7,7 @@
     <div class="container">
             <div class="row mt-3 ">
                 <div class="col-md-12">
-                        <h1 class="text-center text-uppercase">Товары</h1>
+                        <h1 class="text-center text-uppercase">{{head}}</h1>
                 </div>
                    
                     
@@ -16,7 +16,7 @@
         <div class="row mt-3 mb-4 justify-content-center">
                 
              
-                       {% for p in products %}
+                       {% for p in prod %}
                         <div class="col-md-4 mt-3">
                                 <div class="item">
                                     <div class="product">
@@ -58,7 +58,7 @@
 {% include "./layout/script.njk" %}
 <script>
  $(".active").removeClass('active')
-  document.getElementById('liProd').setAttribute("class", "active")
+  document.getElementById('{{id}}').setAttribute("class", "active")
 </script>
 </body>
 {% include "./layout/footer.njk" %}

@@ -286,7 +286,7 @@ function subForm(){
              document.location.href = "/adminNews"
         },
         error: function (response) {
-
+            
         }
     });
     

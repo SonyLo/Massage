@@ -14,9 +14,9 @@
         
                             <div class="card card-body">
                                 <div class="row">
-                                    <button class="btn btn-outline-info ml-4 mb-3" data-toggle="modal" data-target="#addProduct"> <i class="fa fa-plus fa-lg fa-fw" aria-hidden="true" ></i> </button>
+                                    <button class="btn btn-outline-info ml-4 mb-3" data-toggle="modal" data-target="#addService"> <i class="fa fa-plus fa-lg fa-fw" aria-hidden="true" ></i> </button>
                                     <div class="col-md-12">
-                                        <table id="tableAdminProduct" class="table table-bordered ">
+                                        <table id="tableAdminService" class="table table-bordered ">
                                             <thead class="thead  text-center align-content-center ">
                                               <tr>
                                                <th style="width: 21%"> Фото </th>
@@ -28,28 +28,28 @@
                                               </tr>
                                             </thead>
                                             <tbody >
-                                            {% for p in products %}
+                                            {% for s in services %}
                                            <tr>
-                                           <td><img class="img-thumbnail" src="{{p.linkPicture}}" alt=""></td>
+                                           <td><img class="img-thumbnail" src="{{s.linkPicture}}" alt=""></td>
                                                <td>
-                                                  <input id="tdTitle{{p._id}}" type="text" class="d-none" value="{{p.title}}">
-                                                   {{p.title}}
+                                                  <input id="tdTitle{{s._id}}" type="text" class="d-none" value="{{s.title}}">
+                                                   {{s.title}}
                                                </td>
                                                <td>
-                                                  <input id="tdText{{p._id}}" type="text" class="d-none" value="{{p.text}}">
-                                                   {{p.text}}
+                                                  <input id="tdText{{s._id}}" type="text" class="d-none" value="{{s.text}}">
+                                                   {{s.text}}
                                                </td>
                                                <td>
-                                                  <input id="tdPrice{{p._id}}" type="text" class="d-none" value="{{p.price}}">
-                                                {{p.price}}
+                                                  <input id="tdPrice{{s._id}}" type="text" class="d-none" value="{{s.price}}">
+                                                {{s.price}}
                                             </td>
                                             <td>
-                                        <form  action="/adminProductDelete/" method="get">
-                                          <input type="hidden" value="{{p._id}}" name="idDelete"/>
+                                        <form  action="/adminServiceDelete/" method="get">
+                                          <input type="hidden" value="{{s._id}}" name="idDelete"/>
                                           <button style="font-size:1.5rem" class="btn btn-outline-info" type="submit"  > <i class="fa fa-trash"></i> </button>
                                         </form>
-                                        <form class="mt-4"  action="/ProductUpdate" method="post">
-                                          <button  onclick="ProductUpdate('{{p._id}}')"  style="font-size:1.5rem" class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#addProduct" > <i class="fa fa-pencil"> </i> </button>
+                                        <form class="mt-4"  action="/ServiceUpdate" method="post">
+                                          <button  onclick="ServiceUpdate('{{s._id}}')"  style="font-size:1.5rem" class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#addService" > <i class="fa fa-pencil"> </i> </button>
                                         </form>
                                         </td>
                                            </tr>
@@ -67,44 +67,44 @@
     {% include "../layout/script.njk" %}
     <script>
         $(".active").removeClass('active')
-        document.getElementById('aProduct').setAttribute("class", "active list-group-item list-group-item-action")
+        document.getElementById('aService').setAttribute("class", "active list-group-item list-group-item-action")
     </script>
 </body>
 
-<div style="font-size:1.5rem"  class="modal fade" id="addProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div style="font-size:1.5rem"  class="modal fade" id="addService" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div style="font-size:1.5rem"  class="modal-dialog" role="document">
           <div style="font-size:1.5rem" class="modal-content">
             <div class="modal-header">
-              <h4  class="modal-title" id="exampleModalLabel">Добавить товар</h4>
+              <h4  class="modal-title" id="exampleModalLabel">Добавить услугу</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-              <form id="productFormId"  method="post" enctype="multipart/form-data">
+              <form id="serviceFormId"  method="post" enctype="multipart/form-data">
                 <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Название</label>
                   <input name="title" type="text" class="form-control" id="recipient-name">
                 </div>
                 <div class="form-group">
-                  <label for="recipient-text" class="col-form-label">Описание</label>
-                  <input name="text" type="text" class="form-control" id="recipient-text">
+                  <label for="recipient-text" class="col-form-label">Цена </label>
+                  <input name="price" type="text" class="form-control" id="message-text">
                 </div>
                 <div class="form-group">
-                  <label for="message-text" class="col-form-label">Цена</label>
-                  <textarea name ="price" class="form-control" id="message-text"></textarea>
+                  <label for="message-text" class="col-form-label">Описание</label>
+                  <textarea name ="text" class="form-control" id="recipient-text"></textarea>
                 </div>
                 <div  class="form-group">
                       
                         <input name="image" type="file">
                 </div>
-                <input name ="IDforSearch"  id="idProductId" type="text" class ="d-none">
+                <input name ="IDforSearch"  id="idServiceId" type="text" class ="d-none">
                 <button id="subHidden" type="submit" class="d-none" ></button>
               </form>
             </div>
             <div  class="modal-footer">
               <button style="font-size:1.5rem" type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-              <button  style="font-size:1.5rem" type="button"  onclick="sendSubProduct()" class="btn btn-primary">Сохранить</button>
+              <button  style="font-size:1.5rem" type="button"  onclick="sendSubService()" class="btn btn-primary">Сохранить</button>
             </div>
           </div>
         </div>

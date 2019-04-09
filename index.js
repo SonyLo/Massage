@@ -10,11 +10,12 @@ const About=require('./models/abouts')
 const AboutCourses=require('./models/about_courses')
 const Comments=require('./models/comments')
 const Products=require('./models/products')
+const Services=require('./models/services')
 const User = require('./models/users')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const upload = require('./mid/upload')
-
+const fs = require('fs');
 
 app.use(passport.initialize())
 require('./mid/passport')(passport)
@@ -302,6 +303,23 @@ app.get('/addProducts', async(req,res)=>{
     }
     res.status(200).json({ st:"Your order is accepted"})
 })
+// добавление услуг
+app.get('/addServices', async(req,res)=>{
+    const services = await new Services({
+        linkPicture:'img/uploads/courseNew1.png',
+        title: 'Массажное масло',
+        text: '',
+        price:'2000'
+    })
+    try {
+        services.save()
+        console.log('Услуга добавлена')
+    }
+    catch (e) {
+        console.log(e)
+    }
+    res.status(200).json({ st:"Your order is accepted"})
+})
 // добавление отзывов
 app.get('/addComments', async(req,res)=>{
     const comments = await new Comments({
@@ -383,8 +401,16 @@ app.get("/schedule", async(req, res)=>{
 })
 
 app.get("/product", async(req, res)=>{
-    const products=await Products.find({})
-    res.render('product.njk',{products});    
+    const prod=await Products.find({})
+    const head='Товары'
+    const id='liProd'
+    res.render('product.njk',{prod,head,id});    
+})
+app.get("/service", async(req, res)=>{
+    const prod=await Services.find({})
+    const head='Услуги'
+    const id='liService'
+    res.render('product.njk',{prod,head,id});    
 })
 
 
@@ -502,26 +528,31 @@ app.post("/adminNews", upload.single('image'), async(req, res)=>{
     
     authh(req, res)
     if(req.user_data){
-        
-        const candidate = await News.findById(req.body.IDforSearch)
-        if(candidate){
-            const updated = {
-                title: req.body.titleNews,
-                text: req.body.description,
+        if(req.body.IDforSearch){
+            const candidate = await News.findById(req.body.IDforSearch)
+            if(candidate){
+                const updated = {
+                    title: req.body.titleNews,
+                    text: req.body.description,
+                }
+                if(req.file){
+                    updated.linkPicture = req.file.path
+                }
+    
+                try{
+                    const news = await News.findOneAndUpdate({_id:req.body.IDforSearch}, {$set: updated},{new:true})
+                    res.redirect("/adminNews")
+                }
+                catch(e){
+                    console.log(e)
+                }
+    
             }
-            if(req.file){
-                updated.linkPicture = req.file.path
-            }
+            
 
-            try{
-                const news = await News.findOneAndUpdate({_id:req.body.IDforSearch}, {$set: updated},{new:true})
-                res.redirect("/adminNews")
-            }
-            catch(e){
-                console.log(e)
-            }
 
         }
+        
         else{
             const  news = new News({
                 linkPicture: req.file ? req.file.path : '',
@@ -551,6 +582,12 @@ app.get("/adminNewsDelete", async(req, res)=>{
     authh(req, res)
     if(req.user_data){
         const id=req.query.idDelete
+        let can = await News.findById({_id:id})
+        console.log(can.linkPicture)
+        fs.unlink(can.linkPicture, (err) => {
+            if (err) console.log(err);
+            console.log('successfully deleted '+ can.linkPicture);
+          });
         let news = await News.findByIdAndDelete({_id:id})
     try {
         await news.save()
@@ -582,7 +619,7 @@ app.get("/adminCourses", async(req, res)=>{
        {
            date.push(moment(courses[i].date).format('DD-MM-YYYY'))
            dateIn.push(moment(courses[i].date).format('YYYY-MM-DD'))
-           teacher.push(await Teachers.findOne({_id: courses[i].idTeacher}))
+           teacher.push( await Teachers.findOne({_id: courses[i].idTeacher}))
        }
         res.render('adminTables/adminCourses.njk',{courses,date,teacher,teachers,dateIn});  
     }
@@ -598,50 +635,53 @@ app.post("/adminCourses", upload.single('image'), async(req, res)=>{
     authh(req, res)
     if(req.user_data){
         
-        const candidate = await Courses.findById(req.body.IDforSearch)
-        if(candidate){
-            var d=req.body.dateStart
-            var dd=d.split('-')
-            var ddd=new Date(Date.UTC(parseInt(dd[0]),parseInt(dd[1])-1,parseInt(dd[2])))
-            let updated;
-            if(req.body.level==1)
-            {
-                updated = {
-                    title: req.body.courseName,
-                    text: req.body.courseDescription,
-                    date:ddd,
-                    idTeacher:await Teachers.findOne({'_id':req.body.teacher}),
-                    price:req.body.price,
-                    duration:req.body.duration,
-                    forNewbies:'true'
+        if(req.body.IDforSearch){
+            const candidate = await Courses.findById(req.body.IDforSearch)
+            if(candidate){
+                var d=req.body.dateStart
+                var dd=d.split('-')
+                var ddd=new Date(Date.UTC(parseInt(dd[0]),parseInt(dd[1])-1,parseInt(dd[2])))
+                let updated;
+                if(req.body.level==1)
+                {
+                    updated = {
+                        title: req.body.courseName,
+                        text: req.body.courseDescription,
+                        date:ddd,
+                        idTeacher:await Teachers.findOne({'_id':req.body.teacher}),
+                        price:req.body.price,
+                        duration:req.body.duration,
+                        forNewbies:'true'
+                    }
                 }
-            }
-            else
-            {
-                updated ={
-                    linkPicture: req.file ? req.file.path : '',
-                    title: req.body.courseName,
-                    text: req.body.courseDescription,
-                    date:ddd,
-                    idTeacher:await Teachers.findOne({'_id':req.body.teacher}),
-                    price:req.body.price,
-                    duration:req.body.duration,
-                    forNewbies:'false'
+                else
+                {
+                    updated ={
+                        linkPicture: req.file ? req.file.path : '',
+                        title: req.body.courseName,
+                        text: req.body.courseDescription,
+                        date:ddd,
+                        idTeacher:await Teachers.findOne({'_id':req.body.teacher}),
+                        price:req.body.price,
+                        duration:req.body.duration,
+                        forNewbies:'false'
+                    }
                 }
+                if(req.file){
+                    updated.linkPicture = req.file.path
+                }
+    
+                try{
+                    const courses = await Courses.findOneAndUpdate({_id:req.body.IDforSearch}, {$set: updated},{new:true})
+                    res.redirect("/adminCourses")
+                }
+                catch(e){
+                    console.log(e)
+                }
+    
             }
-            if(req.file){
-                updated.linkPicture = req.file.path
-            }
-
-            try{
-                const courses = await Courses.findOneAndUpdate({_id:req.body.IDforSearch}, {$set: updated},{new:true})
-                res.redirect("/adminCourses")
-            }
-            catch(e){
-                console.log(e)
-            }
-
         }
+       
         else{
             var d=req.body.dateStart
             var dd=d.split('-')
@@ -695,17 +735,32 @@ app.get("/adminCoursesDelete", async(req, res)=>{
     
     authh(req, res)
     if(req.user_data){
-        const id=req.query.idDelete
-        let courses = await Courses.findByIdAndDelete({_id:id})
-    try {
-        await courses.save()
-        res.redirect("/adminCourses")
-      } catch (e) {
-       res.status(501).json({
-        status: "bad"
-       })
-      }
-    }
+        if(req.query.idDelete){
+            const id=req.query.idDelete
+        
+            let can = await Courses.findById({_id:id})
+            console.log(can.linkPicture)
+            fs.unlink(can.linkPicture, (err) => {
+                if (err) console.log(err);
+                console.log('successfully deleted '+ can.linkPicture);
+              });
+    
+            let courses = await Courses.findByIdAndDelete({_id:id})
+        try {
+            await courses.save()
+            res.redirect("/adminCourses")
+          } catch (e) {
+           res.status(501).json({
+            status: "bad"
+           })
+          }
+        }
+        else{
+            res.send("Nooooo")
+        }
+
+        }
+       
     else{
         res.send("Nooooo")
     }
@@ -728,7 +783,8 @@ app.post("/adminTeacher", upload.single('image'), async(req, res)=>{
     authh(req, res)
     if(req.user_data){
         
-        const candidate = await Teachers.findById(req.body.IDforSearch)
+        if(req.body.IDforSearch){
+            const candidate = await Teachers.findById(req.body.IDforSearch)
         if(candidate){
             const updated = {
                 name: req.body.nameTeacher,
@@ -747,6 +803,8 @@ app.post("/adminTeacher", upload.single('image'), async(req, res)=>{
             }
 
         }
+        }
+        
         else{
             const teacher = new Teachers({
                 linkPicture: req.file ? req.file.path : '',
@@ -773,7 +831,14 @@ app.get("/adminTeacherDelete", async(req, res)=>{
     
     authh(req, res)
     if(req.user_data){
-        const id=req.query.idDelete
+        if(req.query.idDelete){
+            const id=req.query.idDelete
+            let can = await Teachers.findById({_id:id})
+            console.log(can.linkPicture)
+            fs.unlink(can.linkPicture, (err) => {
+                if (err) console.log(err);
+                console.log('successfully deleted '+ can.linkPicture);
+              });
         let teacher = await Teachers.findByIdAndDelete({_id:id})
     try {
         await teacher.save()
@@ -783,6 +848,10 @@ app.get("/adminTeacherDelete", async(req, res)=>{
         status: "bad"
        })
       }
+        }
+        else{
+            res.send("Nooooo")
+        }
     }
     else{
         res.send("Nooooo")
@@ -812,7 +881,7 @@ app.post("/adminProduct", upload.single('image'), async(req, res)=>{
                 console.log('222')
                 const updated = {
                     title: req.body.title,
-                    text: '',
+                    text: req.body.text,
                     price: req.body.price,
                 }
                 if(req.file){
@@ -838,7 +907,7 @@ app.post("/adminProduct", upload.single('image'), async(req, res)=>{
             const product = new Products({
                 linkPicture: req.file ? req.file.path : '',
                 title: req.body.title,
-                text: '',
+                text: req.body.text,
                 price: req.body.price,
             })
             console.log(product)
@@ -862,16 +931,27 @@ app.get("/adminProductDelete", async(req, res)=>{
     
     authh(req, res)
     if(req.user_data){
-        const id=req.query.idDelete
-        let products = await Products.findByIdAndDelete({_id:id})
-    try {
-        await products.save()
-        res.redirect("/adminProduct")
-      } catch (e) {
-       res.status(501).json({
-        status: "bad"
-       })
-      }
+        if(req.query.idDelete){
+            const id=req.query.idDelete
+            let can = await Products.findById({_id:id})
+            console.log(can.linkPicture)
+            fs.unlink(can.linkPicture, (err) => {
+                if (err) console.log(err);
+                console.log('successfully deleted '+ can.linkPicture);
+              });
+            let products = await Products.findByIdAndDelete({_id:id})
+        try {
+            await products.save()
+            res.redirect("/adminProduct")
+          } catch (e) {
+           res.status(501).json({
+            status: "bad"
+           })
+          }
+        }
+        else{
+            res.send("Nooooo")
+        }
     }
     else{
         res.send("Nooooo")
@@ -897,7 +977,8 @@ app.post("/adminContact", upload.single('image'), async(req, res)=>{
     authh(req, res)
     if(req.user_data){
         
-        const candidate = await Contacts.findById(req.body.IDforSearch)
+        if(req.body.IDforSearch){
+            const candidate = await Contacts.findById(req.body.IDforSearch)
         if(candidate){
             const updated = {
                 title: req.body.typeContact,
@@ -915,6 +996,7 @@ app.post("/adminContact", upload.single('image'), async(req, res)=>{
                 console.log(e)
             }
 
+        }
         }
         else{
             const contacts = new Contacts({
@@ -958,6 +1040,107 @@ app.get("/adminContactDelete", async(req, res)=>{
        
 })
 
+
+app.get("/adminService", async(req, res)=>{
+    authh(req, res)
+    if(req.user_data){
+        const services=await Services.find({})
+        res.render('adminTables/adminService.njk', {services}); 
+    }
+    else{
+        res.send("Nooooo")
+    }
+     
+})
+
+app.post("/adminService", upload.single('image'), async(req, res)=>{
+
+    authh(req, res)
+    if(req.user_data){
+        if(req.body.IDforSearch)
+        {
+        const candidate = await Services.findById(req.body.IDforSearch)
+        if(candidate){
+            const updated = {
+                title:req.body.title,
+                text: req.body.text,
+                price: req.body.price,
+            }
+            if(req.file){
+                updated.linkPicture = req.file.path
+            }
+
+            try{
+                const services = await Services.findOneAndUpdate({_id:req.body.IDforSearch}, {$set: updated},{new:true})
+                res.redirect("/adminService")
+            }
+            catch(e){
+                console.log(e)
+            }
+
+        }
+        else
+        {
+            res.send("Nooooo")
+        }
+        }
+        else{
+            const services = new Services({
+                linkPicture: req.file ? req.file.path : '',
+                title: req.body.title,
+                text: req.body.text,
+                price: req.body.price,
+            })
+            try {
+                await services.save()
+                res.redirect("/adminService")
+              } catch (e) {
+               res.status(501).json({
+                status: "bad"
+               })
+              }
+        }
+
+    }
+    else{
+        res.send("Nooooo")
+    }
+       
+})
+app.get("/adminServiceDelete", async(req, res)=>{
+    authh(req, res) 
+    if(req.user_data){
+        if(req.query.idDelete){
+            const id=req.query.idDelete
+            let can = await Services.findById({_id:id})
+            console.log(can.linkPicture)
+            fs.unlink(can.linkPicture, (err) => {
+                if (err) console.log(err);
+                console.log('successfully deleted '+ can.linkPicture);
+              });
+
+            let services = await Services.findByIdAndDelete({_id:id})
+        try {
+            await services.save()
+            res.redirect("/adminService")
+          } catch (e) {
+           res.status(501).json({
+            status: "bad"
+           })
+          }
+        }
+        else{
+            res.send("Nooooo")
+        }
+    }
+    else{
+        res.send("Nooooo")
+    }
+    
+       
+})
+
+
 app.post("/NewsUpdate", async(req, res)=>{
     console.log("dskjksdlk")
 })
@@ -968,6 +1151,9 @@ app.post("/ProductUpdate", async(req, res)=>{
     console.log("dskjksdlk")
 })
 app.post("/CourseUpdate", async(req, res)=>{
+    console.log("dskjksdlk")
+})
+app.post("/ServiceUpdate", async(req, res)=>{
     console.log("dskjksdlk")
 })
 

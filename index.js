@@ -555,7 +555,8 @@ app.post("/adminNews", upload.single('image'), async(req, res)=>{
         
         else{
             const  news = new News({
-                linkPicture: req.file ? req.file.path : '',
+                // linkPicture: req.file ? req.file.path : '',
+                linkPicture: req.file.path,
                 title: req.body.titleNews,
                 text: req.body.description,
                 date: Date.now()
@@ -657,7 +658,7 @@ app.post("/adminCourses", upload.single('image'), async(req, res)=>{
                 else
                 {
                     updated ={
-                        linkPicture: req.file ? req.file.path : '',
+                        linkPicture: req.file.path,
                         title: req.body.courseName,
                         text: req.body.courseDescription,
                         date:ddd,
@@ -691,7 +692,7 @@ app.post("/adminCourses", upload.single('image'), async(req, res)=>{
             if(req.body.level==1)
             {
                 courses = new Courses({
-                    linkPicture: req.file ? req.file.path : '',
+                    linkPicture: req.file.path,
                     title: req.body.courseName,
                     text: req.body.courseDescription,
                     date:ddd,
@@ -705,7 +706,7 @@ app.post("/adminCourses", upload.single('image'), async(req, res)=>{
             else
             {
                 courses = new Courses({
-                    linkPicture: req.file ? req.file.path : '',
+                    linkPicture: req.file.path,
                     title: req.body.courseName,
                     text: req.body.courseDescription,
                     date:ddd,
@@ -807,7 +808,7 @@ app.post("/adminTeacher", upload.single('image'), async(req, res)=>{
         
         else{
             const teacher = new Teachers({
-                linkPicture: req.file ? req.file.path : '',
+                linkPicture: req.file.path,
                 name: req.body.nameTeacher,
                 description: req.body.description
             })
@@ -905,7 +906,7 @@ app.post("/adminProduct", upload.single('image'), async(req, res)=>{
         {
             console.log('333')
             const product = new Products({
-                linkPicture: req.file ? req.file.path : '',
+                linkPicture: req.file.path,
                 title: req.body.title,
                 text: req.body.text,
                 price: req.body.price,
@@ -1086,7 +1087,7 @@ app.post("/adminService", upload.single('image'), async(req, res)=>{
         }
         else{
             const services = new Services({
-                linkPicture: req.file ? req.file.path : '',
+                linkPicture: req.file.path,
                 title: req.body.title,
                 text: req.body.text,
                 price: req.body.price,

@@ -196,7 +196,7 @@
 <section id="comments">
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12" id="comment_block">
                     <h2 class="pt-5 pb-5 portfolio-header"> Отзывы</h2>
                     {% for c in comments %}
                     <div class="card mb-4">
@@ -221,14 +221,15 @@
 
             </div>
         </div>
-
-        <div class="row">
+    {% if show_btn %}
+        <div class="row" id="show_com_btn">
             <div class="col-md-12 text-center">
-                <button type="button" style="height:50px; width:150px; font-size: 20px" class="btn btn-outline-primary mb-3 mt-3 text-center">
+                <button id="show_comment" type="button" style="height:50px; width:150px; font-size: 20px" class="btn btn-outline-primary mb-3 mt-3 text-center">
                     Еще
                 </button>   
             </div>
         </div>
+        {% endif %}
 
         <div class="row card card-body mb-4 ml-1" >
             <div class="col-md-12">

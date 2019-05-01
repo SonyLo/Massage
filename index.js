@@ -15,7 +15,8 @@ const User = require('./models/users')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const upload = require('./mid/upload')
-const fs = require('fs');
+const fs = require('fs')
+let com_elem=1
 
 app.use(passport.initialize())
 require('./mid/passport')(passport)
@@ -51,12 +52,23 @@ app.get("/", async(req, res)=>{
     // вывод новостей
     const count_news= await News.find({}).count()
     let news={}
+    let comments={}
     let slider={}
     let slider_active={}
+    let show_btn=false
     const about= await About.find({})
     const course_new=await AboutCourses.findOne({})
     const course_old=await AboutCourses.findOne({}).skip(1)
-    const comments=await Comments.find({})
+    const count_comment=await Comments.find({}).count()
+    if(count_comment<=3)
+    {
+        comments=await Comments.find({}).sort('-date')
+    }
+    else
+    {
+        comments=await Comments.find({}).sort('-date').limit(3)
+        show_btn=true
+    }
     var date=[]
     if(count_news<=3)
     {
@@ -91,9 +103,24 @@ app.get("/", async(req, res)=>{
     // вывод преподавателей
     const teachers = await Teachers.find({})
 
-    res.render('index.njk',{news,teachers,date, slider_active,slider,about,course_new,course_old,comments})
+    res.render('index.njk',{news,teachers,date, slider_active,slider,about,course_new,course_old,comments,show_btn})
 })
 
+app.post("/showComment",async(req,res)=>{
+    com_elem=com_elem+1
+    const count_comment=await Comments.find({}).count()
+    if(count_comment<=(com_elem*3))
+    {
+        comments=await Comments.find({}).sort('-date').skip((com_elem-1)*3)
+        show_btn=false
+    }
+    else
+    {
+        comments=await Comments.find({}).sort('-date').skip((com_elem-1)*3).limit(3)
+        show_btn=true
+    }
+    res.json({comments,show_btn})
+})
 
 app.get('/news/story/:page', async (req, res) => {
     const perPage = 6

@@ -445,6 +445,81 @@ $('#contactFormId').on('submit', function(e){
     })
 })
 
+$('#show_comment').click(function(){
+   
+    $.ajax({
+        type: 'POST',
+        url: '/showComment',
+        processData:false,
+        contentType:false,
+        success: function(data){
+            alert('Успешно!')
+            alert(data.show_btn)
+            show_comment(data)
+        },
+        error: function(er){
+            console.log(er);
+            alert('Упс, что то пошло не так')
+        }
+    })
+})
+
+function show_comment(data){
+    var parent=document.getElementById("comment_block")
+    for(var i=0;i<data.comments.length;i++)
+    {
+        var div1=document.createElement('div')
+        div1.setAttribute('class','card mb-4')
+
+        var div2=document.createElement('div')
+        div2.setAttribute('class','card-body')
+
+        var div3=document.createElement('div')
+        div3.setAttribute('class','row')
+
+        var div_img=document.createElement('div')
+        div_img.setAttribute('class','col-md-4')
+
+        var img_=document.createElement('img')
+        img_.setAttribute('class','commentImg')
+        img_.setAttribute('src',data.comments[i].linkPicture)
+
+        div_img.insertAdjacentHTML('beforeend',img_.outerHTML)
+
+        var div_p=document.createElement('div')
+        div_p.setAttribute('class','col-md-8')
+
+        var p1=document.createElement('p')
+        p1.setAttribute('style','font-size:2.5rem')
+        p1.setAttribute('class','font-weight-bold')
+        p1.textContent=data.comments[i].title
+
+        var p2=document.createElement('p')
+        p2.setAttribute('style','font-size:2rem')
+        p2.textContent=data.comments[i].text
+
+        div_p.insertAdjacentHTML('beforeend',p1.outerHTML)
+        div_p.insertAdjacentHTML('beforeend',p2.outerHTML)
+
+        div3.insertAdjacentHTML('beforeend',div_img.outerHTML)
+        div3.insertAdjacentHTML('beforeend',div_p.outerHTML)
+
+        div2.insertAdjacentHTML('beforeend',div3.outerHTML)
+
+        div1.insertAdjacentHTML('beforeend',div2.outerHTML)
+
+        parent.insertAdjacentHTML('beforeend',div1.outerHTML)
+    }
+    if(data.show_btn==true)
+    {
+        document.getElementById("show_com_btn").style.display="block"
+    }
+    else
+    {
+        document.getElementById("show_com_btn").style.display="none"
+    }
+}
+
 function sendSubService(){
    
     document.getElementById("subHidden").click();

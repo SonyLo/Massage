@@ -453,8 +453,8 @@ $('#show_comment').click(function(){
         processData:false,
         contentType:false,
         success: function(data){
-            alert('Успешно!')
-            alert(data.show_btn)
+            // alert('Успешно!')
+            // alert(data.show_btn)
             show_comment(data)
         },
         error: function(er){

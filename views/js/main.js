@@ -228,9 +228,9 @@ function TableToCSV(tabId, separator) {  //Convierte tabla a CSV
 }
 
 
-$('.carousel').carousel({
-    interval: 2000
-  })
+// $('.carousel').carousel({
+//     interval: 2000
+//   })
 
 
   function myFunction() {

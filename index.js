@@ -121,6 +121,25 @@ app.post("/showComment",async(req,res)=>{
     }
     res.json({comments,show_btn})
 })
+app.post("/saveComment", upload.single('com_img'),async(req,res)=>{
+        console.log('зашли')
+        console.log(req.body.com_text)
+        console.log(req.body.com_title)
+        console.log('зашли')
+            const comment = new Comments({
+                linkPicture: req.file.path,
+                title: req.body.com_title,
+                text: req.body.com_text,
+            })
+            try {
+                await comment.save()
+                res.redirect("/")
+              } catch (e) {
+               res.status(501).json({
+                status: "bad"
+               })
+              }
+})
 
 app.get('/news/story/:page', async (req, res) => {
     const perPage = 6
@@ -1080,7 +1099,49 @@ app.get("/adminService", async(req, res)=>{
     }
      
 })
+app.get("/adminComment", async(req, res)=>{
+    authh(req, res)
+    if(req.user_data){
+        const comments=await Comments.find({}).sort('-date')
+        res.render('adminTables/adminComment.njk', {comments}); 
+    }
+    else{
+        res.send("Nooooo")
+    }
+     
+})
+app.get("/adminCommentDelete", async(req, res)=>{
+    authh(req, res) 
+    if(req.user_data){
+        if(req.query.idDelete){
+            const id=req.query.idDelete
+            let can = await Comments.findById({_id:id})
+            console.log(can.linkPicture)
+            fs.unlink(can.linkPicture, (err) => {
+                if (err) console.log(err);
+                console.log('successfully deleted '+ can.linkPicture);
+              });
 
+            let comment = await Comments.findByIdAndDelete({_id:id})
+        try {
+            await comment.save()
+            res.redirect("/adminComment")
+          } catch (e) {
+           res.status(501).json({
+            status: "bad"
+           })
+          }
+        }
+        else{
+            res.send("Nooooo")
+        }
+    }
+    else{
+        res.send("Nooooo")
+    }
+    
+       
+})
 app.post("/adminService", upload.single('image'), async(req, res)=>{
 
     authh(req, res)

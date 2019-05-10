@@ -1,0 +1,99 @@
+{% include "../layout/header.njk" %}
+
+<body>
+    <section style=" min-height: 80vh;">
+
+        <div class="container-fluid " style="font-size:1.5rem;">
+            <div class="row">
+                {% include "./adminLayout/adminHeader.njk" %}
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-2">
+                    {% include "./adminLayout/sidebar.njk" %}
+                </div>
+                <div class="col-md-10">
+
+                    <div class="card card-body">
+                        <div class="row ">
+                        
+                       <div class="col-md-12">
+                        <table id="tableAdminComment" class="table table-bordered ">
+                            <thead class="thead  text-center align-content-center ">
+                              <tr>
+                               
+                                <th style="width: 21%" >Изображение</th>
+                                <th style="width: 21%" >Заголовок</th>
+                                <th style="width: 60%" >Текст</th>
+                                <th style="width: 9%" ></th>
+                                
+                              </tr>
+                            </thead>
+                            <tbody >
+                             {% for i in range(0,comments.length) %}
+                                <tr>
+                               
+                                <td style="width: 21%" ><img class="img-thumbnail" src="{{comments[i].linkPicture}}" alt=""></td>
+                                <td style="width: 21%" >{{comments[i].title}}</td>
+                                <td style="width: 60%" >{{comments[i].text}}</td>
+                                <td>
+                                        <form  action="/adminCommentDelete/" method="get">
+                                          <input type="hidden" value="{{comments[i]._id}}" name="idDelete"/>
+                                          <button style="font-size:1.5rem" class="btn btn-outline-info" type="submit"  > <i class="fa fa-trash"></i> </button>
+                                        </form>
+                                       
+                                        </td>
+                              </tr>
+                              {% endfor %}
+                            </tbody>
+                          </table>
+                       </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    {% include "../layout/script.njk" %}
+    <script>
+        $(".active").removeClass('active')
+        document.getElementById('aContact').setAttribute("class", "active list-group-item list-group-item-action")
+    </script>
+</body>
+
+
+<div style="font-size:1.5rem"  class="modal fade" id="addContact" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div style="font-size:1.5rem"  class="modal-dialog" role="document">
+          <div style="font-size:1.5rem" class="modal-content">
+            <div class="modal-header">
+              <h4  class="modal-title" id="exampleModalLabel">Добавить контакт</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="contactFormId"  method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Тип контакта</label>
+                  <select name="typeContact" id="typeContact">
+                    <option value="Звоните нам">Звоните нам</option>
+                    <option value="Часы работы">Часы работы</option>
+                    <option value="Мы находимся">Мы находимся</option>
+                    <option value="Напишите нам">Напишите нам</option>
+                  </select> 
+                </div>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label">Описание</label>
+                  <textarea name ="description" class="form-control" id="message-text"></textarea>
+                </div>
+                <input name ="IDforSearch"  id="idContactId" type="text" class ="d-none">
+                <button id="subHidden" type="submit" class="d-none" ></button>
+              </form>
+            </div>
+            <div  class="modal-footer">
+              <button style="font-size:1.5rem" type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+              <button  style="font-size:1.5rem" type="button"  onclick="sendSubContact()" class="btn btn-primary">Сохранить</button>
+            </div>
+          </div>
+        </div>
+      </div>

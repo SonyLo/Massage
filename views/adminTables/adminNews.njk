@@ -38,14 +38,14 @@
                                         <td > <input id="tdText{{news[i]._id}}" type="text" class="d-none" value="{{news[i].text}}">  {{news[i].text}}</td>
                                         <td >{{date[i]}}</td>
                                         <td>
-                                        <form  action="/adminNewsDelete/" method="get">
+                                          <form  action="/adminNewsDelete/" method="get">
                                           <input type="hidden" value="{{news[i]._id}}" name="idDelete"/>
                                           <button style="font-size:1.5rem" class="btn btn-outline-info" type="submit"  > <i class="fa fa-trash"></i> </button>
-                                        </form>
-                                        <form class="mt-4"  action="/NewsUpdate" method="post">
+                                          </form>
+                                          <form class="mt-4"  action="/NewsUpdate" method="post">
                                           <!-- <input id="{{news[i]._id}}" type="hidden" value="{{news[i]._id}}" name="btnUpdate"/> -->
                                           <button  onclick="NewsUpdate('{{news[i]._id}}')"  style="font-size:1.5rem" class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#addNews" > <i class="fa fa-pencil"> </i> </button>
-                                        </form>
+                                          </form>
                                         </td>
                                       </tr>
                                     {% endfor %}

@@ -8,21 +8,21 @@ Bootstable
 //Global variables
 var params = null;  		//Parameters
 var colsEdi = null;
-var newColHtml = '<div class="btn-group pull-right">' +
-    '<button id="bEdit" type="button" class="btn btn-sm btn-primary" onclick="rowEdit(this);">' +
-    '<i class="fa fa-pencil"> </i>' +
-    '</button>' +
-    '<button id="bElim" type="button" class="btn btn-sm btn-default"  onclick="rowElim(this);">' +
-    '<i class="fa fa-trash"> </i>' +
-    '</button>' +
-    '<button id="bAcep" type="button" class="btn btn-sm btn-primary"  onclick="rowAcep(this); "style="display: none;"">' +
-    '<i class="fa fa-check"> </i>' +
-    '</button>' +
-    '<button id="bCanc" type="button" class="btn btn-sm btn-default"  onclick="rowCancel(this);"style="display: none;"">' +
-    '<i class="fa fa-times"> </i>' +
-    '</button>' +
-    '</div>';
-var colEdicHtml = '<td name="buttons" style="vertical-align:middle">' + newColHtml + '</td>';
+// var newColHtml = '<div class="btn-group pull-right">' +
+//     '<button id="bEdit" type="button" class="btn btn-sm btn-primary" onclick="rowEdit(this);">' +
+//     '<i class="fa fa-pencil"> </i>' +
+//     '</button>' +
+//     '<button id="bElim" type="button" class="btn btn-sm btn-default"  onclick="rowElim(this);">' +
+//     '<i class="fa fa-trash"> </i>' +
+//     '</button>' +
+//     '<button id="bAcep" type="button" class="btn btn-sm btn-primary"  onclick="rowAcep(this); "style="display: none;"">' +
+//     '<i class="fa fa-check"> </i>' +
+//     '</button>' +
+//     '<button id="bCanc" type="button" class="btn btn-sm btn-default"  onclick="rowCancel(this);"style="display: none;"">' +
+//     '<i class="fa fa-times"> </i>' +
+//     '</button>' +
+//     '</div>';
+//var colEdicHtml = '<td name="buttons" style="vertical-align:middle">' + newColHtml + '</td>';
 $.fn.SetEditable = function (options) {
     var defaults = {
         columnsEd: null,         //Index to editable columns. If null all td editables. Ex.: "1,2,3,4,5"
@@ -80,22 +80,22 @@ function IterarCamposEdit($cols, tarea) {
         }
     }
 }
-function FijModoNormal(but) {
-    $(but).parent().find('#bAcep').hide();
-    $(but).parent().find('#bCanc').hide();
-    $(but).parent().find('#bEdit').show();
-    $(but).parent().find('#bElim').show();
-    var $row = $(but).parents('tr');  //accede a la fila
-    $row.attr('id', '');  //quita marca
-}
-function FijModoEdit(but) {
-    $(but).parent().find('#bAcep').show();
-    $(but).parent().find('#bCanc').show();
-    $(but).parent().find('#bEdit').hide();
-    $(but).parent().find('#bElim').hide();
-    var $row = $(but).parents('tr');  //accede a la fila
-    $row.attr('id', 'editing');  //indica que está en edición
-}
+// function FijModoNormal(but) {
+//     $(but).parent().find('#bAcep').hide();
+//     $(but).parent().find('#bCanc').hide();
+//     $(but).parent().find('#bEdit').show();
+//     $(but).parent().find('#bElim').show();
+//     var $row = $(but).parents('tr');  //accede a la fila
+//     $row.attr('id', '');  //quita marca
+// }
+// function FijModoEdit(but) {
+//     $(but).parent().find('#bAcep').show();
+//     $(but).parent().find('#bCanc').show();
+//     $(but).parent().find('#bEdit').hide();
+//     $(but).parent().find('#bElim').hide();
+//     var $row = $(but).parents('tr');  //accede a la fila
+//     $row.attr('id', 'editing');  //indica que está en edición
+// }
 function ModoEdicion($row) {
     if ($row.attr('id') == 'editing') {
         return true;

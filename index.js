@@ -178,7 +178,10 @@ app.get("/news/detail",async(req,res)=>{
     const id=req.query.id
     const news = await News.findOne({_id:id})
     const date = moment(news.date).format('DD-MM-YYYY')
-    res.render('news_detail.njk',{news,date })
+    const dateStart=moment(news.dateStart).format('DD-MM-YYYY')
+    console.log(date)
+    console.log(dateStart)
+    res.render('news_detail.njk',{news,date , dateStart})
 })
 // добавление новости
 app.get('/addNews', async(req,res)=>{
@@ -556,11 +559,15 @@ app.get("/adminNews",  async(req, res)=>{
     if(req.user_data){
         let news = await News.find({}).sort('-date')
         var date=[]
+        var dateStart=[]
+        var dateIn=[]
         for (var i=0;i<news.length;i++)
        {
            date.push(moment(news[i].date).format('DD-MM-YYYY'))
+           dateStart.push(moment(news[i].dateStart).format('DD-MM-YYYY'))
+           dateIn.push(moment(news[i].dateStart).format('YYYY-MM-DD'))
        }
-    res.render('adminTables/adminNews.njk',{news,date}); 
+    res.render('adminTables/adminNews.njk',{news,date, dateStart, dateIn}); 
     }
     else{
         //res.send("Nooooo")
@@ -574,11 +581,16 @@ app.post("/adminNews", upload.single('image'), async(req, res)=>{
     
     authh(req, res)
     if(req.user_data){
+        var d=req.body.dateNews
+        var dd=d.split('-')
+        var ddd=new Date(Date.UTC(parseInt(dd[0]),parseInt(dd[1])-1,parseInt(dd[2])))
         if(req.body.IDforSearch){
             const candidate = await News.findById(req.body.IDforSearch)
             if(candidate){
+                
                 const updated = {
                     title: req.body.titleNews,
+                    dateStart:ddd,
                     text: req.body.description,
                 }
                 if(req.file){
@@ -604,6 +616,7 @@ app.post("/adminNews", upload.single('image'), async(req, res)=>{
                 // linkPicture: req.file ? req.file.path : '',
                 linkPicture: req.file.path,
                 title: req.body.titleNews,
+                dateStart:ddd,
                 text: req.body.description,
                 date: Date.now()
             })
@@ -685,16 +698,16 @@ app.post("/adminCourses", upload.single('image'), async(req, res)=>{
         if(req.body.IDforSearch){
             const candidate = await Courses.findById(req.body.IDforSearch)
             if(candidate){
-                var d=req.body.dateStart
-                var dd=d.split('-')
-                var ddd=new Date(Date.UTC(parseInt(dd[0]),parseInt(dd[1])-1,parseInt(dd[2])))
+                // var d=req.body.dateStart
+                // var dd=d.split('-')
+                // var ddd=new Date(Date.UTC(parseInt(dd[0]),parseInt(dd[1])-1,parseInt(dd[2])))
                 let updated;
                 if(req.body.level==1)
                 {
                     updated = {
                         title: req.body.courseName,
                         text: req.body.courseDescription,
-                        date:ddd,
+                        // date:ddd,
                         idTeacher:await Teachers.findOne({'_id':req.body.teacher}),
                         price:req.body.price,
                         duration:req.body.duration,
@@ -707,7 +720,7 @@ app.post("/adminCourses", upload.single('image'), async(req, res)=>{
                         linkPicture: req.file.path,
                         title: req.body.courseName,
                         text: req.body.courseDescription,
-                        date:ddd,
+                        // date:ddd,
                         idTeacher:await Teachers.findOne({'_id':req.body.teacher}),
                         price:req.body.price,
                         duration:req.body.duration,
@@ -730,9 +743,9 @@ app.post("/adminCourses", upload.single('image'), async(req, res)=>{
         }
        
         else{
-            var d=req.body.dateStart
-            var dd=d.split('-')
-            var ddd=new Date(Date.UTC(parseInt(dd[0]),parseInt(dd[1])-1,parseInt(dd[2])))
+            // var d=req.body.dateStart
+            // var dd=d.split('-')
+            // var ddd=new Date(Date.UTC(parseInt(dd[0]),parseInt(dd[1])-1,parseInt(dd[2])))
             var te=await Teachers.findOne({_id:req.body.teacher})
             let courses
             if(req.body.level==1)
@@ -741,7 +754,7 @@ app.post("/adminCourses", upload.single('image'), async(req, res)=>{
                     linkPicture: req.file.path,
                     title: req.body.courseName,
                     text: req.body.courseDescription,
-                    date:ddd,
+                    // date:ddd,
                     idTeacher:await Teachers.findOne({'_id':req.body.teacher}),
                     price:req.body.price,
                     duration:req.body.duration,
@@ -755,7 +768,7 @@ app.post("/adminCourses", upload.single('image'), async(req, res)=>{
                     linkPicture: req.file.path,
                     title: req.body.courseName,
                     text: req.body.courseDescription,
-                    date:ddd,
+                    // date:ddd,
                     idTeacher:await Teachers.findOne({'_id':req.body.teacher}),
                     price:req.body.price,
                     duration:req.body.duration,

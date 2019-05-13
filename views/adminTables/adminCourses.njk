@@ -26,7 +26,7 @@
                                         <th style="width: 21%"> Фото </th>
                                         <th scope="col">Название курса</th>
                                         <th scope="col">Описание</th>
-                                        <th scope="col">Дата</th>
+                                        
                                         <th scope="col">Преподаватель</th>
                                         <th scope="col">Уровень</th>
                                         <th scope="col"></th>
@@ -39,14 +39,14 @@
                                         <td>
                                         <input id="tdTitle{{courses[i]._id}}" type="text" class="d-none" value="{{courses[i].title}}"> 
                                         <input id="tdText{{courses[i]._id}}" type="text" class="d-none" value="{{courses[i].text}}"> 
-                                        <input id="tdDate{{courses[i]._id}}" type="text" class="d-none" value="{{dateIn[i]}}"> 
+                                        
                                         <input id="tdIdTeacher{{courses[i]._id}}" type="text" class="d-none" value="{{courses[i].idTeacher}}"> 
                                         <input id="tdPrice{{courses[i]._id}}" type="text" class="d-none" value="{{courses[i].price}}"> 
                                         <input id="tdDuration{{courses[i]._id}}" type="text" class="d-none" value="{{courses[i].duration}}"> 
                                         {{courses[i].title}}
                                         </td>
                                          <td>{{courses[i].text}}</td>
-                                          <td>{{date[i]}}</td>
+                                         
                                         <td>{{teacher[i].name}}</td>
                                         {% if courses[i].forNewbies==true %}
                                           <input id="tdForNewbies{{courses[i]._id}}" type="text" class="d-none" value="1">
@@ -106,10 +106,7 @@
                   <label for="message-text" class="col-form-label">Описание курса</label>
                   <textarea class="form-control" id="courseDescription" name="courseDescription"></textarea>
                 </div>
-                <div class="form-group">
-                  <label for="message-text" class="col-form-label">Дата начала</label>
-                  <input type="date" class="form-control" id="dateStart" name="dateStart">
-                </div>
+                
                 <div class="form-group">
                   <label for="message-text" class="col-form-label">Цена</label>
                   <input type="text" class="form-control" id="price" name="price">

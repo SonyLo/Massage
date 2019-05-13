@@ -26,7 +26,8 @@
                                         <th style="width: 21%"> Фото </th>
                                         <th style="width: 20%" >Заголовок новости</th>
                                         <th style="width: 50%" >Текст новости</th>
-                                        <th style="width: 9%" >Дата</th>
+                                        <th style="width: 9%" >Дата добавления</th>
+                                        <th style="width: 9%" >Дата начала</th>
                                         <th style="width: 9%" ></th>
                                       </tr>
                                     </thead>
@@ -37,6 +38,7 @@
                                         <td > <input id="tdTitle{{news[i]._id}}" type="text" class="d-none" value="{{news[i].title}}"> {{news[i].title}} </td>
                                         <td > <input id="tdText{{news[i]._id}}" type="text" class="d-none" value="{{news[i].text}}">  {{news[i].text}}</td>
                                         <td >{{date[i]}}</td>
+                                        <td ><input id="tdDate{{news[i]._id}}" type="text" class="d-none" value="{{dateIn[i]}}"> {{dateStart[i]}}</td>
                                         <td>
                                           <form  action="/adminNewsDelete/" method="get">
                                           <input type="hidden" value="{{news[i]._id}}" name="idDelete"/>
@@ -82,6 +84,10 @@
                 <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Название новости</label>
                   <input style="font-size:1.5rem"  name="titleNews" type="text" class="form-control" id="recipient-name">
+                </div>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Дата начала</label>
+                  <input type="date" class="form-control" id="dateNews" name="dateNews">
                 </div>
                 <div class="form-group">
                   <label for="message-text" class="col-form-label">Текст новости</label>

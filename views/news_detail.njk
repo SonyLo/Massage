@@ -16,7 +16,13 @@
                 </div>
                 <div class="col-md-12">
                     <h1  class="text-center slogan">{{news.title}}</h1>
-                    <p style="color:gray"><i class="fa fa-calendar" aria-hidden="true"></i> {{date}} </p>
+                    {% if date==dateStart %}
+                        <p style="color:gray"><i class="fa fa-calendar" aria-hidden="true"></i> {{date}} </p>
+                    {% else %}
+                        <p style="color:gray"><i class="fa fa-calendar" aria-hidden="true"></i> {{date}} </p>
+                        <label>Дата начала:</label>
+                        <p style="color:gray; display:inline-block"><i class="fa fa-calendar" aria-hidden="true"></i> {{dateStart}} </p>
+                    {% endif %}
                     <hr>
                     
                     <p style="font-size: 17px">

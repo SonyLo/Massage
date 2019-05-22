@@ -616,3 +616,7 @@ $('#serviceFormId').on('submit', function(e){
     document.getElementById("idCourseId").value = idCourse
 
   }
+// ------------------------------------
+setTimeout(function(){
+    location.reload();
+}, 1680000);

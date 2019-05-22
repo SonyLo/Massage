@@ -38,7 +38,7 @@
                                       <td><img class="img-thumbnail" src="{{courses[i].linkPicture}}" alt=""></td>
                                         <td>
                                         <input id="tdTitle{{courses[i]._id}}" type="text" class="d-none" value="{{courses[i].title}}"> 
-                                        <input id="tdText{{courses[i]._id}}" type="text" class="d-none" value="{{courses[i].text}}"> 
+                                        <label id="tdText{{courses[i]._id}}" type="text" class="d-none" style=" white-space: pre-line">{{courses[i].text}}</label>  
                                         
                                         <input id="tdIdTeacher{{courses[i]._id}}" type="text" class="d-none" value="{{courses[i].idTeacher}}"> 
                                         <input id="tdPrice{{courses[i]._id}}" type="text" class="d-none" value="{{courses[i].price}}"> 
@@ -104,7 +104,7 @@
                 </div>
                 <div class="form-group">
                   <label for="message-text" class="col-form-label">Описание курса</label>
-                  <textarea class="form-control" id="courseDescription" name="courseDescription"></textarea>
+                  <textarea class="form-control" id="courseDescription" name="courseDescription" wrap="hard"></textarea>
                 </div>
                 
                 <div class="form-group">

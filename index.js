@@ -234,7 +234,8 @@ app.get("/coursesNew/detail",async(req,res)=>{
     const id=req.query.id
     const courses = await Courses.findOne({_id:id})
     const date = moment(courses.date).format('DD-MM-YYYY')
-    res.render('courses_detail.njk',{courses,date })
+    const teacher=await Teachers.findOne({_id:courses.idTeacher})
+    res.render('courses_detail.njk',{courses,date,teacher })
 })
 app.get('/courses/old/:page', async (req, res) => {
     const perPage = 6

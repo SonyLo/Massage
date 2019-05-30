@@ -1169,7 +1169,10 @@ app.post("/adminService", upload.single('image'), async(req, res)=>{
                 text: req.body.text,
                 price: req.body.price,
             }
+            console.log(req.file.path)
+            console.log(11111)
             if(req.file){
+                
                 updated.linkPicture = req.file.path
             }
 
@@ -1188,6 +1191,7 @@ app.post("/adminService", upload.single('image'), async(req, res)=>{
         }
         }
         else{
+            console.log(req.file.path)
             const services = new Services({
                 linkPicture: req.file.path,
                 title: req.body.title,

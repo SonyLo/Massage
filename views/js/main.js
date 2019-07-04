@@ -565,7 +565,7 @@ $('#serviceFormId').on('submit', function(e){
     var t=document.getElementById("tdDate"+idNews).value
     var tt=document.getElementById("dateNews")
     document.getElementById("dateNews").setAttribute('value',t)
-    document.getElementById("message-text").value =  document.getElementById("tdText"+idNews).value
+    document.getElementById("message-text").value =  document.getElementById("tdText"+idNews).textContent
     document.getElementById("idNewsId").value = idNews
 
   }
@@ -605,10 +605,11 @@ $('#serviceFormId').on('submit', function(e){
   function CourseUpdate(idCourse){
      
     document.getElementById("courseName").value =  document.getElementById("tdTitle"+idCourse).value
-    document.getElementById("courseDescription").value =  document.getElementById("tdText"+idCourse).value
-    var t=document.getElementById("tdDate"+idCourse).value
+    var t=document.getElementById("tdText"+idCourse).textContent
+    document.getElementById("courseDescription").value =  t
+    // var t=document.getElementById("tdDate"+idCourse).value
     // t=formatDate(t)
-    document.getElementById("dateStart").value =  document.getElementById("tdDate"+idCourse).value
+    // document.getElementById("dateStart").value =  document.getElementById("tdDate"+idCourse).value
     document.getElementById("price").value =  document.getElementById("tdPrice"+idCourse).value
     document.getElementById("duration").value =  document.getElementById("tdDuration"+idCourse).value
     document.getElementById("teacher").value =  document.getElementById("tdIdTeacher"+idCourse).value
@@ -616,3 +617,7 @@ $('#serviceFormId').on('submit', function(e){
     document.getElementById("idCourseId").value = idCourse
 
   }
+// ------------------------------------
+// setTimeout(function(){
+//     location.reload();
+// }, 1680000);

@@ -241,7 +241,8 @@ app.get("/coursesNew/detail",async(req,res)=>{
     const id=req.query.id
     const courses = await Courses.findOne({_id:id})
     const date = moment(courses.date).format('DD-MM-YYYY')
-    res.render('courses_detail.njk',{courses,date })
+    const teacher=await Teachers.findOne({_id:courses.idTeacher})
+    res.render('courses_detail.njk',{courses,date,teacher })
 })
 app.get('/courses/old/:page', async (req, res) => {
     const perPage = 6
@@ -1175,7 +1176,10 @@ app.post("/adminService", upload.single('image'), async(req, res)=>{
                 text: req.body.text,
                 price: req.body.price,
             }
+            console.log(req.file.path)
+            console.log(11111)
             if(req.file){
+                
                 updated.linkPicture = req.file.path
             }
 
@@ -1194,6 +1198,7 @@ app.post("/adminService", upload.single('image'), async(req, res)=>{
         }
         }
         else{
+            console.log(req.file.path)
             const services = new Services({
                 linkPicture: req.file.path,
                 title: req.body.title,

@@ -36,7 +36,7 @@
                                       <tr>
                                         <td><img class="img-thumbnail" src="{{news[i].linkPicture}}" alt=""></td>
                                         <td > <input id="tdTitle{{news[i]._id}}" type="text" class="d-none" value="{{news[i].title}}"> {{news[i].title}} </td>
-                                        <td > <input id="tdText{{news[i]._id}}" type="text" class="d-none" value="{{news[i].text}}">  {{news[i].text}}</td>
+                                        <td > <label id="tdText{{news[i]._id}}" type="text" class="d-none" style="white-space: pre-line">{{news[i].text}}</label> {{news[i].text}}</td>
                                         <td >{{date[i]}}</td>
                                         <td ><input id="tdDate{{news[i]._id}}" type="text" class="d-none" value="{{dateIn[i]}}"> {{dateStart[i]}}</td>
                                         <td>

@@ -17,6 +17,7 @@ const jwt = require('jsonwebtoken')
 const upload = require('./mid/upload')
 const fs = require('fs')
 let com_elem=1
+var cloudinary = require('cloudinary')
 
 app.use(passport.initialize())
 require('./mid/passport')(passport)
@@ -122,23 +123,29 @@ app.post("/showComment",async(req,res)=>{
     res.json({comments,show_btn})
 })
 app.post("/saveComment", upload.single('com_img'),async(req,res)=>{
-        console.log('зашли')
-        console.log(req.body.com_text)
-        console.log(req.body.com_title)
-        console.log('зашли')
-            const comment = new Comments({
-                linkPicture: req.file.path,
-                title: req.body.com_title,
-                text: req.body.com_text,
-            })
-            try {
-                await comment.save()
-                res.redirect("/")
-              } catch (e) {
-               res.status(501).json({
-                status: "bad"
-               })
-              }
+    const date = moment().format('DDMMYYYY-HHmmss_SSS')
+    // const i = date-file.originalname
+    console.log(req.file.path)
+    cloudinary.uploader.upload(req.file.path,
+        async function(result) {
+    
+    const comment = new Comments({
+        linkPicture: result.url,
+        title: req.body.com_title,
+        text: req.body.com_text,
+    })
+    try {
+        await comment.save()
+        res.redirect("/")
+      } catch (e) {
+       res.status(501).json({
+        status: "bad"
+       })
+      }
+    
+})
+
+            
 })
 
 app.get('/news/story/:page', async (req, res) => {

@@ -51,7 +51,7 @@ function formatDateAdmin(date) {
 }
 
 app.get("/adm/sitemap", async(req, res)=>{
-    res.sendFile('sitemap.txt')
+    res.sendFile(__dirname+'\\sitemap.txt')
 })
 
 app.get("/", async (req, res) => {

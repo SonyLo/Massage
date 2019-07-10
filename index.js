@@ -49,6 +49,11 @@ function formatDateAdmin(date) {
 
     return yy + '-' + mm + '.' + dd;
 }
+
+app.get("/adm/sitemap", async(req, res)=>{
+    res.sendFile('sitemap.txt')
+})
+
 app.get("/", async (req, res) => {
     // вывод новостей
     const count_news = await News.find({}).count()

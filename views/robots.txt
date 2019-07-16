@@ -1,0 +1,3 @@
+User-Agent: *
+Disallow: /a 
+Sitemap: http://www.csmsfera.com/sitemap

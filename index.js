@@ -58,7 +58,7 @@ app.get('/robots.txt', function (req, res) {
 
 app.get("/sitemap", async(req, res)=>{
     res.type('text/plain');
-    res.send("http://www.csmsfera.com/ \nhttp://www.csmsfera.com/news/storys \nhttp://www.csmsfera.com/courses/new \nhttp://www.csmsfera.com/courses/old \nhttp://www.csmsfera.com/schedule \nhttp://www.csmsfera.com/teachers \nhttp://www.csmsfera.com/product \nhttp://www.csmsfera.com/service \nhttp://www.csmsfera.com/contact");
+    res.send("http://www.csmsfera.com/ \nhttp://www.csmsfera.com/news/story \nhttp://www.csmsfera.com/courses/new \nhttp://www.csmsfera.com/courses/old \nhttp://www.csmsfera.com/schedule \nhttp://www.csmsfera.com/teachers \nhttp://www.csmsfera.com/product \nhttp://www.csmsfera.com/service \nhttp://www.csmsfera.com/contact");
 })
 
 app.get("/", async (req, res) => {

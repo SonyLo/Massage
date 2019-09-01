@@ -687,10 +687,10 @@ app.get("/adminNewsDelete", async (req, res) => {
         const id = req.query.idDelete
         let can = await News.findById({ _id: id })
         console.log(can.linkPicture)
-        fs.unlink(can.linkPicture, (err) => {
-            if (err) console.log(err);
-            console.log('successfully deleted ' + can.linkPicture);
-        });
+        // fs.unlink(can.linkPicture, (err) => {
+        //     if (err) console.log(err);
+        //     console.log('successfully deleted ' + can.linkPicture);
+        // });
         let news = await News.findByIdAndDelete({ _id: id })
         try {
             await news.save()
@@ -860,10 +860,10 @@ app.get("/adminCoursesDelete", async (req, res) => {
 
             let can = await Courses.findById({ _id: id })
             console.log(can.linkPicture)
-            fs.unlink(can.linkPicture, (err) => {
-                if (err) console.log(err);
-                console.log('successfully deleted ' + can.linkPicture);
-            });
+            // fs.unlink(can.linkPicture, (err) => {
+            //     if (err) console.log(err);
+            //     console.log('successfully deleted ' + can.linkPicture);
+            // });
 
             let courses = await Courses.findByIdAndDelete({ _id: id })
             try {
@@ -1105,10 +1105,10 @@ app.get("/adminProductDelete", async (req, res) => {
             const id = req.query.idDelete
             let can = await Products.findById({ _id: id })
             console.log(can.linkPicture)
-            fs.unlink(can.linkPicture, (err) => {
-                if (err) console.log(err);
-                console.log('successfully deleted ' + can.linkPicture);
-            });
+            // fs.unlink(can.linkPicture, (err) => {
+            //     if (err) console.log(err);
+            //     console.log('successfully deleted ' + can.linkPicture);
+            // });
             let products = await Products.findByIdAndDelete({ _id: id })
             try {
                 await products.save()
@@ -1239,10 +1239,10 @@ app.get("/adminCommentDelete", async (req, res) => {
             const id = req.query.idDelete
             let can = await Comments.findById({ _id: id })
             console.log(can.linkPicture)
-            fs.unlink(can.linkPicture, (err) => {
-                if (err) console.log(err);
-                console.log('successfully deleted ' + can.linkPicture);
-            });
+            // fs.unlink(can.linkPicture, (err) => {
+            //     if (err) console.log(err);
+            //     console.log('successfully deleted ' + can.linkPicture);
+            // });
 
             let comment = await Comments.findByIdAndDelete({ _id: id })
             try {
@@ -1354,10 +1354,10 @@ app.get("/adminServiceDelete", async (req, res) => {
             const id = req.query.idDelete
             let can = await Services.findById({ _id: id })
             console.log(can.linkPicture)
-            fs.unlink(can.linkPicture, (err) => {
-                if (err) console.log(err);
-                console.log('successfully deleted ' + can.linkPicture);
-            });
+            // fs.unlink(can.linkPicture, (err) => {
+            //     if (err) console.log(err);
+            //     console.log('successfully deleted ' + can.linkPicture);
+            // });
 
             let services = await Services.findByIdAndDelete({ _id: id })
             try {

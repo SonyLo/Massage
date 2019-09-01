@@ -981,10 +981,10 @@ app.get("/adminTeacherDelete", async (req, res) => {
             const id = req.query.idDelete
             let can = await Teachers.findById({ _id: id })
             console.log(can.linkPicture)
-            fs.unlink(can.linkPicture, (err) => {
-                if (err) console.log(err);
-                console.log('successfully deleted ' + can.linkPicture);
-            });
+            // fs.unlink(can.linkPicture, (err) => {
+            //     if (err) console.log(err);
+            //     console.log('successfully deleted ' + can.linkPicture);
+            // });
             let teacher = await Teachers.findByIdAndDelete({ _id: id })
             try {
                 await teacher.save()

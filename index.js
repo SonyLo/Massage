@@ -608,8 +608,8 @@ app.post("/adminNews", upload.single('image'), async (req, res) => {
                     text: req.body.description,
                 }
                 if (req.file) {
-                    cloudinary.uploader.upload(req.file.path,
-                        async function (result) {
+                    const el=await cloudinary.uploader.upload(req.file.path,
+                        function (result) {
                             updated.linkPicture = result.url
                         })
 
@@ -768,7 +768,7 @@ app.post("/adminCourses", upload.single('image'), async (req, res) => {
                     }
                 }
                 if (req.file) {
-                    cloudinary.uploader.upload(req.file.path,
+                    const el=await cloudinary.uploader.upload(req.file.path,
                         async function (result) {
                             updated.linkPicture = result.url
                         })
@@ -911,7 +911,7 @@ app.post("/adminTeacher", upload.single('image'), async (req, res) => {
                     description: req.body.description
                 }
                 if (req.file) {
-                    cloudinary.uploader.upload(req.file.path,
+                    const el=await cloudinary.uploader.upload(req.file.path,
                         async function (result) {
                             updated.linkPicture = result.url
                         })
@@ -1030,7 +1030,7 @@ app.post("/adminProduct", upload.single('image'), async (req, res) => {
                     price: req.body.price,
                 }
                 if (req.file) {
-                    cloudinary.uploader.upload(req.file.path,
+                    const el=await cloudinary.uploader.upload(req.file.path,
                         async function (result) {
                             updated.linkPicture = result.url
                         })
@@ -1280,7 +1280,7 @@ app.post("/adminService", upload.single('image'), async (req, res) => {
                 console.log(11111)
                 if (req.file) {
 
-                    cloudinary.uploader.upload(req.file.path,
+                    const el=await cloudinary.uploader.upload(req.file.path,
                         async function (result) {
                             updated.linkPicture = result.url
                         })

@@ -769,7 +769,7 @@ app.post("/adminCourses", upload.single('image'), async (req, res) => {
                 }
                 if (req.file) {
                     const el=await cloudinary.uploader.upload(req.file.path,
-                        async function (result) {
+                        function (result) {
                             updated.linkPicture = result.url
                         })
                 }
@@ -912,7 +912,7 @@ app.post("/adminTeacher", upload.single('image'), async (req, res) => {
                 }
                 if (req.file) {
                     const el=await cloudinary.uploader.upload(req.file.path,
-                        async function (result) {
+                        function (result) {
                             updated.linkPicture = result.url
                         })
 
@@ -1031,7 +1031,7 @@ app.post("/adminProduct", upload.single('image'), async (req, res) => {
                 }
                 if (req.file) {
                     const el=await cloudinary.uploader.upload(req.file.path,
-                        async function (result) {
+                        function (result) {
                             updated.linkPicture = result.url
                         })
                 }
@@ -1281,7 +1281,7 @@ app.post("/adminService", upload.single('image'), async (req, res) => {
                 if (req.file) {
 
                     const el=await cloudinary.uploader.upload(req.file.path,
-                        async function (result) {
+                        function (result) {
                             updated.linkPicture = result.url
                         })
                 }

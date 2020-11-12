@@ -738,6 +738,7 @@ app.post("/adminCourses", upload.single('image'), async (req, res) => {
     if (req.user_data) {
 
         if (req.body.IDforSearch) {
+            console.log(req.body.IDforSearch)
             const candidate = await Courses.findById(req.body.IDforSearch)
             if (candidate) {
                 // var d=req.body.dateStart
@@ -789,23 +790,39 @@ app.post("/adminCourses", upload.single('image'), async (req, res) => {
             // var d=req.body.dateStart
             // var dd=d.split('-')
             // var ddd=new Date(Date.UTC(parseInt(dd[0]),parseInt(dd[1])-1,parseInt(dd[2])))
-            var te = await Teachers.findOne({ _id: req.body.teacher })
+            let te = await Teachers.findOne({ _id: req.body.teacher })
+            console.log(te)
             let courses
            
             if (req.body.level == 1) {
+
                 if (req.file) {
+                   
+
                     cloudinary.uploader.upload(req.file.path,
                         async function (result) {
+
+                           
+
                             courses = new Courses({
                                 linkPicture: result.url,
                                 title: req.body.courseName,
                                 text: req.body.courseDescription,
                                 // date:ddd,
-                                idTeacher: await Teachers.findOne({ '_id': req.body.teacher }),
+                                idTeacher: te,
                                 price: req.body.price,
                                 duration: req.body.duration,
                                 forNewbies: 'true'
                             })
+                            try {
+                                console.log(courses)
+                                await courses.save()
+                                res.redirect("/adminCourses")
+                            } catch (e) {
+                                res.status(501).json({
+                                    status: "bad"
+                                })
+                            }
                         })
                 }
                 else{
@@ -814,14 +831,23 @@ app.post("/adminCourses", upload.single('image'), async (req, res) => {
                         title: req.body.courseName,
                         text: req.body.courseDescription,
                         // date:ddd,
-                        idTeacher: await Teachers.findOne({ '_id': req.body.teacher }),
+                        idTeacher: te,
                         price: req.body.price,
                         duration: req.body.duration,
                         forNewbies: 'true'
                     })
+                    try {
+                        console.log(courses)
+                        await courses.save()
+                        res.redirect("/adminCourses")
+                    } catch (e) {
+                        res.status(501).json({
+                            status: "bad"
+                        })
+                    }
                 }
                
-                console.log(courses)
+                // console.log(courses)
             }
             else {
                 courses = new Courses({
@@ -829,21 +855,22 @@ app.post("/adminCourses", upload.single('image'), async (req, res) => {
                     title: req.body.courseName,
                     text: req.body.courseDescription,
                     // date:ddd,
-                    idTeacher: await Teachers.findOne({ '_id': req.body.teacher }),
+                    idTeacher: te,
                     price: req.body.price,
                     duration: req.body.duration,
                     forNewbies: 'false'
                 })
-                console.log(courses)
+                try {
+                    console.log(courses)
+                    await courses.save()
+                    res.redirect("/adminCourses")
+                } catch (e) {
+                    res.status(501).json({
+                        status: "bad"
+                    })
+                }
             }
-            try {
-                await courses.save()
-                res.redirect("/adminCourses")
-            } catch (e) {
-                res.status(501).json({
-                    status: "bad"
-                })
-            }
+            
         }
 
     }
@@ -1158,7 +1185,10 @@ app.post("/adminContact", async (req, res) => {
 
                 try {
                     const contacts = await Contacts.findOneAndUpdate({ _id: req.body.IDforSearch }, { $set: updated }, { new: true })
-                    res.redirect("/adminContact")
+                    //res.redirect("/adminContact")
+                    res.status(200).json({
+                        ok: 'ok'
+                    })
                 }
                 catch (e) {
                     console.log(e)
@@ -1172,9 +1202,12 @@ app.post("/adminContact", async (req, res) => {
                 title: req.body.typeContact,
                 description: req.body.description
             })
+            
             try {
                 await contacts.save()
-                res.redirect("/adminContact")
+                res.status(200).json({
+                    ok: 'ok'
+                })
             } catch (e) {
                 res.status(501).json({
                     status: "bad"

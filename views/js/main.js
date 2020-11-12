@@ -421,19 +421,69 @@ $('#productFormId').on('submit', function(e){
 
 function sendSubContact(){
    
-    document.getElementById("subHidden").click();
+    // document.getElementById("subHidden").click()
+
+  
+    $.ajax({
+        type: 'POST',
+        url: '/adminContact',
+
+        data: JSON.stringify(
+            {
+                description: document.getElementById("message-text").value,
+                typeContact: document.getElementById("typeContact").value,
+            }
+        ),//
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+
+
+        
+        processData:false,
+       
+        success: function(r){
+            alert('Успешно добавлено!')
+            document.location.href ='/adminContact'
+         },
+        error: function(er){
+            console.log(er);
+            alert('Упс, что то пошло не так')
+        }
+    })
+
+
+
 }
 
 $('#contactFormId').on('submit', function(e){
     e.preventDefault()
     var formData = new FormData(this)
+    console.log(document.getElementById("message-text").value)
+    alert(document.getElementById("description").value)
+    alert(document.getElementById("typeContact").value)
+    data = {
+        description: document.getElementById("description").value,
+        typeContact: document.getElementById("typeContact").value,
+    } 
+
     
     $.ajax({
         type: 'POST',
         url: '/adminContact',
-        data:formData,
+
+        data: JSON.stringify(
+            {
+                description: document.getElementById("description").value,
+                typeContact: document.getElementById("typeContact").value,
+            }
+        ),//
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+
+
+        // data:data,
         processData:false,
-        contentType:false,
+        // contentType:false,
         success: function(r){
             alert('Успешно добавлено!')
             document.location.href ='/adminContact'

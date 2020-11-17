@@ -63,7 +63,8 @@ app.get("/sitemap", async(req, res)=>{
 
 app.get("/", async (req, res) => {
     // вывод новостей
-    const count_news = await News.find({}).count()
+    const count_news = await News.find().countDocuments()
+    console.log(count_news)
     let news = {}
     let comments = {}
     let slider = {}
@@ -72,7 +73,7 @@ app.get("/", async (req, res) => {
     const about = await About.find({})
     const course_new = await AboutCourses.findOne({})
     const course_old = await AboutCourses.findOne({}).skip(1)
-    const count_comment = await Comments.find({}).count()
+    const count_comment = await Comments.find({}).countDocuments()
     if (count_comment <= 3) {
         comments = await Comments.find({}).sort('-date')
     }
@@ -112,7 +113,7 @@ app.get("/", async (req, res) => {
 
 app.post("/showComment", async (req, res) => {
     com_elem = com_elem + 1
-    const count_comment = await Comments.find({}).count()
+    const count_comment = await Comments.find({}).countDocuments()
     if (count_comment <= (com_elem * 3)) {
         comments = await Comments.find({}).sort('-date').skip((com_elem - 1) * 3)
         show_btn = false
@@ -170,7 +171,7 @@ app.get('/news/story/:page', async (req, res) => {
     let page = req.params.page || 1
     let news = await News.find({}).sort('-date').skip((perPage * page) - perPage).limit(perPage)
     // news.reverse()
-    let count = await News.count()
+    let count = await News.countDocuments()
     var date = []
     for (var i = 0; i < news.length; i++) {
         date.push(moment(news[i].date).format('DD-MM-YYYY'))
@@ -184,7 +185,7 @@ app.get('/news/story', async (req, res) => {
     let page = req.params.page || 1
     let news = await News.find({}).sort('-date').skip((perPage * page) - perPage).limit(perPage)
     // news.reverse()
-    let count = await News.count()
+    let count = await News.countDocuments()
     var date = []
     for (var i = 0; i < news.length; i++) {
         date.push(moment(news[i].date).format('DD-MM-YYYY'))
@@ -226,7 +227,7 @@ app.get('/courses/new/:page', async (req, res) => {
     let page = req.params.page || 1
     let courses_new = await Courses.find({}).sort('-date').where({ forNewbies: true }).skip((perPage * page) - perPage).limit(perPage)
     // news.reverse()
-    let count = await Courses.where({ forNewbies: true }).count()
+    let count = await Courses.where({ forNewbies: true }).countDocuments()
     var date = []
     for (var i = 0; i < courses_new.length; i++) {
         date.push(moment(courses_new[i].date).format('DD-MM-YYYY'))
@@ -240,7 +241,7 @@ app.get('/courses/new', async (req, res) => {
     let page = req.params.page || 1
     let courses_new = await Courses.find({}).sort('-date').where({ forNewbies: true }).skip((perPage * page) - perPage).limit(perPage)
     // news.reverse()
-    let count = await Courses.where({ forNewbies: true }).count()
+    let count = await Courses.where({ forNewbies: true }).countDocuments()
     var date = []
     for (var i = 0; i < courses_new.length; i++) {
         date.push(moment(courses_new[i].date).format('DD-MM-YYYY'))
@@ -262,7 +263,7 @@ app.get('/courses/old/:page', async (req, res) => {
     let page = req.params.page || 1
     let courses_old = await Courses.find({}).sort('-date').where({ forNewbies: false }).skip((perPage * page) - perPage).limit(perPage)
     // news.reverse()
-    let count = await Courses.where({ forNewbies: false }).count()
+    let count = await Courses.where({ forNewbies: false }).countDocuments()
     var date = []
     for (var i = 0; i < courses_old.length; i++) {
         date.push(moment(courses_old[i].date).format('DD-MM-YYYY'))
@@ -276,7 +277,7 @@ app.get('/courses/old', async (req, res) => {
     let page = req.params.page || 1
     let courses_old = await Courses.find({}).sort('-date').where({ forNewbies: false }).skip((perPage * page) - perPage).limit(perPage)
     // news.reverse()
-    let count = await Courses.where({ forNewbies: false }).count()
+    let count = await Courses.where({ forNewbies: false }).countDocuments()
     var date = []
     for (var i = 0; i < courses_old.length; i++) {
         date.push(moment(courses_old[i].date).format('DD-MM-YYYY'))

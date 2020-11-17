@@ -11,7 +11,7 @@ const upload = require('./mid/upload')
 
 
 
-mongoose.connect(keys.mongoURL,  { useNewUrlParser: true })
+mongoose.connect(keys.mongoURL, { useNewUrlParser: true, useUnifiedTopology: true })
 .then(()=>{
     console.log('MongoDB connect')
 })
